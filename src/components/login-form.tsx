@@ -1,0 +1,42 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
+import { Field, FieldGroup, FieldLabel } from '@ui/field';
+import { Input } from '@ui/input';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+
+export function LoginForm({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Admin Dashboard</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input id="password" type="password" required />
+              </Field>
+              <Field>
+                <Button type="submit">Login</Button>
+              </Field>
+            </FieldGroup>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
