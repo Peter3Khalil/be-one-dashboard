@@ -4,22 +4,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@ui/sidebar';
-import type { LucideIcon } from 'lucide-react';
+import type { NavItemType } from '@/types';
 
-export function NavMain({
-  items,
-}: {
-  items: Array<{
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: Array<{
-      title: string;
-      url: string;
-    }>;
-  }>;
-}) {
+export default function NavMain({ items }: { items: Array<NavItemType> }) {
   return (
     <SidebarGroup>
       <SidebarMenu>

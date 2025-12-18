@@ -1,5 +1,3 @@
-'use client';
-
 import {
   BadgeCheck,
   Bell,
@@ -9,7 +7,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar';
+import { Avatar, AvatarFallback } from '@ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,17 +24,21 @@ import {
   useSidebar,
 } from '@ui/sidebar';
 
-export function NavUser({
+export default function NavUser({
   user,
 }: {
   user: {
     name: string;
     email: string;
-    avatar: string;
   };
 }) {
   const { isMobile } = useSidebar();
-
+  const userInitials = user.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -47,8 +49,9 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {userInitials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -66,8 +69,9 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {userInitials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>

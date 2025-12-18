@@ -1,4 +1,4 @@
-import { AppSidebar } from '@components/app-sidebar';
+import AppSidebar from '@components/app-sidebar';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { Separator } from '@ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@ui/sidebar';
@@ -10,6 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@ui/breadcrumb';
+import { NAV_ITEMS } from '@/constants';
 
 export const Route = createFileRoute('/_auth/_layout')({
   component: RouteComponent,
@@ -18,7 +19,10 @@ export const Route = createFileRoute('/_auth/_layout')({
 function RouteComponent() {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar
+        items={NAV_ITEMS}
+        user={{ name: 'Peter', email: 'peter@example.com' }}
+      />
       <SidebarInset>
         <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
