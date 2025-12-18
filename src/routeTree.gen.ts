@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthLayoutRouteImport } from './routes/_auth/_layout'
 import { Route as AuthLayoutIndexRouteImport } from './routes/_auth/_layout/index'
+import { Route as AuthLayoutProductsRouteImport } from './routes/_auth/_layout/products'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -26,25 +27,38 @@ const AuthLayoutIndexRoute = AuthLayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
+const AuthLayoutProductsRoute = AuthLayoutProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
 }
 export interface FileRoutesByTo {
+  '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_auth/_layout': typeof AuthLayoutRouteWithChildren
+  '/_auth/_layout/products': typeof AuthLayoutProductsRoute
   '/_auth/_layout/': typeof AuthLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/products' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_auth' | '/_auth/_layout' | '/_auth/_layout/'
+  to: '/products' | '/'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/_auth/_layout'
+    | '/_auth/_layout/products'
+    | '/_auth/_layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -74,14 +88,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutIndexRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
+    '/_auth/_layout/products': {
+      id: '/_auth/_layout/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthLayoutProductsRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
   }
 }
 
 interface AuthLayoutRouteChildren {
+  AuthLayoutProductsRoute: typeof AuthLayoutProductsRoute
   AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
+  AuthLayoutProductsRoute: AuthLayoutProductsRoute,
   AuthLayoutIndexRoute: AuthLayoutIndexRoute,
 }
 

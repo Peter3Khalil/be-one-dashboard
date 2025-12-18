@@ -1,7 +1,5 @@
 import AppSidebar from '@components/app-sidebar';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
-import { Separator } from '@ui/separator';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@ui/sidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,17 +8,20 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@ui/breadcrumb';
-import { NAV_ITEMS } from '@/constants';
+import { Separator } from '@ui/separator';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@ui/sidebar';
+import { useSidebarItems } from '@/stores/sidebar';
 
 export const Route = createFileRoute('/_auth/_layout')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { items } = useSidebarItems();
   return (
     <SidebarProvider>
       <AppSidebar
-        items={NAV_ITEMS}
+        items={items}
         user={{ name: 'Peter', email: 'peter@example.com' }}
       />
       <SidebarInset>
