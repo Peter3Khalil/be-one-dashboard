@@ -15,11 +15,11 @@ export const NAV_ITEMS = [
   {
     id: 'orders',
     title: 'Orders',
-    url: '/',
+    url: '/orders',
   },
   {
     id: 'customers',
     title: 'Customers',
-    url: '/',
+    url: '/customers',
   },
 ] as const satisfies Array<NavItemType>;

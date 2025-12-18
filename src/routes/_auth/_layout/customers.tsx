@@ -2,16 +2,16 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 
-export const Route = createFileRoute('/_auth/_layout/products')({
+export const Route = createFileRoute('/_auth/_layout/customers')({
   component: RouteComponent,
   onEnter() {
     useBreadcrumbItems
       .getState()
-      .setItems([{ label: 'Products', href: '/products', isCurrent: true }]);
-    useSidebarItems.getState().setActiveItem('products');
+      .setItems([{ label: 'Customers', href: '/customers', isCurrent: true }]);
+    useSidebarItems.getState().setActiveItem('customers');
   },
 });
 
 function RouteComponent() {
-  return <div>Products</div>;
+  return <div>Customers</div>;
 }
