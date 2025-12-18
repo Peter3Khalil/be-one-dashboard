@@ -6,7 +6,7 @@ export const Route = createFileRoute('/_auth')({
 });
 
 function RouteComponent() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return isAuthenticated ? (
     <Outlet />
   ) : (
