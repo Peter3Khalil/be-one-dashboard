@@ -9,4 +9,10 @@ export type NavItemType = {
   isActive?: boolean;
 };
 
+export type BreadcrumbItemType = {
+  label: string;
+  href?: RouteType;
+  isCurrent?: boolean;
+};
+
 export type RouteType = LinkComponentProps<typeof Link>['to'];
