@@ -8,6 +8,8 @@ import { Plus, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/_auth/_layout/products_/create')({
   component: RouteComponent,
@@ -25,8 +27,9 @@ export const Route = createFileRoute('/_auth/_layout/products_/create')({
 });
 
 function RouteComponent() {
+  const isMobile = useIsMobile();
   return (
-    <div className="container space-y-6">
+    <div className={cn('container space-y-6', { 'px-0': isMobile })}>
       <div className="flex items-center justify-between">
         <h1 className="heading">Create Product</h1>
         <Button>
@@ -38,7 +41,7 @@ function RouteComponent() {
           <CardTitle>Product Details</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="grid grid-cols-2 gap-4">
+          <form className="grid gap-4 md:grid-cols-2">
             <div className="col-span-full flex flex-col gap-1">
               <Label htmlFor="name" className="text-sm text-muted-foreground">
                 Product Name
