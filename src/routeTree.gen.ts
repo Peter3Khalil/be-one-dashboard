@@ -15,6 +15,7 @@ import { Route as AuthLayoutIndexRouteImport } from './routes/_auth/_layout/inde
 import { Route as AuthLayoutProductsRouteImport } from './routes/_auth/_layout/products'
 import { Route as AuthLayoutOrdersRouteImport } from './routes/_auth/_layout/orders'
 import { Route as AuthLayoutCustomersRouteImport } from './routes/_auth/_layout/customers'
+import { Route as AuthLayoutProductsCreateRouteImport } from './routes/_auth/_layout/products_.create'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -44,18 +45,26 @@ const AuthLayoutCustomersRoute = AuthLayoutCustomersRouteImport.update({
   path: '/customers',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
+const AuthLayoutProductsCreateRoute =
+  AuthLayoutProductsCreateRouteImport.update({
+    id: '/products_/create',
+    path: '/products/create',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/customers': typeof AuthLayoutCustomersRoute
   '/orders': typeof AuthLayoutOrdersRoute
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
+  '/products/create': typeof AuthLayoutProductsCreateRoute
 }
 export interface FileRoutesByTo {
   '/customers': typeof AuthLayoutCustomersRoute
   '/orders': typeof AuthLayoutOrdersRoute
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
+  '/products/create': typeof AuthLayoutProductsCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -65,12 +74,13 @@ export interface FileRoutesById {
   '/_auth/_layout/orders': typeof AuthLayoutOrdersRoute
   '/_auth/_layout/products': typeof AuthLayoutProductsRoute
   '/_auth/_layout/': typeof AuthLayoutIndexRoute
+  '/_auth/_layout/products_/create': typeof AuthLayoutProductsCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/customers' | '/orders' | '/products' | '/'
+  fullPaths: '/customers' | '/orders' | '/products' | '/' | '/products/create'
   fileRoutesByTo: FileRoutesByTo
-  to: '/customers' | '/orders' | '/products' | '/'
+  to: '/customers' | '/orders' | '/products' | '/' | '/products/create'
   id:
     | '__root__'
     | '/_auth'
@@ -79,6 +89,7 @@ export interface FileRouteTypes {
     | '/_auth/_layout/orders'
     | '/_auth/_layout/products'
     | '/_auth/_layout/'
+    | '/_auth/_layout/products_/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -129,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutCustomersRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
+    '/_auth/_layout/products_/create': {
+      id: '/_auth/_layout/products_/create'
+      path: '/products/create'
+      fullPath: '/products/create'
+      preLoaderRoute: typeof AuthLayoutProductsCreateRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
   }
 }
 
@@ -137,6 +155,7 @@ interface AuthLayoutRouteChildren {
   AuthLayoutOrdersRoute: typeof AuthLayoutOrdersRoute
   AuthLayoutProductsRoute: typeof AuthLayoutProductsRoute
   AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
+  AuthLayoutProductsCreateRoute: typeof AuthLayoutProductsCreateRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
@@ -144,6 +163,7 @@ const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutOrdersRoute: AuthLayoutOrdersRoute,
   AuthLayoutProductsRoute: AuthLayoutProductsRoute,
   AuthLayoutIndexRoute: AuthLayoutIndexRoute,
+  AuthLayoutProductsCreateRoute: AuthLayoutProductsCreateRoute,
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(

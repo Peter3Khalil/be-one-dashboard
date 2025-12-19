@@ -1,7 +1,7 @@
 import Combobox from '@components/combobox';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import { MoreHorizontal, Plus, RotateCcw } from 'lucide-react';
@@ -49,9 +49,11 @@ function RouteComponent() {
             />
           </Button>
         </div>
-        <Button>
-          <Plus />
-          Add Product
+        <Button asChild>
+          <Link to="/products/create">
+            <Plus />
+            Add Product
+          </Link>
         </Button>
       </div>
       <div className="flex items-center gap-4">
