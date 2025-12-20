@@ -16,3 +16,20 @@ export type BreadcrumbItemType = {
 };
 
 export type RouteType = LinkComponentProps<typeof Link>['to'];
+
+export type SizeStock = {
+  value: string;
+  stock: number;
+};
+
+export type ColorVariant = {
+  color: string;
+  sizes: Array<SizeStock>;
+};
+
+export type ProductFormData = {
+  name: string;
+  price: string;
+  description: string;
+  variants: Array<ColorVariant>;
+};

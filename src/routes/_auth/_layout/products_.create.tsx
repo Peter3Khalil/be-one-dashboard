@@ -1,10 +1,10 @@
 import ProductDetailsForm from '@modules/products/components/product-details-form';
+import { VariantsSection } from '@modules/products/components/variants-selection';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
-import { Input } from '@ui/input';
-import { Plus, Save, Upload, X } from 'lucide-react';
+import { Package, Save } from 'lucide-react';
 import { useState } from 'react';
+import type { ColorVariant, ProductFormData } from '@/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn } from '@/lib/utils';
@@ -27,132 +27,87 @@ export const Route = createFileRoute('/_auth/_layout/products_/create')({
 
 function RouteComponent() {
   const isMobile = useIsMobile();
+  const [formData, setFormData] = useState<ProductFormData>({
+    name: '',
+    price: '',
+    description: '',
+    variants: [],
+  });
+
+  const handleAddVariant = () => {
+    setFormData((prev) => ({
+      ...prev,
+      variants: [...prev.variants, { color: '', sizes: [] }],
+    }));
+  };
+
+  const handleUpdateVariant = (index: number, variant: ColorVariant) => {
+    setFormData((prev) => ({
+      ...prev,
+      variants: prev.variants.map((v, i) => (i === index ? variant : v)),
+    }));
+  };
+
+  const handleRemoveVariant = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      variants: prev.variants.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const cleanedVariants = formData.variants
+      .filter((v) => v.color.trim() !== '' && v.sizes.length > 0)
+      .map((v) => ({
+        color: v.color,
+        sizes: v.sizes.map((s) => ({
+          value: s.value,
+          stock: s.stock,
+        })),
+      }));
+
+    console.log('Product Data:', {
+      name: formData.name,
+      price: formData.price,
+      description: formData.description,
+      variants: cleanedVariants,
+    });
+  };
+
+  const totalStock = formData.variants.reduce(
+    (sum, v) => sum + v.sizes.reduce((s, size) => s + size.stock, 0),
+    0
+  );
   return (
-    <div className={cn('container space-y-6', { 'px-0': isMobile })}>
+    <form
+      onSubmit={handleSubmit}
+      className={cn('container space-y-6', { 'px-0': isMobile })}
+    >
       <div className="flex items-center justify-between">
         <h1 className="heading">Create Product</h1>
-        <Button>
+        <Button type="submit">
           <Save /> Save Product
         </Button>
       </div>
       <ProductDetailsForm />
-      <Card>
-        <CardHeader>
-          <CardTitle>Variants</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-1 border-b pb-4">
-            <p className="text-sm text-muted-foreground">Size</p>
-            <ul>
-              {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-                <li key={size} className="mr-2 mb-2 inline-block">
-                  <CustomCheckbox
-                    key={size}
-                    onChecked={(checked) => {
-                      console.log(`${size} checked:`, checked);
-                    }}
-                  >
-                    {size}
-                  </CustomCheckbox>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="space-y-4">
-            <div className="space-y-2 pt-4">
-              <p className="text-sm text-muted-foreground">Colors</p>
-              <div className="space-y-4">
-                <div className="flex flex-col gap-4 rounded-md border bg-muted/30 p-4 shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <Input
-                      placeholder="Blue, Red, etc..."
-                      className="bg-background"
-                    />
-                    <Button
-                      variant="destructive"
-                      className="bg-destructive/15 text-destructive/90 hover:bg-destructive/20 dark:bg-destructive/15 dark:hover:bg-destructive/20"
-                      size="icon-sm"
-                    >
-                      <X />
-                    </Button>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full border-2 border-dashed text-muted-foreground hover:bg-background/50"
-                  >
-                    <Upload />
-                    Upload Image
-                  </Button>
-                </div>
-                <div className="flex flex-col gap-4 rounded-md border bg-muted/30 p-4 shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <Input
-                      placeholder="Blue, Red, etc..."
-                      className="bg-background"
-                    />
-                    <Button
-                      variant="destructive"
-                      className="bg-destructive/15 text-destructive/90 hover:bg-destructive/20 dark:bg-destructive/15 dark:hover:bg-destructive/20"
-                      size="icon-sm"
-                    >
-                      <X />
-                    </Button>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full border-2 border-dashed text-muted-foreground hover:bg-background/50"
-                  >
-                    <Upload />
-                    Upload Image
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <Button variant="outline" size="lg" className="w-full">
-              <Plus /> Add More Colors
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <VariantsSection
+        variants={formData.variants}
+        onAddVariant={handleAddVariant}
+        onUpdateVariant={handleUpdateVariant}
+        onRemoveVariant={handleRemoveVariant}
+      />
+
+      <div className="flex items-center justify-between border-t border-border pt-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Package className="h-4 w-4" />
+          <span>
+            Total Stock:{' '}
+            <strong className="text-foreground">{totalStock} items</strong>
+          </span>
+        </div>
+      </div>
+    </form>
   );
 }
-
-const CustomCheckbox = ({
-  children,
-  onChecked,
-  checked,
-  defaultChecked,
-}: {
-  children: React.ReactNode;
-
-  onChecked?: (checked: boolean) => void;
-  checked?: boolean;
-  defaultChecked?: boolean;
-}) => {
-  const [value, setValue] = useState(checked || defaultChecked || false);
-  return (
-    <Button
-      variant={value ? 'default' : 'secondary'}
-      size="sm"
-      className="rounded-md"
-      asChild
-    >
-      <label>
-        {children}
-
-        <input
-          type="checkbox"
-          hidden
-          checked={value}
-          onChange={() => {
-            setValue(!value);
-            onChecked?.(!value);
-          }}
-        />
-      </label>
-    </Button>
-  );
-};
