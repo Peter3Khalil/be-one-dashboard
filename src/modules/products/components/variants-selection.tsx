@@ -1,6 +1,6 @@
 import { Layers, Plus } from 'lucide-react';
 import ColorVariantCard from './color-variant-card';
-import type { ColorVariant } from '@/types';
+import type { ColorVariant } from '../types';
 import { Button } from '@/components/ui/button';
 
 interface VariantsSectionProps {

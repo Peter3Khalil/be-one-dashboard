@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Package, Save } from 'lucide-react';
 import { useState } from 'react';
-import type { ColorVariant, ProductFormData } from '@/types';
+import type { ColorVariant, ProductFormData } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn } from '@/lib/utils';

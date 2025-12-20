@@ -2,7 +2,7 @@ import { Package, Palette, X } from 'lucide-react';
 import FileUploader from '@components/file-uploader';
 import SizeSelector from './size-selector';
 import SizeStockInput from './size-stock-input';
-import type { ColorVariant } from '@/types';
+import type { ColorVariant } from '../types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';

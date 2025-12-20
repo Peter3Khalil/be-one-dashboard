@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import type { SizeStock } from '@/types';
+import type { SizeStock } from '../types';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
