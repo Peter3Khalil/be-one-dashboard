@@ -1,15 +1,14 @@
-import { Label } from '@radix-ui/react-label';
+import ProductDetailsForm from '@modules/products/components/product-details-form';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
 import { Input } from '@ui/input';
-import { Textarea } from '@ui/textarea';
 import { Plus, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Route = createFileRoute('/_auth/_layout/products_/create')({
   component: RouteComponent,
@@ -36,46 +35,7 @@ function RouteComponent() {
           <Save /> Save Product
         </Button>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Product Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form className="grid gap-4 md:grid-cols-2">
-            <div className="col-span-full flex flex-col gap-1">
-              <Label htmlFor="name" className="text-sm text-muted-foreground">
-                Product Name
-              </Label>
-              <Input id="name" placeholder="Product Name" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="price" className="text-sm text-muted-foreground">
-                Price
-              </Label>
-              <Input id="price" placeholder="Price" type="number" min={1} />
-            </div>
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="stock" className="text-sm text-muted-foreground">
-                Stock
-              </Label>
-              <Input id="stock" placeholder="Stock" type="number" min={1} />
-            </div>
-            <div className="col-span-full flex flex-col gap-1">
-              <Label
-                htmlFor="description"
-                className="text-sm text-muted-foreground"
-              >
-                Description
-              </Label>
-              <Textarea
-                id="description"
-                placeholder="Description"
-                className="min-h-32"
-              />
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+      <ProductDetailsForm />
       <Card>
         <CardHeader>
           <CardTitle>Variants</CardTitle>
