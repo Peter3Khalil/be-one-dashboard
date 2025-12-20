@@ -36,12 +36,12 @@ export default function SizeStockInput({
       </div>
       <Button
         type="button"
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+        variant="destructiveSoft"
+        className="bg-transparent text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+        size="icon-sm"
         onClick={onRemove}
       >
-        <X className="h-4 w-4" />
+        <X />
       </Button>
     </div>
   );

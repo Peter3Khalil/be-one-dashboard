@@ -87,12 +87,11 @@ export default function ColorVariantCard({
             )}
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+              variant="destructiveSoft"
+              size="icon-sm"
               onClick={onRemove}
             >
-              <X className="h-5 w-5" />
+              <X />
             </Button>
           </div>
         </div>
