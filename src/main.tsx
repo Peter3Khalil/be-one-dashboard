@@ -6,6 +6,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 
 import './styles.css';
+import ThemeEffect from './stores/theme';
 
 // Create a new router instance
 const router = createRouter({
@@ -30,6 +31,7 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
+      <ThemeEffect />
       <RouterProvider router={router} />
     </StrictMode>
   );
