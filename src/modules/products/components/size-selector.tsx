@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils';
+import { Button } from '@ui/button';
+import { useEffect, useState } from 'react';
 
 const AVAILABLE_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -16,22 +17,49 @@ export default function SizeSelector({
       {AVAILABLE_SIZES.map((size) => {
         const isSelected = selectedSizes.includes(size);
         return (
-          <button
+          <CustomCheckbox
             key={size}
-            type="button"
-            onClick={() => onToggleSize(size)}
-            className={cn(
-              'h-9 rounded-lg px-4 text-sm font-medium transition-all duration-200',
-              'border-2 hover:scale-105 active:scale-95',
-              isSelected
-                ? 'shadow-soft border-primary bg-primary text-primary-foreground'
-                : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground'
-            )}
+            checked={isSelected}
+            onChecked={() => onToggleSize(size)}
           >
             {size}
-          </button>
+          </CustomCheckbox>
         );
       })}
     </div>
   );
 }
+
+const CustomCheckbox = ({
+  children,
+  onChecked,
+  checked,
+  defaultChecked,
+}: {
+  children: React.ReactNode;
+
+  onChecked?: (checked: boolean) => void;
+  checked?: boolean;
+  defaultChecked?: boolean;
+}) => {
+  const [value, setValue] = useState(checked || defaultChecked || false);
+  const toggleCheckbox = () => {
+    setValue(!value);
+    onChecked?.(!value);
+  };
+  useEffect(() => {
+    if (typeof checked === 'boolean') {
+      setValue(checked);
+    }
+  }, [checked]);
+  return (
+    <Button
+      variant={value ? 'default' : 'secondary'}
+      size="sm"
+      className="rounded-md"
+      onClick={toggleCheckbox}
+    >
+      {children}
+    </Button>
+  );
+};

@@ -2,10 +2,10 @@ import { Package, Palette, X } from 'lucide-react';
 import SizeSelector from './size-selector';
 import SizeStockInput from './size-stock-input';
 import type { ColorVariant } from '@/types';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 type Props = {
   variant: ColorVariant;
@@ -59,7 +59,7 @@ export default function ColorVariantCard({
   const selectedSizes = variant.sizes.map((s) => s.value);
 
   return (
-    <Card className="animate-slide-in shadow-medium overflow-hidden border-border/60">
+    <Card className="shadow-medium animate-slide-in overflow-hidden border-border/60">
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 space-y-3">
