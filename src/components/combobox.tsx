@@ -11,6 +11,7 @@ import {
   CommandList,
 } from '@ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/popover';
+import { cn } from '@/lib/utils';
 
 type Props = {
   items?: Array<{ value: string; label: string }>;
@@ -18,6 +19,7 @@ type Props = {
   searchPlaceholder?: string;
   onSelect?: (values: Array<string>) => void;
   defaultValues?: Array<string>;
+  className?: string;
 };
 
 const Combobox = ({
@@ -25,6 +27,7 @@ const Combobox = ({
   label = 'Select items...',
   searchPlaceholder = 'Search items...',
   defaultValues = [],
+  className,
   onSelect,
 }: Props) => {
   const [open, setOpen] = useState(false);
@@ -35,7 +38,10 @@ const Combobox = ({
       <PopoverTrigger asChild>
         <Button
           aria-expanded={open}
-          className="w-62.5 justify-between text-muted-foreground"
+          className={cn(
+            'w-62.5 justify-between text-muted-foreground',
+            className
+          )}
           role="combobox"
           variant="outline"
         >
