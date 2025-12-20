@@ -24,6 +24,7 @@ export type SizeStock = {
 
 export type ColorVariant = {
   color: string;
+  image?: string;
   sizes: Array<SizeStock>;
 };
 

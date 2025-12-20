@@ -1,4 +1,5 @@
 import { Package, Palette, X } from 'lucide-react';
+import FileUploader from '@components/file-uploader';
 import SizeSelector from './size-selector';
 import SizeStockInput from './size-stock-input';
 import type { ColorVariant } from '@/types';
@@ -60,7 +61,7 @@ export default function ColorVariantCard({
 
   return (
     <Card className="shadow-medium animate-slide-in overflow-hidden border-border/60">
-      <CardHeader className="pb-4">
+      <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-2">
@@ -70,34 +71,35 @@ export default function ColorVariantCard({
               <span className="text-sm font-medium text-muted-foreground">
                 Color Variant {index + 1}
               </span>
+              <div className="ms-auto flex items-center gap-4">
+                {totalStock > 0 && (
+                  <Badge className="gap-1.5">
+                    <Package className="h-3 w-3" />
+                    {totalStock} total
+                  </Badge>
+                )}
+                <Button
+                  type="button"
+                  variant="destructiveSoft"
+                  size="icon-sm"
+                  onClick={onRemove}
+                >
+                  <X />
+                </Button>
+              </div>
             </div>
             <Input
               value={variant.color}
               onChange={(e) => handleColorChange(e.target.value)}
               placeholder="Enter color name (e.g., Red, Navy Blue)"
-              className="text-base font-medium"
+              className="w-full text-base font-medium"
             />
-          </div>
-          <div className="flex items-center gap-3">
-            {totalStock > 0 && (
-              <Badge className="gap-1.5">
-                <Package className="h-3 w-3" />
-                {totalStock} total
-              </Badge>
-            )}
-            <Button
-              type="button"
-              variant="destructiveSoft"
-              size="icon-sm"
-              onClick={onRemove}
-            >
-              <X />
-            </Button>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-6">
+        <FileUploader />
         <div className="space-y-2">
           <label className="block text-sm font-medium text-muted-foreground">
             Available Sizes

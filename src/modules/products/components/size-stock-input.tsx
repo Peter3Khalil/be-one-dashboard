@@ -19,16 +19,16 @@ export default function SizeStockInput({
       <div className="flex h-10 w-12 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-secondary-foreground">
         {size.value}
       </div>
-      <div className="relative max-w-[120px] flex-1">
+      <div className="relative flex-1 md:max-w-[140px]">
         <Input
           type="number"
-          min="0"
-          value={size.stock}
+          min={0}
+          value={size.stock === 0 ? '' : size.stock}
           onChange={(e) =>
             onStockChange(Math.max(0, parseInt(e.target.value) || 0))
           }
-          className="pr-12 text-center font-medium"
-          placeholder="0"
+          className="pe-12 text-center font-medium"
+          placeholder="stock"
         />
         <span className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-muted-foreground">
           pcs
