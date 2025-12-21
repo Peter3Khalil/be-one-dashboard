@@ -7,7 +7,7 @@ import { useState } from 'react';
 import type { ColorVariant, ProductFormData } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { cn } from '@/lib/utils';
+import { cn, pageTitle } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Route = createFileRoute('/_auth/_layout/products_/create')({
@@ -22,6 +22,9 @@ export const Route = createFileRoute('/_auth/_layout/products_/create')({
       },
     ]);
     useSidebarItems.getState().setActiveItem('products');
+  },
+  head() {
+    return { meta: [{ title: pageTitle('Create Product') }] };
   },
 });
 

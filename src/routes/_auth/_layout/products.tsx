@@ -9,7 +9,7 @@ import { useState } from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { cn, duplicateArray } from '@/lib/utils';
+import { cn, duplicateArray, pageTitle } from '@/lib/utils';
 
 type Product = {
   id: string;
@@ -31,6 +31,9 @@ export const Route = createFileRoute('/_auth/_layout/products')({
       .getState()
       .setItems([{ label: 'Products', href: '/products', isCurrent: true }]);
     useSidebarItems.getState().setActiveItem('products');
+  },
+  head() {
+    return { meta: [{ title: pageTitle('Products') }] };
   },
 });
 

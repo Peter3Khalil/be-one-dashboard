@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
+import { pageTitle } from '@/lib/utils';
 
 export const Route = createFileRoute('/_auth/_layout/')({
   component: App,
@@ -9,6 +10,9 @@ export const Route = createFileRoute('/_auth/_layout/')({
       .getState()
       .setItems([{ label: 'Dashboard', href: '/', isCurrent: true }]);
     useSidebarItems.getState().setActiveItem('dashboard');
+  },
+  head() {
+    return { meta: [{ title: pageTitle('Dashboard') }] };
   },
 });
 
