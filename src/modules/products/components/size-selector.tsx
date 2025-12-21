@@ -58,6 +58,7 @@ const CustomCheckbox = ({
       size="sm"
       className="rounded-md"
       onClick={toggleCheckbox}
+      type="button"
     >
       {children}
     </Button>
