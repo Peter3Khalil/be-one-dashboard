@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
-  const { control, watch } = useFormContext<ProductFormSchema>();
+  const { control, watch, ...form } = useFormContext<ProductFormSchema>();
   const {
     fields: sizes,
     append: appendSize,
@@ -69,7 +69,15 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <FileUploader />
+        <FileUploader
+          onImagesChange={(images) => {
+            form.setValue(
+              `variants.${variantIndex}.images`,
+              images.map((img) => img.file)
+            );
+            form.trigger(`variants.${variantIndex}.images`);
+          }}
+        />
         <div className="space-y-2">
           <label className="block text-sm font-medium text-muted-foreground">
             Available Sizes
