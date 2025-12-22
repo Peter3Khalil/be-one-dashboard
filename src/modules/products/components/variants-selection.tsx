@@ -33,26 +33,9 @@ export function VariantsSection() {
       </div>
 
       {variants.length === 0 ? (
-        <div className="rounded-xl border-2 border-dashed border-border bg-card/50 py-12 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-muted">
-            <Layers className="h-8 w-8 text-muted-foreground" />
-          </div>
-          <h3 className="mb-1 text-base font-medium text-foreground">
-            No color variants yet
-          </h3>
-          <p className="mb-4 text-sm text-muted-foreground">
-            Add your first color variant to start managing stock
-          </p>
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => append({ color: '', sizes: [], images: [] })}
-            className="gap-2"
-          >
-            <Plus className="h-4 w-4" />
-            Add First Color
-          </Button>
-        </div>
+        <NoColorVariants
+          onAdd={() => append({ color: '', sizes: [], images: [] })}
+        />
       ) : (
         <div className="space-y-4">
           {variants.map((_, index) => (
@@ -77,3 +60,21 @@ export function VariantsSection() {
     </div>
   );
 }
+
+const NoColorVariants = ({ onAdd }: { onAdd: () => void }) => (
+  <div className="rounded-xl border-2 border-dashed border-border bg-card/50 py-12 text-center">
+    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-muted">
+      <Layers className="h-8 w-8 text-muted-foreground" />
+    </div>
+    <h3 className="mb-1 text-base font-medium text-foreground">
+      No color variants yet
+    </h3>
+    <p className="mb-4 text-sm text-muted-foreground">
+      Add your first color variant to start managing stock
+    </p>
+    <Button type="button" variant="secondary" onClick={onAdd} className="gap-2">
+      <Plus className="h-4 w-4" />
+      Add First Color
+    </Button>
+  </div>
+);
