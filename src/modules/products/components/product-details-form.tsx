@@ -42,6 +42,9 @@ const ProductDetailsForm = () => {
             className="w-full"
             label="Select category..."
             searchPlaceholder="Search categories..."
+            onSelect={(values) => {
+              form.setValue('categories', values);
+            }}
             items={[
               {
                 value: 'winter',

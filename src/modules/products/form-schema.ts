@@ -14,7 +14,7 @@ const variantsSchema = z.object({
 export const formSchema = z.object({
   name: z.string().min(1),
   price: z.coerce.number().min(1),
-  category: z.string().min(1),
+  categories: z.array(z.string().min(1)).min(1),
   description: z.string().min(1),
   variants: z.array(variantsSchema),
 });

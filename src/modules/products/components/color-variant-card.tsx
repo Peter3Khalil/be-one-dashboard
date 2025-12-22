@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
-  const { control } = useFormContext<ProductFormSchema>();
+  const { control, watch } = useFormContext<ProductFormSchema>();
   const {
     fields: sizes,
     append: appendSize,
@@ -25,7 +25,10 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
     name: `variants.${variantIndex}.sizes`,
   });
 
-  const totalStock = sizes.reduce((sum, s) => sum + s.stock, 0);
+  const totalStock = watch(`variants.${variantIndex}.sizes`).reduce(
+    (sum, s) => sum + (isNaN(+s.stock) ? 0 : +s.stock),
+    0
+  );
   return (
     <Card className="shadow-medium animate-slide-in overflow-hidden border-border/60">
       <CardHeader>

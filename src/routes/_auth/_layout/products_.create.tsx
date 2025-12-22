@@ -37,16 +37,7 @@ function RouteComponent() {
   const form = useForm<ProductFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      price: 0,
-      description: '',
-      variants: [
-        {
-          color: '',
-          images: [],
-          sizes: [],
-        },
-      ],
+      variants: [],
     },
   });
 
@@ -57,10 +48,14 @@ function RouteComponent() {
   const totalStock = form
     .getValues('variants')
     .reduce(
-      (sum, v) => sum + v.sizes.reduce((s, size) => s + size.stock, 0),
+      (sum, v) =>
+        sum +
+        v.sizes.reduce(
+          (s, size) => s + (isNaN(+size.stock) ? 0 : +size.stock),
+          0
+        ),
       0
     );
-
   console.log(form.watch());
 
   return (
