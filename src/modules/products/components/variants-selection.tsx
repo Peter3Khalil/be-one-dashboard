@@ -1,21 +1,19 @@
 import { Layers, Plus } from 'lucide-react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import ColorVariantCard from './color-variant-card';
-import type { ColorVariant } from '../types';
+import type { ProductFormSchema } from '../types';
 import { Button } from '@/components/ui/button';
 
-interface VariantsSectionProps {
-  variants?: Array<ColorVariant>;
-  onAddVariant: () => void;
-  onUpdateVariant: (index: number, variant: ColorVariant) => void;
-  onRemoveVariant: (index: number) => void;
-}
-
-export function VariantsSection({
-  variants = [],
-  onAddVariant,
-  onUpdateVariant,
-  onRemoveVariant,
-}: VariantsSectionProps) {
+export function VariantsSection() {
+  const { control } = useFormContext<ProductFormSchema>();
+  const {
+    fields: variants,
+    append,
+    remove,
+  } = useFieldArray({
+    control,
+    name: 'variants',
+  });
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
@@ -48,7 +46,7 @@ export function VariantsSection({
           <Button
             type="button"
             variant="secondary"
-            onClick={onAddVariant}
+            onClick={() => append({ color: '', sizes: [], images: [] })}
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
@@ -57,19 +55,17 @@ export function VariantsSection({
         </div>
       ) : (
         <div className="space-y-4">
-          {variants.map((variant, index) => (
+          {variants.map((_, index) => (
             <ColorVariantCard
               key={index}
-              variant={variant}
-              index={index}
-              onUpdate={(updated) => onUpdateVariant(index, updated)}
-              onRemove={() => onRemoveVariant(index)}
+              variantIndex={index}
+              onRemove={() => remove(index)}
             />
           ))}
           <Button
             type="button"
             variant="secondary"
-            onClick={onAddVariant}
+            onClick={() => append({ color: '', sizes: [], images: [] })}
             className="w-full"
             size="lg"
           >

@@ -1,64 +1,31 @@
-import { Package, Palette, X } from 'lucide-react';
 import FileUploader from '@components/file-uploader';
+import InputFormField from '@components/form-fields/input-form-field';
+import { Package, Palette, X } from 'lucide-react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import SizeSelector from './size-selector';
 import SizeStockInput from './size-stock-input';
-import type { ColorVariant } from '../types';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import type { ProductFormSchema } from '../types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 type Props = {
-  variant: ColorVariant;
-  index: number;
-  onUpdate: (variant: ColorVariant) => void;
+  variantIndex: number;
   onRemove: () => void;
 };
 
-export default function ColorVariantCard({
-  variant,
-  index,
-  onUpdate,
-  onRemove,
-}: Props) {
-  const handleColorChange = (color: string) => {
-    onUpdate({ ...variant, color });
-  };
+export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
+  const { control } = useFormContext<ProductFormSchema>();
+  const {
+    fields: sizes,
+    append: appendSize,
+    remove: removeSize,
+  } = useFieldArray({
+    control,
+    name: `variants.${variantIndex}.sizes`,
+  });
 
-  const handleToggleSize = (size: string) => {
-    const existingSize = variant.sizes.find((s) => s.value === size);
-    if (existingSize) {
-      onUpdate({
-        ...variant,
-        sizes: variant.sizes.filter((s) => s.value !== size),
-      });
-    } else {
-      onUpdate({
-        ...variant,
-        sizes: [...variant.sizes, { value: size, stock: 0 }],
-      });
-    }
-  };
-
-  const handleStockChange = (sizeValue: string, stock: number) => {
-    onUpdate({
-      ...variant,
-      sizes: variant.sizes.map((s) =>
-        s.value === sizeValue ? { ...s, stock } : s
-      ),
-    });
-  };
-
-  const handleRemoveSize = (sizeValue: string) => {
-    onUpdate({
-      ...variant,
-      sizes: variant.sizes.filter((s) => s.value !== sizeValue),
-    });
-  };
-
-  const totalStock = variant.sizes.reduce((sum, s) => sum + s.stock, 0);
-  const selectedSizes = variant.sizes.map((s) => s.value);
-
+  const totalStock = sizes.reduce((sum, s) => sum + s.stock, 0);
   return (
     <Card className="shadow-medium animate-slide-in overflow-hidden border-border/60">
       <CardHeader>
@@ -69,7 +36,7 @@ export default function ColorVariantCard({
                 <Palette className="h-4 w-4 text-primary" />
               </div>
               <span className="text-sm font-medium text-muted-foreground">
-                Color Variant {index + 1}
+                Color Variant {variantIndex + 1}
               </span>
               <div className="ms-auto flex items-center gap-4">
                 {totalStock > 0 && (
@@ -88,9 +55,9 @@ export default function ColorVariantCard({
                 </Button>
               </div>
             </div>
-            <Input
-              value={variant.color}
-              onChange={(e) => handleColorChange(e.target.value)}
+            <InputFormField
+              name={`variants.${variantIndex}.color`}
+              control={control}
               placeholder="Enter color name (e.g., Red, Navy Blue)"
               className="w-full text-base font-medium"
             />
@@ -105,32 +72,37 @@ export default function ColorVariantCard({
             Available Sizes
           </label>
           <SizeSelector
-            selectedSizes={selectedSizes}
-            onToggleSize={handleToggleSize}
+            selectedSizes={sizes.map((s) => s.value)}
+            onToggleSize={(size) => {
+              const index = sizes.findIndex((s) => s.value === size);
+              if (index > -1) {
+                removeSize(index);
+              } else {
+                appendSize({ value: size, stock: undefined as never });
+              }
+            }}
           />
         </div>
 
-        {variant.sizes.length > 0 && (
+        {sizes.length > 0 && (
           <div className="space-y-2">
             <label className="block text-sm font-medium text-muted-foreground">
               Stock per Size
             </label>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {variant.sizes.map((size) => (
+              {sizes.map((size, sizeIndex) => (
                 <SizeStockInput
                   key={size.value}
-                  size={size}
-                  onStockChange={(stock) =>
-                    handleStockChange(size.value, stock)
-                  }
-                  onRemove={() => handleRemoveSize(size.value)}
+                  sizeIndex={sizeIndex}
+                  variantIndex={variantIndex}
+                  onRemove={() => removeSize(sizeIndex)}
                 />
               ))}
             </div>
           </div>
         )}
 
-        {variant.sizes.length === 0 && (
+        {sizes.length === 0 && (
           <div className="rounded-lg border-2 border-dashed border-border py-6 text-center">
             <p className="text-sm text-muted-foreground">
               Click on sizes above to add stock entries

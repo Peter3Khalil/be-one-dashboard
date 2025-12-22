@@ -1,7 +1,5 @@
-import { Button } from '@ui/button';
-import { useEffect, useState } from 'react';
-
-const AVAILABLE_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+import CustomCheckbox from '@ui/custom-checkbox';
+import { AVAILABLE_SIZES } from '@/constants';
 
 interface SizeSelectorProps {
   selectedSizes: Array<string>;
@@ -18,7 +16,7 @@ export default function SizeSelector({
         const isSelected = selectedSizes.includes(size);
         return (
           <CustomCheckbox
-            key={size}
+            key={size + isSelected}
             checked={isSelected}
             onChecked={() => onToggleSize(size)}
           >
@@ -29,38 +27,3 @@ export default function SizeSelector({
     </div>
   );
 }
-
-const CustomCheckbox = ({
-  children,
-  onChecked,
-  checked,
-  defaultChecked,
-}: {
-  children: React.ReactNode;
-
-  onChecked?: (checked: boolean) => void;
-  checked?: boolean;
-  defaultChecked?: boolean;
-}) => {
-  const [value, setValue] = useState(checked || defaultChecked || false);
-  const toggleCheckbox = () => {
-    setValue(!value);
-    onChecked?.(!value);
-  };
-  useEffect(() => {
-    if (typeof checked === 'boolean') {
-      setValue(checked);
-    }
-  }, [checked]);
-  return (
-    <Button
-      variant={value ? 'default' : 'secondary'}
-      size="sm"
-      className="rounded-md"
-      onClick={toggleCheckbox}
-      type="button"
-    >
-      {children}
-    </Button>
-  );
-};

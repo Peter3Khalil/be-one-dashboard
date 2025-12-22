@@ -28,3 +28,5 @@ export const NAV_ITEMS = [
     icon: Users,
   },
 ] as const satisfies Array<NavItemType>;
+
+export const AVAILABLE_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'] as const;

@@ -1,3 +1,6 @@
+import type { z } from 'zod';
+import type { formSchema } from './form-schema';
+
 export type SizeStock = {
   value: string;
   stock: number;
@@ -5,7 +8,7 @@ export type SizeStock = {
 
 export type ColorVariant = {
   color: string;
-  image?: string;
+  images: Array<string>;
   sizes: Array<SizeStock>;
 };
 
@@ -15,3 +18,5 @@ export type ProductFormData = {
   description: string;
   variants: Array<ColorVariant>;
 };
+
+export type ProductFormSchema = z.infer<typeof formSchema>;
