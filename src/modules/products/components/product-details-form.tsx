@@ -44,6 +44,7 @@ const ProductDetailsForm = () => {
             searchPlaceholder="Search categories..."
             onSelect={(values) => {
               form.setValue('categories', values);
+              form.trigger('categories');
             }}
             items={[
               {
@@ -56,6 +57,9 @@ const ProductDetailsForm = () => {
               },
             ]}
           />
+          <p className="text-sm text-destructive">
+            {form.formState.errors.categories?.message}
+          </p>
         </div>
         <div className="col-span-full flex flex-col gap-1">
           <TextareaFormField
