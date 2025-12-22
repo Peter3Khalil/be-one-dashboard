@@ -56,8 +56,6 @@ function RouteComponent() {
         ),
       0
     );
-  console.log(form.watch());
-
   return (
     <FormProvider {...form}>
       <Form {...form}>
