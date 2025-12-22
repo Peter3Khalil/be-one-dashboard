@@ -184,7 +184,7 @@ export default function FileUploader({
   };
 
   return (
-    <div className={cn('w-full max-w-4xl space-y-4', className)}>
+    <div className={cn('w-full space-y-4', className)}>
       <div>
         {images.length > 0 && (
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
