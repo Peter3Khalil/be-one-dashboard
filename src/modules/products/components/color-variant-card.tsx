@@ -8,6 +8,7 @@ import type { ProductFormSchema } from '../types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 type Props = {
   variantIndex: number;
@@ -69,17 +70,29 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <FileUploader
-          onImagesChange={(images) => {
-            form.setValue(
-              `variants.${variantIndex}.images`,
-              images.map((img) => img.file)
-            );
-            form.trigger(`variants.${variantIndex}.images`);
-          }}
-        />
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-muted-foreground">
+          {form.formState.errors.variants?.[variantIndex]?.images && (
+            <p className="text-destructive">
+              {form.formState.errors.variants?.[variantIndex]?.images?.message}
+            </p>
+          )}
+          <FileUploader
+            onImagesChange={(images) => {
+              form.setValue(
+                `variants.${variantIndex}.images`,
+                images.map((img) => img.file)
+              );
+              form.trigger(`variants.${variantIndex}.images`);
+            }}
+          />
+        </div>
+        <div className="space-y-2">
+          <label
+            className={cn('block text-sm font-medium text-muted-foreground', {
+              'text-destructive':
+                form.formState.errors.variants?.[variantIndex]?.sizes,
+            })}
+          >
             Available Sizes
           </label>
           <SizeSelector
@@ -90,9 +103,15 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
                 removeSize(index);
               } else {
                 appendSize({ value: size, stock: undefined as never });
+                form.clearErrors(`variants.${variantIndex}.sizes`);
               }
             }}
           />
+          {form.formState.errors.variants?.[variantIndex]?.sizes && (
+            <p className="text-sm text-destructive">
+              {form.formState.errors.variants?.[variantIndex]?.sizes?.message}
+            </p>
+          )}
         </div>
 
         {sizes.length > 0 && (
