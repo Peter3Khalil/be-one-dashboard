@@ -18,7 +18,7 @@ export default function SizeStockInput({
   const { control, ...form } = useFormContext<ProductFormSchema>();
 
   return (
-    <div className="animate-scale-in flex items-center gap-3">
+    <div className="animate-scale-in flex items-start gap-3">
       <div className="flex h-10 w-12 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-secondary-foreground">
         {form.watch(`variants.${variantIndex}.sizes.${sizeIndex}.value`)}
       </div>
@@ -27,12 +27,9 @@ export default function SizeStockInput({
           type="number"
           control={control}
           name={`variants.${variantIndex}.sizes.${sizeIndex}.stock`}
-          className="pe-12 text-center font-medium"
+          className="font-medium"
           placeholder="stock"
         />
-        <span className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-muted-foreground">
-          pcs
-        </span>
       </div>
       <Button
         type="button"
