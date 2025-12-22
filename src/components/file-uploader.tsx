@@ -125,6 +125,7 @@ export default function FileUploader({
       if (image) {
         URL.revokeObjectURL(image.preview);
       }
+      onImagesChange?.(prev.filter((img) => img.id !== id));
       return prev.filter((img) => img.id !== id);
     });
   }, []);
@@ -183,14 +184,14 @@ export default function FileUploader({
   };
 
   return (
-    <div className={cn('w-full max-w-4xl', className)}>
+    <div className={cn('w-full max-w-4xl space-y-4', className)}>
       <div>
         {images.length > 0 && (
-          <div className="grid grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {images.map((imageFile, index) => (
               <Card
                 key={imageFile.id}
-                className="group relative flex size-48 shrink-0 rounded-md bg-accent/50 shadow-none"
+                className="group relative flex aspect-square w-full shrink-0 rounded-md bg-accent/50 shadow-none"
               >
                 <img
                   src={imageFile.preview}
@@ -212,35 +213,33 @@ export default function FileUploader({
           </div>
         )}
       </div>
-      {images.length === 0 && (
-        <Card
-          className={cn(
-            'rounded-md border-dashed shadow-none transition-colors',
-            isDragging
-              ? 'border-primary bg-primary/5'
-              : 'border-muted-foreground/25 hover:border-muted-foreground/50'
-          )}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <CardContent className="text-center">
-            <div className="mx-auto mb-3 flex size-[32px] items-center justify-center rounded-full border border-border">
-              <CloudUpload className="size-4" />
-            </div>
-            <h3 className="text-2sm mb-0.5 font-semibold text-foreground">
-              Choose a file or drag & drop here.
-            </h3>
-            <span className="mb-3 block text-xs font-normal text-secondary-foreground">
-              JPEG, PNG, up to {formatBytes(maxSize)}.
-            </span>
-            <Button size="sm" variant="secondary" onClick={openFileDialog}>
-              Browse File
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+      <Card
+        className={cn(
+          'rounded-md border-dashed shadow-none transition-colors',
+          isDragging
+            ? 'border-primary bg-primary/5'
+            : 'border-muted-foreground/25 hover:border-muted-foreground/50'
+        )}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        <CardContent className="text-center">
+          <div className="mx-auto mb-3 flex size-[32px] items-center justify-center rounded-full border border-border">
+            <CloudUpload className="size-4" />
+          </div>
+          <h3 className="text-2sm mb-0.5 font-semibold text-foreground">
+            Choose a file or drag & drop here.
+          </h3>
+          <span className="mb-3 block text-xs font-normal text-secondary-foreground">
+            JPEG, PNG, up to {formatBytes(maxSize)}.
+          </span>
+          <Button size="sm" variant="secondary" onClick={openFileDialog}>
+            Browse File
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }
