@@ -39,7 +39,12 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                 <Palette className="h-4 w-4 text-primary" />
               </div>
-              <span className="text-sm font-medium text-muted-foreground">
+              <span
+                className={cn('text-sm font-medium text-muted-foreground', {
+                  'text-destructive':
+                    form.formState.errors.variants?.[variantIndex],
+                })}
+              >
                 Color Variant {variantIndex + 1}
               </span>
               <div className="ms-auto flex items-center gap-4">
