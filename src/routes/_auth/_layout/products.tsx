@@ -5,9 +5,35 @@ import { DataTable } from '@components/data-table';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
-import { CircleCheck, MoreHorizontal, Plus, RotateCcw, X } from 'lucide-react';
+import {
+  CircleCheck,
+  Eye,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  RotateCcw,
+  Trash,
+  X,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@ui/alert-dialog';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -151,12 +177,62 @@ const columns: Array<ColumnDef<Product>> = [
   },
   {
     id: 'actions',
-    cell() {
-      return (
-        <Button variant="ghost" size="icon-sm" className="ms-auto flex">
-          <MoreHorizontal />
-        </Button>
-      );
+    cell: ({ row }) => {
+      const Component = () => {
+        return (
+          <AlertDialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/products/$id"
+                    viewTransition
+                    params={{ id: String(row.original.id) }}
+                  >
+                    <Eye />
+                    View
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild variant="info">
+                  <a>
+                    <Pencil />
+                    Edit
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem variant="destructive">
+                    <Trash />
+                    Delete
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <Button variant="destructive">Delete</Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        );
+      };
+
+      return <Component />;
     },
   },
 ];
