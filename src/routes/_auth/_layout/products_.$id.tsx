@@ -13,13 +13,16 @@ import {
   Book,
   ChevronLeft,
   ChevronRight,
+  CircleCheck,
   Images,
   Package,
+  X,
 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
+import { Badge } from '@ui/badge';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
@@ -70,6 +73,17 @@ function RouteComponent() {
             <ArrowLeft />
           </Button>
           <h1 className="heading">{productDetails.data.name}</h1>
+          {productDetails.data.is_active ? (
+            <Badge variant="success">
+              <CircleCheck />
+              Active
+            </Badge>
+          ) : (
+            <Badge variant="destructive">
+              <X />
+              Inactive
+            </Badge>
+          )}
         </div>
         <div className="flex flex-col">
           <strong className="heading">${productDetails.data.price}</strong>

@@ -15,9 +15,21 @@ const badgeVariants = cva(
         secondary:
           'border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
         destructive:
-          'border-transparent bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90',
+          'border-red-200 bg-red-100 text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-300',
         outline:
           'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        success:
+          'border-green-200 bg-green-100 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-300',
+        'info-pink':
+          'border-pink-200 bg-pink-100 text-pink-800 dark:border-pink-800 dark:bg-pink-950 dark:text-pink-300',
+        'info-blue':
+          'border-blue-200 bg-blue-100 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300',
+        'info-yellow':
+          'border-yellow-200 bg-yellow-100 text-yellow-800 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
+        'info-purple':
+          'border-purple-200 bg-purple-100 text-purple-800 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-300',
+        'info-gray':
+          'border-gray-200 bg-gray-100 text-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-300',
       },
     },
     defaultVariants: {
@@ -43,5 +55,6 @@ function Badge({
     />
   );
 }
+type BadgeVariant = VariantProps<typeof badgeVariants>['variant'];
 
-export { Badge, badgeVariants };
+export { Badge, badgeVariants, type BadgeVariant };

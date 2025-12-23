@@ -5,8 +5,9 @@ import { DataTable } from '@components/data-table';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
-import { MoreHorizontal, Plus, RotateCcw } from 'lucide-react';
+import { CircleCheck, MoreHorizontal, Plus, RotateCcw, X } from 'lucide-react';
 import { useState } from 'react';
+import { Badge } from '@ui/badge';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -130,6 +131,23 @@ const columns: Array<ColumnDef<Product>> = [
   {
     accessorKey: 'category_name',
     header: 'Category',
+  },
+  {
+    accessorKey: 'is_active',
+    header: 'Status',
+    cell({ row: { original } }) {
+      return original.is_active ? (
+        <Badge variant="success">
+          <CircleCheck />
+          Active
+        </Badge>
+      ) : (
+        <Badge variant="destructive">
+          <X />
+          Inactive
+        </Badge>
+      );
+    },
   },
   {
     id: 'actions',
