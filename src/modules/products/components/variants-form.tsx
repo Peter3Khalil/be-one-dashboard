@@ -31,6 +31,11 @@ export function VariantsForm({ form }: Props) {
             <p className="text-sm text-muted-foreground">
               Add colors and manage stock for each size
             </p>
+            {form.formState.errors.variants?.root?.type === 'custom' && (
+              <p className="text-sm text-destructive">
+                {form.formState.errors.variants.root.message}
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -31,11 +31,24 @@ export const Route = createFileRoute('/_auth/_layout/products_/create')({
   },
 });
 
+const createFormSchema = formSchema.refine(
+  ({ variants }) => {
+    // Must be distinct colors
+    const colors = variants.map((v) => v.color.toLowerCase());
+    const uniqueColors = new Set(colors);
+    return colors.length === uniqueColors.size;
+  },
+  {
+    message: 'Variant colors must be distinct',
+    path: ['variants'],
+  }
+);
+
 function RouteComponent() {
   const isMobile = useIsMobile();
 
   const form = useForm<ProductFormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createFormSchema),
     defaultValues: {
       variants: [],
     },
@@ -57,7 +70,7 @@ function RouteComponent() {
       0
     );
 
-  console.log(form.watch());
+  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form
