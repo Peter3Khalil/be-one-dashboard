@@ -4,11 +4,13 @@ import TextareaFormField from '@components/form-fields/textarea-form-field';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
 import { Label } from '@ui/label';
 import { Package2 } from 'lucide-react';
-import { useFormContext } from 'react-hook-form';
+import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 
-const ProductDetailsForm = () => {
-  const form = useFormContext<ProductFormSchema>();
+type Props = {
+  form: UseFormReturn<ProductFormSchema>;
+};
+const ProductDetailsForm = ({ form }: Props) => {
   return (
     <Card>
       <CardHeader>
@@ -42,6 +44,9 @@ const ProductDetailsForm = () => {
             className="w-full"
             label="Select category..."
             searchPlaceholder="Search categories..."
+            defaultValues={
+              (form.formState.defaultValues?.categories as never) || []
+            }
             onSelect={(values) => {
               form.setValue('categories', values);
               form.trigger('categories');

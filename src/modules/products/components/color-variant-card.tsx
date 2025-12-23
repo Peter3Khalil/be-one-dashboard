@@ -8,9 +8,10 @@ import {
 } from '@ui/accordion';
 import { ChevronDownIcon, Package, Palette, X } from 'lucide-react';
 import { useId } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import SizeSelector from './size-selector';
 import SizeStockInput from './size-stock-input';
+import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -20,23 +21,26 @@ import { Badge } from '@/components/ui/badge';
 type Props = {
   variantIndex: number;
   onRemove: () => void;
+  form: UseFormReturn<ProductFormSchema>;
 };
 
-export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
-  const { control, watch, ...form } = useFormContext<ProductFormSchema>();
+export default function ColorVariantCard({
+  variantIndex,
+  onRemove,
+  form,
+}: Props) {
   const {
     fields: sizes,
     append: appendSize,
     remove: removeSize,
   } = useFieldArray({
-    control,
+    control: form.control,
     name: `variants.${variantIndex}.sizes`,
   });
 
-  const totalStock = watch(`variants.${variantIndex}.sizes`).reduce(
-    (sum, s) => sum + (isNaN(+s.stock) ? 0 : +s.stock),
-    0
-  );
+  const totalStock = form
+    .watch(`variants.${variantIndex}.sizes`)
+    .reduce((sum, s) => sum + (isNaN(+s.stock) ? 0 : +s.stock), 0);
   const id = useId();
   return (
     <Accordion type="single" collapsible>
@@ -84,7 +88,7 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
             <CardContent className="space-y-6">
               <InputFormField
                 name={`variants.${variantIndex}.color`}
-                control={control}
+                control={form.control}
                 placeholder="Enter color name (e.g., Red, Navy Blue)"
                 className="w-full text-base font-medium"
               />
@@ -153,6 +157,7 @@ export default function ColorVariantCard({ variantIndex, onRemove }: Props) {
                         sizeIndex={sizeIndex}
                         variantIndex={variantIndex}
                         onRemove={() => removeSize(sizeIndex)}
+                        form={form}
                       />
                     ))}
                   </div>

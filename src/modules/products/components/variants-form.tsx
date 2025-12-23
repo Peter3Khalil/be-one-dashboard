@@ -1,17 +1,20 @@
 import { Layers, Plus } from 'lucide-react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import ColorVariantCard from './color-variant-card';
+import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 import { Button } from '@/components/ui/button';
 
-export function VariantsSection() {
-  const { control } = useFormContext<ProductFormSchema>();
+type Props = {
+  form: UseFormReturn<ProductFormSchema>;
+};
+export function VariantsForm({ form }: Props) {
   const {
     fields: variants,
     append,
     remove,
   } = useFieldArray({
-    control,
+    control: form.control,
     name: 'variants',
   });
   return (
@@ -43,6 +46,7 @@ export function VariantsSection() {
               key={index}
               variantIndex={index}
               onRemove={() => remove(index)}
+              form={form}
             />
           ))}
           <Button
