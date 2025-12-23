@@ -16,7 +16,7 @@ import { Route as AuthLayoutProductsRouteImport } from './routes/_auth/_layout/p
 import { Route as AuthLayoutOrdersRouteImport } from './routes/_auth/_layout/orders'
 import { Route as AuthLayoutCustomersRouteImport } from './routes/_auth/_layout/customers'
 import { Route as AuthLayoutProductsCreateRouteImport } from './routes/_auth/_layout/products_.create'
-import { Route as AuthLayoutProductsIdRouteImport } from './routes/_auth/_layout/products_.$id'
+import { Route as AuthLayoutProductsIdViewRouteImport } from './routes/_auth/_layout/products_.$id.view'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -52,27 +52,28 @@ const AuthLayoutProductsCreateRoute =
     path: '/products/create',
     getParentRoute: () => AuthLayoutRoute,
   } as any)
-const AuthLayoutProductsIdRoute = AuthLayoutProductsIdRouteImport.update({
-  id: '/products_/$id',
-  path: '/products/$id',
-  getParentRoute: () => AuthLayoutRoute,
-} as any)
+const AuthLayoutProductsIdViewRoute =
+  AuthLayoutProductsIdViewRouteImport.update({
+    id: '/products_/$id/view',
+    path: '/products/$id/view',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/customers': typeof AuthLayoutCustomersRoute
   '/orders': typeof AuthLayoutOrdersRoute
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
-  '/products/$id': typeof AuthLayoutProductsIdRoute
   '/products/create': typeof AuthLayoutProductsCreateRoute
+  '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesByTo {
   '/customers': typeof AuthLayoutCustomersRoute
   '/orders': typeof AuthLayoutOrdersRoute
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
-  '/products/$id': typeof AuthLayoutProductsIdRoute
   '/products/create': typeof AuthLayoutProductsCreateRoute
+  '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -82,8 +83,8 @@ export interface FileRoutesById {
   '/_auth/_layout/orders': typeof AuthLayoutOrdersRoute
   '/_auth/_layout/products': typeof AuthLayoutProductsRoute
   '/_auth/_layout/': typeof AuthLayoutIndexRoute
-  '/_auth/_layout/products_/$id': typeof AuthLayoutProductsIdRoute
   '/_auth/_layout/products_/create': typeof AuthLayoutProductsCreateRoute
+  '/_auth/_layout/products_/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -92,16 +93,16 @@ export interface FileRouteTypes {
     | '/orders'
     | '/products'
     | '/'
-    | '/products/$id'
     | '/products/create'
+    | '/products/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/customers'
     | '/orders'
     | '/products'
     | '/'
-    | '/products/$id'
     | '/products/create'
+    | '/products/$id/view'
   id:
     | '__root__'
     | '/_auth'
@@ -110,8 +111,8 @@ export interface FileRouteTypes {
     | '/_auth/_layout/orders'
     | '/_auth/_layout/products'
     | '/_auth/_layout/'
-    | '/_auth/_layout/products_/$id'
     | '/_auth/_layout/products_/create'
+    | '/_auth/_layout/products_/$id/view'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -169,11 +170,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutProductsCreateRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
-    '/_auth/_layout/products_/$id': {
-      id: '/_auth/_layout/products_/$id'
-      path: '/products/$id'
-      fullPath: '/products/$id'
-      preLoaderRoute: typeof AuthLayoutProductsIdRouteImport
+    '/_auth/_layout/products_/$id/view': {
+      id: '/_auth/_layout/products_/$id/view'
+      path: '/products/$id/view'
+      fullPath: '/products/$id/view'
+      preLoaderRoute: typeof AuthLayoutProductsIdViewRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
   }
@@ -184,8 +185,8 @@ interface AuthLayoutRouteChildren {
   AuthLayoutOrdersRoute: typeof AuthLayoutOrdersRoute
   AuthLayoutProductsRoute: typeof AuthLayoutProductsRoute
   AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
-  AuthLayoutProductsIdRoute: typeof AuthLayoutProductsIdRoute
   AuthLayoutProductsCreateRoute: typeof AuthLayoutProductsCreateRoute
+  AuthLayoutProductsIdViewRoute: typeof AuthLayoutProductsIdViewRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
@@ -193,8 +194,8 @@ const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutOrdersRoute: AuthLayoutOrdersRoute,
   AuthLayoutProductsRoute: AuthLayoutProductsRoute,
   AuthLayoutIndexRoute: AuthLayoutIndexRoute,
-  AuthLayoutProductsIdRoute: AuthLayoutProductsIdRoute,
   AuthLayoutProductsCreateRoute: AuthLayoutProductsCreateRoute,
+  AuthLayoutProductsIdViewRoute: AuthLayoutProductsIdViewRoute,
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(

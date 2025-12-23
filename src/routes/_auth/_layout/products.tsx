@@ -129,14 +129,14 @@ const columns: Array<ColumnDef<Product>> = [
       return (
         <div className="flex w-fit flex-row-reverse items-center gap-2">
           <Link
-            to="/products/$id"
+            to="/products/$id/view"
             params={{ id: String(original.id) }}
             className="peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline"
           >
             {original.name}
           </Link>
           <Link
-            to="/products/$id"
+            to="/products/$id/view"
             className="relative size-14 overflow-hidden rounded-md peer-hover:*:scale-110"
             params={{ id: String(original.id) }}
           >
@@ -191,7 +191,7 @@ const columns: Array<ColumnDef<Product>> = [
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
                   <Link
-                    to="/products/$id"
+                    to="/products/$id/view"
                     viewTransition
                     params={{ id: String(row.original.id) }}
                   >
