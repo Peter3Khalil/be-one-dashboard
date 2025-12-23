@@ -37,7 +37,6 @@ function RouteComponent() {
   const form = useForm<ProductFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: 'Peter',
       variants: [],
     },
   });
