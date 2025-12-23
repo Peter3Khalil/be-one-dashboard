@@ -1,6 +1,6 @@
 import productDetails from '@assets/product-details.json';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button } from '@ui/button';
+import { Button, buttonVariants } from '@ui/button';
 import {
   Card,
   CardContent,
@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@ui/card';
-import CustomCheckbox from '@ui/custom-checkbox';
 import {
   ArrowLeft,
   Book,
@@ -18,6 +17,9 @@ import {
   Package,
 } from 'lucide-react';
 import { useState } from 'react';
+
+import { Label } from '@ui/label';
+import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
@@ -85,25 +87,30 @@ function RouteComponent() {
               </div>
               Product Images
             </CardTitle>
-            <ul className="flex items-center gap-2">
-              {Array.from(colorsMap.keys()).map((color) => (
-                <li key={color}>
-                  <CustomCheckbox
-                    onChecked={(checked) => {
-                      if (checked) {
-                        setCurrentColor(color);
-                      } else {
-                        setCurrentColor('');
-                      }
-                    }}
-                    checked={currentColor === color}
-                    className="capitalize hover:bg-primary hover:text-primary-foreground"
-                  >
-                    {color}
-                  </CustomCheckbox>
-                </li>
-              ))}
-            </ul>
+            <RadioGroup
+              onValueChange={setCurrentColor}
+              defaultValue={currentColor}
+            >
+              <ul className="flex items-center gap-2">
+                {Array.from(colorsMap.keys()).map((color, index) => (
+                  <li key={color} className="flex">
+                    <RadioGroupItem value={color} hidden id={String(index)}>
+                      {color}
+                    </RadioGroupItem>
+                    <Label
+                      className={buttonVariants({
+                        variant:
+                          currentColor === color ? 'default' : 'secondary',
+                        size: 'sm',
+                      })}
+                      htmlFor={String(index)}
+                    >
+                      {color}
+                    </Label>
+                  </li>
+                ))}
+              </ul>
+            </RadioGroup>
           </CardHeader>
           <CardContent>
             <ImageGallery
