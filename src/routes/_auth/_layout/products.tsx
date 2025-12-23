@@ -100,13 +100,25 @@ const columns: Array<ColumnDef<Product>> = [
     header: 'Name',
     cell({ row: { original } }) {
       return (
-        <div className="flex items-center gap-2">
-          <img
-            src={original.thumbnail_url}
-            alt={original.name}
-            className="size-14 rounded-md object-cover"
-          />
-          <p>{original.name}</p>
+        <div className="flex w-fit flex-row-reverse items-center gap-2">
+          <Link
+            to="/products/$id"
+            params={{ id: String(original.id) }}
+            className="peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline"
+          >
+            {original.name}
+          </Link>
+          <Link
+            to="/products/$id"
+            className="relative size-14 overflow-hidden rounded-md peer-hover:*:scale-110"
+            params={{ id: String(original.id) }}
+          >
+            <img
+              src={original.thumbnail_url}
+              alt={original.name}
+              className="absolute inset-0 size-full rounded-[inherit] object-cover duration-200 hover:scale-110"
+            />
+          </Link>
         </div>
       );
     },
