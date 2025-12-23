@@ -25,6 +25,7 @@
       "@ui/*": ["./src/components/ui/*"],
       "@components/*": ["./src/components/*"],
       "@modules/*": ["./src/modules/*"],
+      "@assets/*": ["./src/assets/*"],
       "@/*": ["./src/*"]
     }
   }

@@ -1,3 +1,4 @@
+import products from '@assets/products.json';
 import Combobox from '@components/combobox';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
@@ -9,20 +10,17 @@ import { useState } from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { cn, duplicateArray, pageTitle } from '@/lib/utils';
+import { cn, pageTitle } from '@/lib/utils';
 
 type Product = {
-  id: string;
+  id: number | string;
   name: string;
   price: number;
-  category: string;
-  variants: Array<{
-    id: string;
-    color: string;
-    size: string;
-    stock: number;
-    image: string;
-  }>;
+  description?: string;
+  category_name: string;
+  is_active?: boolean;
+  image_url: string;
+  thumbnail_url: string;
 };
 export const Route = createFileRoute('/_auth/_layout/products')({
   component: RouteComponent,
@@ -86,9 +84,12 @@ function RouteComponent() {
           'animate-pulse': false,
         })}
         columns={columns}
-        data={duplicateArray(data)}
+        data={products.data}
       />
-      <CustomPagination className="mx-auto [&_ul]:gap-3" totalPages={5} />
+      <CustomPagination
+        className="mx-auto [&_ul]:gap-3"
+        totalPages={products.pagination.count}
+      />
     </div>
   );
 }
@@ -101,19 +102,11 @@ const columns: Array<ColumnDef<Product>> = [
       return (
         <div className="flex items-center gap-2">
           <img
-            src={original.variants[0]?.image}
+            src={original.thumbnail_url}
             alt={original.name}
             className="size-14 rounded-md object-cover"
           />
-          <div>
-            <h2 className="text-base font-medium">{original.name}</h2>
-            <p className="text-xs text-muted-foreground">
-              Size: {original.variants.map(({ size }) => size).join(', ')}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Color: {original.variants.map(({ color }) => color).join(', ')}
-            </p>
-          </div>
+          <p>{original.name}</p>
         </div>
       );
     },
@@ -123,22 +116,8 @@ const columns: Array<ColumnDef<Product>> = [
     header: 'Price',
   },
   {
-    accessorKey: 'category',
+    accessorKey: 'category_name',
     header: 'Category',
-  },
-  {
-    accessorKey: 'Stock',
-    header: 'Stock',
-    cell({ row: { original } }) {
-      return (
-        <span>
-          {original.variants.reduce(
-            (total, variant) => total + variant.stock,
-            0
-          )}
-        </span>
-      );
-    },
   },
   {
     id: 'actions',
@@ -149,52 +128,5 @@ const columns: Array<ColumnDef<Product>> = [
         </Button>
       );
     },
-  },
-];
-
-const data: Array<Product> = [
-  {
-    id: '1',
-    name: 'T-Shirt',
-    price: 19.99,
-    category: 'Winter',
-    variants: [
-      {
-        id: 'v1',
-        color: 'Red',
-        size: 'M',
-        stock: 10,
-        image: 'https://shadcnuikit.com/images/products/01.jpeg',
-      },
-      {
-        id: 'v2',
-        color: 'Blue',
-        size: 'L',
-        stock: 5,
-        image: 'https://shadcnuikit.com/images/products/01.jpeg',
-      },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Jeans',
-    price: 49.99,
-    category: 'Summer',
-    variants: [
-      {
-        id: 'v3',
-        color: 'Black',
-        size: 'M',
-        stock: 8,
-        image: 'https://shadcnuikit.com/images/products/01.jpeg',
-      },
-      {
-        id: 'v4',
-        color: 'Blue',
-        size: '2XL',
-        stock: 12,
-        image: 'https://shadcnuikit.com/images/products/01.jpeg',
-      },
-    ],
   },
 ];
