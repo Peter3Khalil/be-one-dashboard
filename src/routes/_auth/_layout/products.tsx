@@ -200,10 +200,14 @@ const columns: Array<ColumnDef<Product>> = [
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild variant="info">
-                  <a>
+                  <Link
+                    to="/products/$id/edit"
+                    params={{ id: String(row.original.id) }}
+                    viewTransition
+                  >
                     <Pencil />
                     Edit
-                  </a>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 

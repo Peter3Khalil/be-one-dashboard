@@ -17,6 +17,7 @@ import { Route as AuthLayoutOrdersRouteImport } from './routes/_auth/_layout/ord
 import { Route as AuthLayoutCustomersRouteImport } from './routes/_auth/_layout/customers'
 import { Route as AuthLayoutProductsCreateRouteImport } from './routes/_auth/_layout/products_.create'
 import { Route as AuthLayoutProductsIdViewRouteImport } from './routes/_auth/_layout/products_.$id.view'
+import { Route as AuthLayoutProductsIdEditRouteImport } from './routes/_auth/_layout/products_.$id.edit'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -58,6 +59,12 @@ const AuthLayoutProductsIdViewRoute =
     path: '/products/$id/view',
     getParentRoute: () => AuthLayoutRoute,
   } as any)
+const AuthLayoutProductsIdEditRoute =
+  AuthLayoutProductsIdEditRouteImport.update({
+    id: '/products_/$id/edit',
+    path: '/products/$id/edit',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/customers': typeof AuthLayoutCustomersRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
   '/products/create': typeof AuthLayoutProductsCreateRoute
+  '/products/$id/edit': typeof AuthLayoutProductsIdEditRoute
   '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesByTo {
@@ -73,6 +81,7 @@ export interface FileRoutesByTo {
   '/products': typeof AuthLayoutProductsRoute
   '/': typeof AuthLayoutIndexRoute
   '/products/create': typeof AuthLayoutProductsCreateRoute
+  '/products/$id/edit': typeof AuthLayoutProductsIdEditRoute
   '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesById {
@@ -84,6 +93,7 @@ export interface FileRoutesById {
   '/_auth/_layout/products': typeof AuthLayoutProductsRoute
   '/_auth/_layout/': typeof AuthLayoutIndexRoute
   '/_auth/_layout/products_/create': typeof AuthLayoutProductsCreateRoute
+  '/_auth/_layout/products_/$id/edit': typeof AuthLayoutProductsIdEditRoute
   '/_auth/_layout/products_/$id/view': typeof AuthLayoutProductsIdViewRoute
 }
 export interface FileRouteTypes {
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/'
     | '/products/create'
+    | '/products/$id/edit'
     | '/products/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/products'
     | '/'
     | '/products/create'
+    | '/products/$id/edit'
     | '/products/$id/view'
   id:
     | '__root__'
@@ -112,6 +124,7 @@ export interface FileRouteTypes {
     | '/_auth/_layout/products'
     | '/_auth/_layout/'
     | '/_auth/_layout/products_/create'
+    | '/_auth/_layout/products_/$id/edit'
     | '/_auth/_layout/products_/$id/view'
   fileRoutesById: FileRoutesById
 }
@@ -177,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutProductsIdViewRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
+    '/_auth/_layout/products_/$id/edit': {
+      id: '/_auth/_layout/products_/$id/edit'
+      path: '/products/$id/edit'
+      fullPath: '/products/$id/edit'
+      preLoaderRoute: typeof AuthLayoutProductsIdEditRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
   }
 }
 
@@ -186,6 +206,7 @@ interface AuthLayoutRouteChildren {
   AuthLayoutProductsRoute: typeof AuthLayoutProductsRoute
   AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
   AuthLayoutProductsCreateRoute: typeof AuthLayoutProductsCreateRoute
+  AuthLayoutProductsIdEditRoute: typeof AuthLayoutProductsIdEditRoute
   AuthLayoutProductsIdViewRoute: typeof AuthLayoutProductsIdViewRoute
 }
 
@@ -195,6 +216,7 @@ const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutProductsRoute: AuthLayoutProductsRoute,
   AuthLayoutIndexRoute: AuthLayoutIndexRoute,
   AuthLayoutProductsCreateRoute: AuthLayoutProductsCreateRoute,
+  AuthLayoutProductsIdEditRoute: AuthLayoutProductsIdEditRoute,
   AuthLayoutProductsIdViewRoute: AuthLayoutProductsIdViewRoute,
 }
 

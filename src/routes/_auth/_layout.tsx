@@ -20,7 +20,7 @@ function RouteComponent() {
       />
       <SidebarInset>
         <Header items={breadcrumbItems} />
-        <div className="px-4 py-6">
+        <div className="size-full px-4 py-6">
           <Outlet />
         </div>
       </SidebarInset>
