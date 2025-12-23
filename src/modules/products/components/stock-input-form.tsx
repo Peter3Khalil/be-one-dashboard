@@ -11,7 +11,7 @@ type Props = {
   form: UseFormReturn<ProductFormSchema>;
 };
 
-export default function SizeStockInput({
+export default function StockInputForm({
   sizeIndex,
   variantIndex,
   onRemove,

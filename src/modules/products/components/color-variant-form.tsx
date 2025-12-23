@@ -10,7 +10,7 @@ import { ChevronDownIcon, Package, Palette, X } from 'lucide-react';
 import { useId } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import SizeSelector from './size-selector';
-import SizeStockInput from './size-stock-input';
+import StockInputForm from './stock-input-form';
 import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 import { cn } from '@/lib/utils';
@@ -24,7 +24,7 @@ type Props = {
   form: UseFormReturn<ProductFormSchema>;
 };
 
-export default function ColorVariantCard({
+export default function ColorVariantForm({
   variantIndex,
   onRemove,
   form,
@@ -152,7 +152,7 @@ export default function ColorVariantCard({
                   </label>
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                     {sizes.map((size, sizeIndex) => (
-                      <SizeStockInput
+                      <StockInputForm
                         key={size.value}
                         sizeIndex={sizeIndex}
                         variantIndex={variantIndex}

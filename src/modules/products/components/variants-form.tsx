@@ -1,6 +1,6 @@
 import { Layers, Plus } from 'lucide-react';
 import { useFieldArray } from 'react-hook-form';
-import ColorVariantCard from './color-variant-card';
+import ColorVariantForm from './color-variant-form';
 import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 import { Button } from '@/components/ui/button';
@@ -42,7 +42,7 @@ export function VariantsForm({ form }: Props) {
       ) : (
         <div className="space-y-4">
           {variants.map((_, index) => (
-            <ColorVariantCard
+            <ColorVariantForm
               key={index}
               variantIndex={index}
               onRemove={() => remove(index)}
