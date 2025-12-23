@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Button } from './button';
+import type { FC } from 'react';
 
-const CustomCheckbox = ({
+type Props = React.ComponentProps<typeof Button> & {
+  onChecked?: (checked: boolean) => void;
+  checked?: boolean;
+  defaultChecked?: boolean;
+};
+const CustomCheckbox: FC<Props> = ({
   children,
   onChecked,
   checked,
   defaultChecked,
-}: {
-  children: React.ReactNode;
-
-  onChecked?: (checked: boolean) => void;
-  checked?: boolean;
-  defaultChecked?: boolean;
+  ...props
 }) => {
   const [value, setValue] = useState(checked || defaultChecked || false);
   const toggleCheckbox = () => {
@@ -27,9 +28,9 @@ const CustomCheckbox = ({
     <Button
       variant={value ? 'default' : 'secondary'}
       size="sm"
-      className="rounded-md"
       onClick={toggleCheckbox}
       type="button"
+      {...props}
     >
       {children}
     </Button>
