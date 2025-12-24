@@ -7,7 +7,7 @@ export default [
   {
     rules: {
       '@typescript-eslint/no-unnecessary-condition': 'warn',
-      '@typescript-eslint/method-signature-style': 'warn',
+      '@typescript-eslint/method-signature-style': 'off',
     },
   },
 ];
