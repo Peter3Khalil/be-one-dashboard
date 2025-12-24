@@ -1,6 +1,4 @@
 import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router';
-import { NAV_ITEMS } from '@/constants';
-import { useSidebarItems } from '@/stores/sidebar';
 
 export const Route = createRootRoute({
   component: () => (
@@ -9,7 +7,4 @@ export const Route = createRootRoute({
       <Outlet />
     </div>
   ),
-  onEnter() {
-    useSidebarItems.getState().setItems(NAV_ITEMS());
-  },
 });

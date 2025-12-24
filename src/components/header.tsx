@@ -9,8 +9,9 @@ import {
 import { Separator } from '@ui/separator';
 import { SidebarTrigger } from '@ui/sidebar';
 import React from 'react';
-import { Button } from '@ui/button';
+import { Button, buttonVariants } from '@ui/button';
 import { Moon, Sun } from 'lucide-react';
+import LanguageSwitcher from './language-switcher';
 import type { BreadcrumbItemType } from '@/types';
 import { useThemeStore } from '@/stores/theme';
 import { Link } from '@/i18n/routing';
@@ -29,14 +30,14 @@ const Header = ({ items = [] }: Props) => {
           className="mr-2 data-[orientation=vertical]:h-4"
         />
         <CustomBreadcrumb items={items} />
-        <Button
-          variant="outline"
-          size="sm"
-          className="ms-auto"
-          onClick={toggleTheme}
-        >
-          {theme === 'dark' ? <Sun /> : <Moon />}
-        </Button>
+        <div className="ms-auto flex w-fit items-center gap-2">
+          <LanguageSwitcher
+            className={buttonVariants({ variant: 'outline', size: 'sm' })}
+          />
+          <Button variant="outline" size="sm" onClick={toggleTheme}>
+            {theme === 'dark' ? <Sun /> : <Moon />}
+          </Button>
+        </div>
       </div>
     </header>
   );

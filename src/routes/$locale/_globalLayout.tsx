@@ -3,6 +3,8 @@ import i18next from 'i18next';
 import { useEffect } from 'react';
 import { DirectionProvider } from '@radix-ui/react-direction';
 import useLocale from '@/hooks/use-locale';
+import { useSidebarItems } from '@/stores/sidebar';
+import { NAV_ITEMS } from '@/constants';
 
 export const Route = createFileRoute('/$locale/_globalLayout')({
   component: LayoutComponent,
@@ -13,6 +15,9 @@ export const Route = createFileRoute('/$locale/_globalLayout')({
     } else {
       i18next.changeLanguage(locale);
     }
+  },
+  onEnter() {
+    useSidebarItems.getState().setItems(NAV_ITEMS());
   },
 });
 
