@@ -8,6 +8,7 @@ import { Form } from '@ui/form';
 import { Package, Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import type { ProductFormSchema } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -19,14 +20,6 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
   onEnter() {
-    useBreadcrumbItems.getState().setItems([
-      { label: 'Products', href: '/products' },
-      {
-        label: 'Create',
-        href: '/products/create',
-        isCurrent: true,
-      },
-    ]);
     useSidebarItems.getState().setActiveItem('products');
   },
   head() {
@@ -73,6 +66,17 @@ function RouteComponent() {
         ),
       0
     );
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([
+      {
+        label: t('ProductsPage.products'),
+        href: '/products',
+        isCurrent: false,
+      },
+      { label: t('CreateProductPage.title'), isCurrent: true },
+    ]);
+  }, [setItems, t]);
   return (
     <Form {...form}>
       <form
