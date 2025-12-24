@@ -13,5 +13,8 @@
     "cva\\(([^)]*)\\)",
     "tw\\w+\\s*[:=]\\s*['\"]([^'\"]*)['\"]", // For variables prefixed with tw
     "\\w*[cC][lL][aA][sS][sS][nN][aA][mM][eE]\\w*\\s*[:=]\\s*['\"]([^'\"]*)['\"]" // For variables containing className (case-insensitive)
-  ]
+  ],
+  "i18n-ally.localesPaths": ["src/i18n", "src/i18n/locales"],
+  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.keystyle": "nested"
 }

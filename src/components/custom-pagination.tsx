@@ -7,6 +7,7 @@ import {
 } from '@ui/pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { FC } from 'react';
 import { cn } from '@/lib/utils';
 import usePagination from '@/hooks/use-pagination';
@@ -39,6 +40,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({
     chunkSize,
     defaultPage,
   });
+  const { t } = useTranslation();
   useEffect(() => {
     onPaginate?.(currentPage);
   }, [onPaginate, currentPage]);
@@ -47,8 +49,8 @@ const CustomPagination: FC<CustomPaginationProps> = ({
       <PaginationContent>
         <PaginationItem>
           <Button variant="secondary" onClick={goToPrev} disabled={!hasPrev}>
-            <ChevronLeftIcon className="size-4" />
-            <span>Previous</span>
+            <ChevronLeftIcon className="size-4 rtl:rotate-180" />
+            <span>{t('Global.previous')}</span>
           </Button>
         </PaginationItem>
         {hasPrevChunk && (
@@ -108,8 +110,8 @@ const CustomPagination: FC<CustomPaginationProps> = ({
         )}
         <PaginationItem>
           <Button onClick={goToNext} disabled={!hasNext} variant="secondary">
-            <span>Next</span>
-            <ChevronRightIcon className="size-4" />
+            <span>{t('Global.next')}</span>
+            <ChevronRightIcon className="size-4 rtl:rotate-180" />
           </Button>
         </PaginationItem>
       </PaginationContent>

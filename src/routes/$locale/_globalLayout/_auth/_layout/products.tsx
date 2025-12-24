@@ -15,7 +15,7 @@ import {
   Trash,
   X,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from '@ui/badge';
 import {
   DropdownMenu,
@@ -34,6 +34,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@ui/alert-dialog';
+import { useTranslation } from 'react-i18next';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -55,9 +56,6 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
   onEnter() {
-    useBreadcrumbItems
-      .getState()
-      .setItems([{ label: 'Products', href: '/products', isCurrent: true }]);
     useSidebarItems.getState().setActiveItem('products');
   },
   head() {
@@ -67,11 +65,18 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const [selectedValues, setSelectedValues] = useState<Array<string>>([]);
+  const { t } = useTranslation();
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([
+      { label: t('ProductsPage.products'), href: '/products', isCurrent: true },
+    ]);
+  }, [setItems, t]);
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <h1 className="heading">Products (15)</h1>
+          <h1 className="heading">{t('ProductsPage.products')} (15)</h1>
           <Button variant="ghost" size="icon-sm">
             <RotateCcw
               className={cn({
@@ -83,12 +88,15 @@ function RouteComponent() {
         <Button asChild>
           <Link to="/products/create">
             <Plus />
-            Add Product
+            {t('ProductsPage.addProductButton')}
           </Link>
         </Button>
       </div>
       <div className="flex items-center gap-4">
-        <Input placeholder="Search products..." className="w-80" />
+        <Input
+          placeholder={t('ProductsPage.searchPlaceholder')}
+          className="w-80"
+        />
         <Combobox
           items={[
             {
@@ -104,9 +112,9 @@ function RouteComponent() {
           label={
             selectedValues.length > 0
               ? `${selectedValues.length} ${selectedValues.length > 1 ? 'Categories' : 'Category'}`
-              : 'Filter by Category'
+              : t('ProductsPage.filterByCategory')
           }
-          searchPlaceholder="Search categories..."
+          searchPlaceholder={t('ProductsPage.searchForCategoryPlaceholder')}
         />
       </div>
       <DataTable

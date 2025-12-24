@@ -1,3 +1,23 @@
 import type { TranslationType } from '../translation.type';
 
-export default {} satisfies TranslationType;
+export default {
+  ProductsPage: {
+    products: 'Products',
+    addProductButton: 'Add Product',
+    searchPlaceholder: 'Search for a product...',
+    filterByCategory: 'Filter by Category',
+    searchForCategoryPlaceholder: 'Search for a category...',
+    table: {
+      header: {
+        name: 'Name',
+        price: 'Price',
+        category: 'Category',
+        status: 'Status',
+      },
+    },
+  },
+  Global: {
+    next: 'Next',
+    previous: 'Previous',
+  },
+} satisfies TranslationType;
