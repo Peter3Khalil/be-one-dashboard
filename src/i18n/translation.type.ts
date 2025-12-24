@@ -18,4 +18,10 @@ export type TranslationType = {
     next: string;
     previous: string;
   };
+  Sidebar: {
+    dashboard: string;
+    products: string;
+    orders: string;
+    customers: string;
+  };
 };

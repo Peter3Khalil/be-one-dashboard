@@ -20,4 +20,10 @@ export default {
     next: 'التالي',
     previous: 'السابق',
   },
+  Sidebar: {
+    dashboard: 'اللوحة الرئيسية',
+    products: 'المنتجات',
+    orders: 'الطلبات',
+    customers: 'العملاء',
+  },
 } satisfies TranslationType;

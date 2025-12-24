@@ -20,4 +20,10 @@ export default {
     next: 'Next',
     previous: 'Previous',
   },
+  Sidebar: {
+    dashboard: 'Dashboard',
+    products: 'Products',
+    orders: 'Orders',
+    customers: 'Customers',
+  },
 } satisfies TranslationType;
