@@ -18,11 +18,12 @@ import {
   Package,
   X,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
 import { Badge } from '@ui/badge';
+import { useTranslation } from 'react-i18next';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
@@ -32,13 +33,6 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
   onEnter() {
-    useBreadcrumbItems.getState().setItems([
-      { label: 'Products', href: '/products' },
-      {
-        label: 'Product Details',
-        isCurrent: true,
-      },
-    ]);
     useSidebarItems.getState().setActiveItem('products');
   },
   head() {
@@ -47,6 +41,7 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colorsMap = getDistinctColors({
     variants: productDetails.data.variants,
@@ -61,7 +56,16 @@ function RouteComponent() {
   );
 
   const colorsEntries = Array.from(colorsMap.entries());
-
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([
+      { label: t('Sidebar.products'), href: '/products' },
+      {
+        label: t('ProductDetailsPage.title'),
+        isCurrent: true,
+      },
+    ]);
+  }, [t, setItems]);
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -70,7 +74,7 @@ function RouteComponent() {
             onClick={() => router.history.back()}
             variant="outline"
             size="icon"
-            className="rounded-full text-muted-foreground"
+            className="rounded-full text-muted-foreground rtl:rotate-180"
           >
             <ArrowLeft />
           </Button>
@@ -78,19 +82,19 @@ function RouteComponent() {
           {productDetails.data.is_active ? (
             <Badge variant="success">
               <CircleCheck />
-              Active
+              {t('Global.active')}
             </Badge>
           ) : (
             <Badge variant="destructive">
               <X />
-              Inactive
+              {t('Global.inactive')}
             </Badge>
           )}
         </div>
         <div className="flex flex-col">
           <strong className="heading">${productDetails.data.price}</strong>
           <span className="text-sm text-muted-foreground">
-            <b>{totalStock}</b> items in stock
+            <b>{totalStock}</b> {t('ProductDetailsPage.itemsInStock')}
           </span>
         </div>
       </div>
@@ -101,7 +105,7 @@ function RouteComponent() {
               <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
                 <Images className="size-5 text-primary" />
               </div>
-              Product Images
+              {t('ProductDetailsPage.productImages')}
             </CardTitle>
             <RadioGroup
               onValueChange={setCurrentColor}
@@ -142,7 +146,7 @@ function RouteComponent() {
                 <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
                   <Book className="size-5 text-primary" />
                 </div>
-                Description
+                {t('ProductDetailsPage.description')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -157,7 +161,7 @@ function RouteComponent() {
                 <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
                   <Package className="size-5 text-primary" />
                 </div>
-                Inventory by Variant
+                {t('ProductDetailsPage.inventoryByVariant')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -185,7 +189,9 @@ function RouteComponent() {
                       ))}
                     </ul>
                     <div className="ms-auto">
-                      <span className="text-muted-foreground">Total: </span>
+                      <span className="text-muted-foreground">
+                        {t('ProductDetailsPage.total')}:{' '}
+                      </span>
                       <span className="font-medium">
                         {colorsMap.get(color)?.totalStock || 0}
                       </span>
@@ -194,7 +200,9 @@ function RouteComponent() {
                 </div>
               ))}
               <div className="ms-auto w-fit">
-                <span className="font-medium">Total Stocks: </span>
+                <span className="font-medium">
+                  {t('ProductDetailsPage.totalStocks')}:{' '}
+                </span>
                 <b>{totalStock}</b>
               </div>
             </CardContent>

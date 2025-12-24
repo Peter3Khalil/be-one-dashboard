@@ -14,6 +14,17 @@ export type TranslationType = {
       };
     };
   };
+  ProductDetailsPage: {
+    title: string;
+    productImages: string;
+    inventoryByVariant: string;
+    total: string;
+    totalStocks: string;
+    items: string;
+    stock: string;
+    itemsInStock: string;
+    description: string;
+  };
   Global: {
     next: string;
     previous: string;

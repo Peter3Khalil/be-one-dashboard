@@ -16,6 +16,17 @@ export default {
       },
     },
   },
+  ProductDetailsPage: {
+    title: 'Product Details',
+    productImages: 'Product Images',
+    inventoryByVariant: 'Inventory by Variant',
+    total: 'Total',
+    totalStocks: 'Total Stocks',
+    items: 'Items',
+    stock: 'Stock',
+    itemsInStock: 'Items in Stock',
+    description: 'Description',
+  },
   Global: {
     next: 'Next',
     previous: 'Previous',

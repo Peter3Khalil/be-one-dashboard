@@ -58,7 +58,7 @@ const CustomBreadcrumb = ({ items }: CustomBreadcrumbProps) => {
                 <Link to={item.href}>{item.label}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
+            <BreadcrumbSeparator className="hidden md:block rtl:rotate-180" />
           </React.Fragment>
         ))}
         {currentItem && (
