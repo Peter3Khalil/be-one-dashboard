@@ -7,7 +7,7 @@ export const Route = createFileRoute('/$locale/_globalLayout/_auth')({
 });
 
 function RouteComponent() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return isAuthenticated ? (
     <Outlet />
   ) : (
