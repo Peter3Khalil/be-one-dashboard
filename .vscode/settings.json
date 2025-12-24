@@ -7,5 +7,11 @@
   },
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
-  }
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "cn\\(([^)]*)\\)",
+    "cva\\(([^)]*)\\)",
+    "tw\\w+\\s*[:=]\\s*['\"]([^'\"]*)['\"]", // For variables prefixed with tw
+    "\\w*[cC][lL][aA][sS][sS][nN][aA][mM][eE]\\w*\\s*[:=]\\s*['\"]([^'\"]*)['\"]" // For variables containing className (case-insensitive)
+  ]
 }
