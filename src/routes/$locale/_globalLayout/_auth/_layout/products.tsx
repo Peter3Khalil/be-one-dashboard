@@ -35,6 +35,7 @@ import {
   AlertDialogTrigger,
 } from '@ui/alert-dialog';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -135,7 +136,7 @@ function RouteComponent() {
 const columns: Array<ColumnDef<Product>> = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: i18next.t('ProductsPage.table.header.name'),
     cell({ row: { original } }) {
       return (
         <div className="flex w-fit flex-row-reverse items-center gap-2">
@@ -163,25 +164,25 @@ const columns: Array<ColumnDef<Product>> = [
   },
   {
     accessorKey: 'price',
-    header: 'Price',
+    header: i18next.t('ProductsPage.table.header.price'),
   },
   {
     accessorKey: 'category_name',
-    header: 'Category',
+    header: i18next.t('ProductsPage.table.header.category'),
   },
   {
     accessorKey: 'is_active',
-    header: 'Status',
+    header: i18next.t('ProductsPage.table.header.status'),
     cell({ row: { original } }) {
       return original.is_active ? (
         <Badge variant="success">
           <CircleCheck />
-          Active
+          {i18next.t('Global.active')}
         </Badge>
       ) : (
         <Badge variant="destructive">
           <X />
-          Inactive
+          {i18next.t('Global.inactive')}
         </Badge>
       );
     },
@@ -207,7 +208,7 @@ const columns: Array<ColumnDef<Product>> = [
                     params={{ id: String(row.original.id) }}
                   >
                     <Eye />
-                    View
+                    {i18next.t('Global.view')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild variant="info">
@@ -217,7 +218,7 @@ const columns: Array<ColumnDef<Product>> = [
                     viewTransition
                   >
                     <Pencil />
-                    Edit
+                    {i18next.t('Global.edit')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -225,7 +226,7 @@ const columns: Array<ColumnDef<Product>> = [
                 <AlertDialogTrigger asChild>
                   <DropdownMenuItem variant="destructive">
                     <Trash />
-                    Delete
+                    {i18next.t('Global.delete')}
                   </DropdownMenuItem>
                 </AlertDialogTrigger>
               </DropdownMenuContent>

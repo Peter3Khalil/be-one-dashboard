@@ -19,6 +19,11 @@ export default {
   Global: {
     next: 'Next',
     previous: 'Previous',
+    active: 'Active',
+    inactive: 'Inactive',
+    view: 'View',
+    edit: 'Edit',
+    delete: 'Delete',
   },
   Sidebar: {
     dashboard: 'Dashboard',

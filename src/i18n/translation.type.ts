@@ -17,6 +17,11 @@ export type TranslationType = {
   Global: {
     next: string;
     previous: string;
+    active: string;
+    inactive: string;
+    view: string;
+    edit: string;
+    delete: string;
   };
   Sidebar: {
     dashboard: string;

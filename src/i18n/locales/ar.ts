@@ -19,6 +19,11 @@ export default {
   Global: {
     next: 'التالي',
     previous: 'السابق',
+    active: 'نشط',
+    inactive: 'غير نشط',
+    view: 'عرض',
+    edit: 'تعديل',
+    delete: 'حذف',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',
