@@ -1,7 +1,8 @@
 import { LoginForm } from '@components/login-form';
-import { Link, Outlet, createFileRoute } from '@tanstack/react-router';
+import { Outlet, createFileRoute } from '@tanstack/react-router';
+import { Link } from '@/i18n/routing';
 
-export const Route = createFileRoute('/_auth')({
+export const Route = createFileRoute('/$locale/_globalLayout/_auth')({
   component: RouteComponent,
 });
 

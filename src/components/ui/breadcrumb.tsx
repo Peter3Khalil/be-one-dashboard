@@ -1,8 +1,8 @@
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
 
-import { Link } from '@tanstack/react-router';
-import type { LinkComponentProps } from '@tanstack/react-router';
+import { Slot } from '@radix-ui/react-slot';
+import type { LocalizedRouteType } from '@/types';
 import { cn } from '@/lib/utils';
 
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
@@ -33,11 +33,17 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
 }
 
 function BreadcrumbLink({
+  asChild,
   className,
   ...props
-}: LinkComponentProps<typeof Link>) {
+}: Omit<React.ComponentProps<'a'>, 'href'> & {
+  asChild?: boolean;
+  href?: LocalizedRouteType;
+}) {
+  const Comp = asChild ? Slot : 'a';
+
   return (
-    <Link
+    <Comp
       data-slot="breadcrumb-link"
       className={cn('transition-colors hover:text-foreground', className)}
       {...props}

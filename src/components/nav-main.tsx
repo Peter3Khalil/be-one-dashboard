@@ -4,8 +4,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@ui/sidebar';
-import { Link } from '@tanstack/react-router';
 import type { NavItemType } from '@/types';
+import { Link } from '@/i18n/routing';
 
 export default function NavMain({ items }: { items: Array<NavItemType> }) {
   return (

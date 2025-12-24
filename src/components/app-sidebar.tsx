@@ -11,6 +11,7 @@ import {
 import NavMain from './nav-main';
 import NavUser from './nav-user';
 import type { NavItemType } from '@/types';
+import useLocale from '@/hooks/use-locale';
 
 type Props = React.ComponentProps<typeof Sidebar> & {
   items?: Array<NavItemType>;
@@ -21,8 +22,13 @@ type Props = React.ComponentProps<typeof Sidebar> & {
 };
 
 export default function AppSidebar({ items = [], user, ...props }: Props) {
+  const locale = useLocale();
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      collapsible="icon"
+      side={locale === 'ar' ? 'right' : 'left'}
+      {...props}
+    >
       <SidebarHeader>
         <SidebarHeader>
           <Link to="/" className="flex items-center gap-2 py-2 font-bold">

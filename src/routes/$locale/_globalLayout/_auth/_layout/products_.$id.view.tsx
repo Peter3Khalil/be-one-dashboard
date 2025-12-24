@@ -27,7 +27,9 @@ import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
 
-export const Route = createFileRoute('/_auth/_layout/products_/$id/view')({
+export const Route = createFileRoute(
+  '/$locale/_globalLayout/_auth/_layout/products_/$id/view'
+)({
   component: RouteComponent,
   onEnter() {
     useBreadcrumbItems.getState().setItems([

@@ -9,233 +9,301 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthRouteImport } from './routes/_auth'
-import { Route as AuthLayoutRouteImport } from './routes/_auth/_layout'
-import { Route as AuthLayoutIndexRouteImport } from './routes/_auth/_layout/index'
-import { Route as AuthLayoutProductsRouteImport } from './routes/_auth/_layout/products'
-import { Route as AuthLayoutOrdersRouteImport } from './routes/_auth/_layout/orders'
-import { Route as AuthLayoutCustomersRouteImport } from './routes/_auth/_layout/customers'
-import { Route as AuthLayoutProductsCreateRouteImport } from './routes/_auth/_layout/products_.create'
-import { Route as AuthLayoutProductsIdViewRouteImport } from './routes/_auth/_layout/products_.$id.view'
-import { Route as AuthLayoutProductsIdEditRouteImport } from './routes/_auth/_layout/products_.$id.edit'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as LocaleGlobalLayoutRouteImport } from './routes/$locale/_globalLayout'
+import { Route as LocaleGlobalLayoutAuthRouteImport } from './routes/$locale/_globalLayout/_auth'
+import { Route as LocaleGlobalLayoutAuthLayoutRouteImport } from './routes/$locale/_globalLayout/_auth/_layout'
+import { Route as LocaleGlobalLayoutAuthLayoutIndexRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/index'
+import { Route as LocaleGlobalLayoutAuthLayoutProductsRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products'
+import { Route as LocaleGlobalLayoutAuthLayoutOrdersRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/orders'
+import { Route as LocaleGlobalLayoutAuthLayoutCustomersRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/customers'
+import { Route as LocaleGlobalLayoutAuthLayoutProductsCreateRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.create'
+import { Route as LocaleGlobalLayoutAuthLayoutProductsIdViewRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.$id.view'
+import { Route as LocaleGlobalLayoutAuthLayoutProductsIdEditRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.$id.edit'
 
-const AuthRoute = AuthRouteImport.update({
-  id: '/_auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLayoutRoute = AuthLayoutRouteImport.update({
-  id: '/_layout',
-  getParentRoute: () => AuthRoute,
-} as any)
-const AuthLayoutIndexRoute = AuthLayoutIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthLayoutRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLayoutProductsRoute = AuthLayoutProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => AuthLayoutRoute,
+const LocaleGlobalLayoutRoute = LocaleGlobalLayoutRouteImport.update({
+  id: '/$locale/_globalLayout',
+  path: '/$locale',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLayoutOrdersRoute = AuthLayoutOrdersRouteImport.update({
-  id: '/orders',
-  path: '/orders',
-  getParentRoute: () => AuthLayoutRoute,
+const LocaleGlobalLayoutAuthRoute = LocaleGlobalLayoutAuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => LocaleGlobalLayoutRoute,
 } as any)
-const AuthLayoutCustomersRoute = AuthLayoutCustomersRouteImport.update({
-  id: '/customers',
-  path: '/customers',
-  getParentRoute: () => AuthLayoutRoute,
-} as any)
-const AuthLayoutProductsCreateRoute =
-  AuthLayoutProductsCreateRouteImport.update({
+const LocaleGlobalLayoutAuthLayoutRoute =
+  LocaleGlobalLayoutAuthLayoutRouteImport.update({
+    id: '/_layout',
+    getParentRoute: () => LocaleGlobalLayoutAuthRoute,
+  } as any)
+const LocaleGlobalLayoutAuthLayoutIndexRoute =
+  LocaleGlobalLayoutAuthLayoutIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
+  } as any)
+const LocaleGlobalLayoutAuthLayoutProductsRoute =
+  LocaleGlobalLayoutAuthLayoutProductsRouteImport.update({
+    id: '/products',
+    path: '/products',
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
+  } as any)
+const LocaleGlobalLayoutAuthLayoutOrdersRoute =
+  LocaleGlobalLayoutAuthLayoutOrdersRouteImport.update({
+    id: '/orders',
+    path: '/orders',
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
+  } as any)
+const LocaleGlobalLayoutAuthLayoutCustomersRoute =
+  LocaleGlobalLayoutAuthLayoutCustomersRouteImport.update({
+    id: '/customers',
+    path: '/customers',
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
+  } as any)
+const LocaleGlobalLayoutAuthLayoutProductsCreateRoute =
+  LocaleGlobalLayoutAuthLayoutProductsCreateRouteImport.update({
     id: '/products_/create',
     path: '/products/create',
-    getParentRoute: () => AuthLayoutRoute,
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
   } as any)
-const AuthLayoutProductsIdViewRoute =
-  AuthLayoutProductsIdViewRouteImport.update({
+const LocaleGlobalLayoutAuthLayoutProductsIdViewRoute =
+  LocaleGlobalLayoutAuthLayoutProductsIdViewRouteImport.update({
     id: '/products_/$id/view',
     path: '/products/$id/view',
-    getParentRoute: () => AuthLayoutRoute,
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
   } as any)
-const AuthLayoutProductsIdEditRoute =
-  AuthLayoutProductsIdEditRouteImport.update({
+const LocaleGlobalLayoutAuthLayoutProductsIdEditRoute =
+  LocaleGlobalLayoutAuthLayoutProductsIdEditRouteImport.update({
     id: '/products_/$id/edit',
     path: '/products/$id/edit',
-    getParentRoute: () => AuthLayoutRoute,
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/customers': typeof AuthLayoutCustomersRoute
-  '/orders': typeof AuthLayoutOrdersRoute
-  '/products': typeof AuthLayoutProductsRoute
-  '/': typeof AuthLayoutIndexRoute
-  '/products/create': typeof AuthLayoutProductsCreateRoute
-  '/products/$id/edit': typeof AuthLayoutProductsIdEditRoute
-  '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
+  '/': typeof IndexRoute
+  '/$locale': typeof LocaleGlobalLayoutAuthLayoutRouteWithChildren
+  '/$locale/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
+  '/$locale/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
+  '/$locale/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
+  '/$locale/': typeof LocaleGlobalLayoutAuthLayoutIndexRoute
+  '/$locale/products/create': typeof LocaleGlobalLayoutAuthLayoutProductsCreateRoute
+  '/$locale/products/$id/edit': typeof LocaleGlobalLayoutAuthLayoutProductsIdEditRoute
+  '/$locale/products/$id/view': typeof LocaleGlobalLayoutAuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesByTo {
-  '/customers': typeof AuthLayoutCustomersRoute
-  '/orders': typeof AuthLayoutOrdersRoute
-  '/products': typeof AuthLayoutProductsRoute
-  '/': typeof AuthLayoutIndexRoute
-  '/products/create': typeof AuthLayoutProductsCreateRoute
-  '/products/$id/edit': typeof AuthLayoutProductsIdEditRoute
-  '/products/$id/view': typeof AuthLayoutProductsIdViewRoute
+  '/': typeof IndexRoute
+  '/$locale': typeof LocaleGlobalLayoutAuthLayoutIndexRoute
+  '/$locale/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
+  '/$locale/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
+  '/$locale/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
+  '/$locale/products/create': typeof LocaleGlobalLayoutAuthLayoutProductsCreateRoute
+  '/$locale/products/$id/edit': typeof LocaleGlobalLayoutAuthLayoutProductsIdEditRoute
+  '/$locale/products/$id/view': typeof LocaleGlobalLayoutAuthLayoutProductsIdViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_auth': typeof AuthRouteWithChildren
-  '/_auth/_layout': typeof AuthLayoutRouteWithChildren
-  '/_auth/_layout/customers': typeof AuthLayoutCustomersRoute
-  '/_auth/_layout/orders': typeof AuthLayoutOrdersRoute
-  '/_auth/_layout/products': typeof AuthLayoutProductsRoute
-  '/_auth/_layout/': typeof AuthLayoutIndexRoute
-  '/_auth/_layout/products_/create': typeof AuthLayoutProductsCreateRoute
-  '/_auth/_layout/products_/$id/edit': typeof AuthLayoutProductsIdEditRoute
-  '/_auth/_layout/products_/$id/view': typeof AuthLayoutProductsIdViewRoute
+  '/': typeof IndexRoute
+  '/$locale/_globalLayout': typeof LocaleGlobalLayoutRouteWithChildren
+  '/$locale/_globalLayout/_auth': typeof LocaleGlobalLayoutAuthRouteWithChildren
+  '/$locale/_globalLayout/_auth/_layout': typeof LocaleGlobalLayoutAuthLayoutRouteWithChildren
+  '/$locale/_globalLayout/_auth/_layout/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
+  '/$locale/_globalLayout/_auth/_layout/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
+  '/$locale/_globalLayout/_auth/_layout/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
+  '/$locale/_globalLayout/_auth/_layout/': typeof LocaleGlobalLayoutAuthLayoutIndexRoute
+  '/$locale/_globalLayout/_auth/_layout/products_/create': typeof LocaleGlobalLayoutAuthLayoutProductsCreateRoute
+  '/$locale/_globalLayout/_auth/_layout/products_/$id/edit': typeof LocaleGlobalLayoutAuthLayoutProductsIdEditRoute
+  '/$locale/_globalLayout/_auth/_layout/products_/$id/view': typeof LocaleGlobalLayoutAuthLayoutProductsIdViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/customers'
-    | '/orders'
-    | '/products'
     | '/'
-    | '/products/create'
-    | '/products/$id/edit'
-    | '/products/$id/view'
+    | '/$locale'
+    | '/$locale/customers'
+    | '/$locale/orders'
+    | '/$locale/products'
+    | '/$locale/'
+    | '/$locale/products/create'
+    | '/$locale/products/$id/edit'
+    | '/$locale/products/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/customers'
-    | '/orders'
-    | '/products'
     | '/'
-    | '/products/create'
-    | '/products/$id/edit'
-    | '/products/$id/view'
+    | '/$locale'
+    | '/$locale/customers'
+    | '/$locale/orders'
+    | '/$locale/products'
+    | '/$locale/products/create'
+    | '/$locale/products/$id/edit'
+    | '/$locale/products/$id/view'
   id:
     | '__root__'
-    | '/_auth'
-    | '/_auth/_layout'
-    | '/_auth/_layout/customers'
-    | '/_auth/_layout/orders'
-    | '/_auth/_layout/products'
-    | '/_auth/_layout/'
-    | '/_auth/_layout/products_/create'
-    | '/_auth/_layout/products_/$id/edit'
-    | '/_auth/_layout/products_/$id/view'
+    | '/'
+    | '/$locale/_globalLayout'
+    | '/$locale/_globalLayout/_auth'
+    | '/$locale/_globalLayout/_auth/_layout'
+    | '/$locale/_globalLayout/_auth/_layout/customers'
+    | '/$locale/_globalLayout/_auth/_layout/orders'
+    | '/$locale/_globalLayout/_auth/_layout/products'
+    | '/$locale/_globalLayout/_auth/_layout/'
+    | '/$locale/_globalLayout/_auth/_layout/products_/create'
+    | '/$locale/_globalLayout/_auth/_layout/products_/$id/edit'
+    | '/$locale/_globalLayout/_auth/_layout/products_/$id/view'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthRoute: typeof AuthRouteWithChildren
+  IndexRoute: typeof IndexRoute
+  LocaleGlobalLayoutRoute: typeof LocaleGlobalLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/_layout': {
-      id: '/_auth/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthLayoutRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/_auth/_layout/': {
-      id: '/_auth/_layout/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthLayoutIndexRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_auth/_layout/products': {
-      id: '/_auth/_layout/products'
+    '/$locale/_globalLayout': {
+      id: '/$locale/_globalLayout'
+      path: '/$locale'
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleGlobalLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/_globalLayout/_auth': {
+      id: '/$locale/_globalLayout/_auth'
+      path: ''
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthRouteImport
+      parentRoute: typeof LocaleGlobalLayoutRoute
+    }
+    '/$locale/_globalLayout/_auth/_layout': {
+      id: '/$locale/_globalLayout/_auth/_layout'
+      path: ''
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthRoute
+    }
+    '/$locale/_globalLayout/_auth/_layout/': {
+      id: '/$locale/_globalLayout/_auth/_layout/'
+      path: '/'
+      fullPath: '/$locale/'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutIndexRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
+    }
+    '/$locale/_globalLayout/_auth/_layout/products': {
+      id: '/$locale/_globalLayout/_auth/_layout/products'
       path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof AuthLayoutProductsRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/products'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutProductsRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
-    '/_auth/_layout/orders': {
-      id: '/_auth/_layout/orders'
+    '/$locale/_globalLayout/_auth/_layout/orders': {
+      id: '/$locale/_globalLayout/_auth/_layout/orders'
       path: '/orders'
-      fullPath: '/orders'
-      preLoaderRoute: typeof AuthLayoutOrdersRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/orders'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutOrdersRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
-    '/_auth/_layout/customers': {
-      id: '/_auth/_layout/customers'
+    '/$locale/_globalLayout/_auth/_layout/customers': {
+      id: '/$locale/_globalLayout/_auth/_layout/customers'
       path: '/customers'
-      fullPath: '/customers'
-      preLoaderRoute: typeof AuthLayoutCustomersRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/customers'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutCustomersRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
-    '/_auth/_layout/products_/create': {
-      id: '/_auth/_layout/products_/create'
+    '/$locale/_globalLayout/_auth/_layout/products_/create': {
+      id: '/$locale/_globalLayout/_auth/_layout/products_/create'
       path: '/products/create'
-      fullPath: '/products/create'
-      preLoaderRoute: typeof AuthLayoutProductsCreateRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/products/create'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutProductsCreateRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
-    '/_auth/_layout/products_/$id/view': {
-      id: '/_auth/_layout/products_/$id/view'
+    '/$locale/_globalLayout/_auth/_layout/products_/$id/view': {
+      id: '/$locale/_globalLayout/_auth/_layout/products_/$id/view'
       path: '/products/$id/view'
-      fullPath: '/products/$id/view'
-      preLoaderRoute: typeof AuthLayoutProductsIdViewRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/products/$id/view'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutProductsIdViewRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
-    '/_auth/_layout/products_/$id/edit': {
-      id: '/_auth/_layout/products_/$id/edit'
+    '/$locale/_globalLayout/_auth/_layout/products_/$id/edit': {
+      id: '/$locale/_globalLayout/_auth/_layout/products_/$id/edit'
       path: '/products/$id/edit'
-      fullPath: '/products/$id/edit'
-      preLoaderRoute: typeof AuthLayoutProductsIdEditRouteImport
-      parentRoute: typeof AuthLayoutRoute
+      fullPath: '/$locale/products/$id/edit'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutProductsIdEditRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
   }
 }
 
-interface AuthLayoutRouteChildren {
-  AuthLayoutCustomersRoute: typeof AuthLayoutCustomersRoute
-  AuthLayoutOrdersRoute: typeof AuthLayoutOrdersRoute
-  AuthLayoutProductsRoute: typeof AuthLayoutProductsRoute
-  AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
-  AuthLayoutProductsCreateRoute: typeof AuthLayoutProductsCreateRoute
-  AuthLayoutProductsIdEditRoute: typeof AuthLayoutProductsIdEditRoute
-  AuthLayoutProductsIdViewRoute: typeof AuthLayoutProductsIdViewRoute
+interface LocaleGlobalLayoutAuthLayoutRouteChildren {
+  LocaleGlobalLayoutAuthLayoutCustomersRoute: typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
+  LocaleGlobalLayoutAuthLayoutOrdersRoute: typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
+  LocaleGlobalLayoutAuthLayoutProductsRoute: typeof LocaleGlobalLayoutAuthLayoutProductsRoute
+  LocaleGlobalLayoutAuthLayoutIndexRoute: typeof LocaleGlobalLayoutAuthLayoutIndexRoute
+  LocaleGlobalLayoutAuthLayoutProductsCreateRoute: typeof LocaleGlobalLayoutAuthLayoutProductsCreateRoute
+  LocaleGlobalLayoutAuthLayoutProductsIdEditRoute: typeof LocaleGlobalLayoutAuthLayoutProductsIdEditRoute
+  LocaleGlobalLayoutAuthLayoutProductsIdViewRoute: typeof LocaleGlobalLayoutAuthLayoutProductsIdViewRoute
 }
 
-const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
-  AuthLayoutCustomersRoute: AuthLayoutCustomersRoute,
-  AuthLayoutOrdersRoute: AuthLayoutOrdersRoute,
-  AuthLayoutProductsRoute: AuthLayoutProductsRoute,
-  AuthLayoutIndexRoute: AuthLayoutIndexRoute,
-  AuthLayoutProductsCreateRoute: AuthLayoutProductsCreateRoute,
-  AuthLayoutProductsIdEditRoute: AuthLayoutProductsIdEditRoute,
-  AuthLayoutProductsIdViewRoute: AuthLayoutProductsIdViewRoute,
+const LocaleGlobalLayoutAuthLayoutRouteChildren: LocaleGlobalLayoutAuthLayoutRouteChildren =
+  {
+    LocaleGlobalLayoutAuthLayoutCustomersRoute:
+      LocaleGlobalLayoutAuthLayoutCustomersRoute,
+    LocaleGlobalLayoutAuthLayoutOrdersRoute:
+      LocaleGlobalLayoutAuthLayoutOrdersRoute,
+    LocaleGlobalLayoutAuthLayoutProductsRoute:
+      LocaleGlobalLayoutAuthLayoutProductsRoute,
+    LocaleGlobalLayoutAuthLayoutIndexRoute:
+      LocaleGlobalLayoutAuthLayoutIndexRoute,
+    LocaleGlobalLayoutAuthLayoutProductsCreateRoute:
+      LocaleGlobalLayoutAuthLayoutProductsCreateRoute,
+    LocaleGlobalLayoutAuthLayoutProductsIdEditRoute:
+      LocaleGlobalLayoutAuthLayoutProductsIdEditRoute,
+    LocaleGlobalLayoutAuthLayoutProductsIdViewRoute:
+      LocaleGlobalLayoutAuthLayoutProductsIdViewRoute,
+  }
+
+const LocaleGlobalLayoutAuthLayoutRouteWithChildren =
+  LocaleGlobalLayoutAuthLayoutRoute._addFileChildren(
+    LocaleGlobalLayoutAuthLayoutRouteChildren,
+  )
+
+interface LocaleGlobalLayoutAuthRouteChildren {
+  LocaleGlobalLayoutAuthLayoutRoute: typeof LocaleGlobalLayoutAuthLayoutRouteWithChildren
 }
 
-const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
-  AuthLayoutRouteChildren,
-)
+const LocaleGlobalLayoutAuthRouteChildren: LocaleGlobalLayoutAuthRouteChildren =
+  {
+    LocaleGlobalLayoutAuthLayoutRoute:
+      LocaleGlobalLayoutAuthLayoutRouteWithChildren,
+  }
 
-interface AuthRouteChildren {
-  AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
+const LocaleGlobalLayoutAuthRouteWithChildren =
+  LocaleGlobalLayoutAuthRoute._addFileChildren(
+    LocaleGlobalLayoutAuthRouteChildren,
+  )
+
+interface LocaleGlobalLayoutRouteChildren {
+  LocaleGlobalLayoutAuthRoute: typeof LocaleGlobalLayoutAuthRouteWithChildren
 }
 
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthLayoutRoute: AuthLayoutRouteWithChildren,
+const LocaleGlobalLayoutRouteChildren: LocaleGlobalLayoutRouteChildren = {
+  LocaleGlobalLayoutAuthRoute: LocaleGlobalLayoutAuthRouteWithChildren,
 }
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const LocaleGlobalLayoutRouteWithChildren =
+  LocaleGlobalLayoutRoute._addFileChildren(LocaleGlobalLayoutRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthRoute: AuthRouteWithChildren,
+  IndexRoute: IndexRoute,
+  LocaleGlobalLayoutRoute: LocaleGlobalLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

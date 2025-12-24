@@ -2,7 +2,7 @@ import products from '@assets/products.json';
 import Combobox from '@components/combobox';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
-import { Link, createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import {
@@ -38,6 +38,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
+import { Link } from '@/i18n/routing';
 
 type Product = {
   id: number | string;
@@ -49,7 +50,9 @@ type Product = {
   image_url: string;
   thumbnail_url: string;
 };
-export const Route = createFileRoute('/_auth/_layout/products')({
+export const Route = createFileRoute(
+  '/$locale/_globalLayout/_auth/_layout/products'
+)({
   component: RouteComponent,
   onEnter() {
     useBreadcrumbItems

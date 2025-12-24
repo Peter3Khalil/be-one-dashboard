@@ -3,19 +3,21 @@ import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { pageTitle } from '@/lib/utils';
 
-export const Route = createFileRoute('/_auth/_layout/customers')({
+export const Route = createFileRoute(
+  '/$locale/_globalLayout/_auth/_layout/orders'
+)({
   component: RouteComponent,
   onEnter() {
     useBreadcrumbItems
       .getState()
-      .setItems([{ label: 'Customers', href: '/customers', isCurrent: true }]);
-    useSidebarItems.getState().setActiveItem('customers');
+      .setItems([{ label: 'Orders', href: '/orders', isCurrent: true }]);
+    useSidebarItems.getState().setActiveItem('orders');
   },
   head() {
-    return { meta: [{ title: pageTitle('Customers') }] };
+    return { meta: [{ title: pageTitle('Orders') }] };
   },
 });
 
 function RouteComponent() {
-  return <div>Customers</div>;
+  return <div>Orders</div>;
 }

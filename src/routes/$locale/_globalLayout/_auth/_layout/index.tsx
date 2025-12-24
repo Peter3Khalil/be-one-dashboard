@@ -3,7 +3,7 @@ import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { pageTitle } from '@/lib/utils';
 
-export const Route = createFileRoute('/_auth/_layout/')({
+export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout/')({
   component: App,
   onEnter() {
     useBreadcrumbItems

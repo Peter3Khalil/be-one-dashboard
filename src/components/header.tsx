@@ -13,6 +13,7 @@ import { Button } from '@ui/button';
 import { Moon, Sun } from 'lucide-react';
 import type { BreadcrumbItemType } from '@/types';
 import { useThemeStore } from '@/stores/theme';
+import { Link } from '@/i18n/routing';
 
 type Props = {
   items?: Array<BreadcrumbItemType>;
@@ -53,7 +54,9 @@ const CustomBreadcrumb = ({ items }: CustomBreadcrumbProps) => {
         {withoutCurrent.map((item, index) => (
           <React.Fragment key={index}>
             <BreadcrumbItem>
-              <BreadcrumbLink to={item.href}>{item.label}</BreadcrumbLink>
+              <BreadcrumbLink asChild>
+                <Link to={item.href}>{item.label}</Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden md:block" />
           </React.Fragment>

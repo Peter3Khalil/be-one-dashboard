@@ -13,7 +13,9 @@ import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-export const Route = createFileRoute('/_auth/_layout/products_/create')({
+export const Route = createFileRoute(
+  '/$locale/_globalLayout/_auth/_layout/products_/create'
+)({
   component: RouteComponent,
   onEnter() {
     useBreadcrumbItems.getState().setItems([

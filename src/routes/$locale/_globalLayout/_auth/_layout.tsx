@@ -5,7 +5,7 @@ import { SidebarInset, SidebarProvider } from '@ui/sidebar';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 
-export const Route = createFileRoute('/_auth/_layout')({
+export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout')({
   component: RouteComponent,
 });
 
