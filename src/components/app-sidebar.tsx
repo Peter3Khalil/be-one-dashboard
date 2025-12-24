@@ -35,7 +35,10 @@ export default function AppSidebar({ items = [], user, ...props }: Props) {
             <span className="hidden text-xl group-data-[state=collapsed]:mx-auto group-data-[state=collapsed]:block">
               B1
             </span>
-            <span className="text-2xl group-data-[state=collapsed]:hidden">
+            <span
+              lang="en"
+              className="text-2xl group-data-[state=collapsed]:hidden"
+            >
               Be One.
             </span>
           </Link>
