@@ -27,6 +27,12 @@ export default {
     itemsInStock: 'Items in Stock',
     description: 'Description',
   },
+  LoginPage: {
+    title: 'Admin Dashboard',
+    login: 'Login',
+    email: 'Email',
+    password: 'Password',
+  },
   Global: {
     next: 'Next',
     previous: 'Previous',

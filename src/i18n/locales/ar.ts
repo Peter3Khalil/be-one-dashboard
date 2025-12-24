@@ -27,6 +27,12 @@ export default {
     itemsInStock: 'العناصر في المخزون',
     description: 'الوصف',
   },
+  LoginPage: {
+    title: 'لوحة التحكم',
+    login: 'تسجيل الدخول',
+    email: 'البريد الإلكتروني',
+    password: 'كلمة المرور',
+  },
   Global: {
     next: 'التالي',
     previous: 'السابق',

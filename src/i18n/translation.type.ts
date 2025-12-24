@@ -25,6 +25,12 @@ export type TranslationType = {
     itemsInStock: string;
     description: string;
   };
+  LoginPage: {
+    title: string;
+    login: string;
+    email: string;
+    password: string;
+  };
   Global: {
     next: string;
     previous: string;
