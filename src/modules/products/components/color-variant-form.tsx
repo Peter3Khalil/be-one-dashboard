@@ -9,6 +9,7 @@ import {
 import { ChevronDownIcon, Package, Palette, X } from 'lucide-react';
 import { useId } from 'react';
 import { useFieldArray } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import SizeSelector from './size-selector';
 import StockInputForm from './stock-input-form';
 import type { UseFormReturn } from 'react-hook-form';
@@ -42,6 +43,7 @@ export default function ColorVariantForm({
     .watch(`variants.${variantIndex}.sizes`)
     .reduce((sum, s) => sum + (isNaN(+s.stock) ? 0 : +s.stock), 0);
   const id = useId();
+  const { t } = useTranslation();
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value={id}>
@@ -62,13 +64,14 @@ export default function ColorVariantForm({
                         form.formState.errors.variants?.[variantIndex],
                     })}
                   >
-                    Color Variant {variantIndex + 1}
+                    {t('CreateProductPage.colorVariants.colorVariant')}{' '}
+                    {variantIndex + 1}
                   </span>
                   <div className="ms-auto flex items-center gap-4">
                     {totalStock > 0 && (
                       <Badge className="gap-1.5">
                         <Package className="h-3 w-3" />
-                        {totalStock} total
+                        {totalStock} {t('ProductDetailsPage.total')}
                       </Badge>
                     )}
                     <Button
@@ -89,7 +92,9 @@ export default function ColorVariantForm({
               <InputFormField
                 name={`variants.${variantIndex}.color`}
                 control={form.control}
-                placeholder="Enter color name (e.g., Red, Navy Blue)"
+                placeholder={t(
+                  'CreateProductPage.colorVariants.colorPlaceholder'
+                )}
                 className="w-full text-base font-medium"
               />
               <div className="space-y-2">
@@ -121,7 +126,7 @@ export default function ColorVariantForm({
                     }
                   )}
                 >
-                  Available Sizes
+                  {t('CreateProductPage.colorVariants.availableSizes')}
                 </label>
                 <SizeSelector
                   selectedSizes={sizes.map((s) => s.value)}
@@ -148,7 +153,7 @@ export default function ColorVariantForm({
               {sizes.length > 0 && (
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-muted-foreground">
-                    Stock per Size
+                    {t('CreateProductPage.colorVariants.stockPerSize')}
                   </label>
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                     {sizes.map((size, sizeIndex) => (
@@ -167,7 +172,7 @@ export default function ColorVariantForm({
               {sizes.length === 0 && (
                 <div className="rounded-lg border-2 border-dashed border-border py-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    Click on sizes above to add stock entries
+                    {t('CreateProductPage.colorVariants.noSizesSelected')}
                   </p>
                 </div>
               )}

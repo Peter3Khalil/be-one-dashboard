@@ -27,6 +27,33 @@ export default {
     itemsInStock: 'العناصر في المخزون',
     description: 'الوصف',
   },
+  CreateProductPage: {
+    title: 'إنشاء منتج',
+    saveProductButton: 'حفظ المنتج',
+    productDetails: {
+      sectionTitle: 'تفاصيل المنتج',
+      productName: 'اسم المنتج',
+      price: 'السعر',
+      description: 'الوصف',
+      category: 'الفئة',
+    },
+    colorVariants: {
+      sectionTitle: 'أنواع الألوان',
+      sectionDescription: 'أضف أنواع ألوان مختلفة لمنتجك.',
+      emptyVariants: {
+        title: 'لا توجد أنواع ألوان',
+        description: 'لم تقم بعد بإضافة أي أنواع ألوان لهذا المنتج.',
+        addFirstVariant: 'أضف أول نوع لون',
+      },
+      colorVariant: 'نوع اللون',
+      colorPlaceholder: 'اكتب اللون هنا (مثال: أحمر، أزرق بحري)',
+      availableSizes: 'الأحجام المتاحة',
+      stockPerSize: 'المخزون لكل حجم',
+      noSizesSelected: 'انقر على الأحجام أعلاه لإضافة إدخالات المخزون',
+      addVariant: 'إضافة نوع لون',
+    },
+    selectCategory: 'اختر الفئة',
+  },
   LoginPage: {
     title: 'لوحة التحكم',
     login: 'تسجيل الدخول',
@@ -41,6 +68,9 @@ export default {
     view: 'عرض',
     edit: 'تعديل',
     delete: 'حذف',
+    browseFiles: 'تصفح الملفات',
+    dragDrop: 'اسحب وأفلت الملفات هنا للتحميل',
+    fileExtension: 'JPEG، PNG، حتى 2 ميغابايت',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',

@@ -2,6 +2,7 @@
 
 import { CloudUpload, XIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -175,13 +176,15 @@ export default function FileUploader({
     input.click();
   }, [accept, addImages]);
 
-  const formatBytes = (bytes: number): string => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-  };
+  // const formatBytes = (bytes: number): string => {
+  //   if (bytes === 0) return '0 Bytes';
+  //   const k = 1024;
+  //   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  // };
+
+  const { t } = useTranslation();
 
   return (
     <div className={cn('w-full space-y-4', className)}>
@@ -230,13 +233,13 @@ export default function FileUploader({
             <CloudUpload className="size-4" />
           </div>
           <h3 className="text-2sm mb-0.5 font-semibold text-foreground">
-            Choose a file or drag & drop here.
+            {t('Global.dragDrop')}
           </h3>
           <span className="mb-3 block text-xs font-normal text-secondary-foreground">
-            JPEG, PNG, up to {formatBytes(maxSize)}.
+            {t('Global.fileExtension')}
           </span>
           <Button size="sm" variant="secondary" onClick={openFileDialog}>
-            Browse File
+            {t('Global.browseFiles')}
           </Button>
         </CardContent>
       </Card>

@@ -7,6 +7,7 @@ import { Button } from '@ui/button';
 import { Form } from '@ui/form';
 import { Package, Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type { ProductFormSchema } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -47,6 +48,7 @@ const createFormSchema = formSchema.refine(
 );
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const form = useForm<ProductFormSchema>({
@@ -71,8 +73,6 @@ function RouteComponent() {
         ),
       0
     );
-
-  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form
@@ -80,9 +80,9 @@ function RouteComponent() {
         className={cn('container space-y-6', { 'px-0': isMobile })}
       >
         <div className="flex items-center justify-between">
-          <h1 className="heading">Create Product</h1>
+          <h1 className="heading">{t('CreateProductPage.title')}</h1>
           <Button type="submit">
-            <Save /> Save Product
+            <Save /> {t('CreateProductPage.saveProductButton')}
           </Button>
         </div>
         <ProductDetailsForm form={form} />
@@ -92,8 +92,10 @@ function RouteComponent() {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Package className="h-4 w-4" />
             <span>
-              Total Stock:{' '}
-              <strong className="text-foreground">{totalStock} items</strong>
+              {t('ProductDetailsPage.totalStocks')}:{' '}
+              <strong className="text-foreground">
+                {totalStock} {t('ProductDetailsPage.items')}
+              </strong>
             </span>
           </div>
         </div>

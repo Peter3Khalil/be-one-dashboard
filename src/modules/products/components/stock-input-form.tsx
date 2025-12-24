@@ -1,5 +1,6 @@
 import InputFormField from '@components/form-fields/input-form-field';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { UseFormReturn } from 'react-hook-form';
 import type { ProductFormSchema } from '../types';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ export default function StockInputForm({
   onRemove,
   form,
 }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="animate-scale-in flex items-start gap-3">
       <div className="flex h-10 w-12 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-secondary-foreground">
@@ -28,7 +30,7 @@ export default function StockInputForm({
           control={form.control}
           name={`variants.${variantIndex}.sizes.${sizeIndex}.stock`}
           className="font-medium"
-          placeholder="stock"
+          placeholder={t('ProductDetailsPage.stock')}
         />
       </div>
       <Button

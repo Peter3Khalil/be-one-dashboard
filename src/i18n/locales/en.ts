@@ -33,6 +33,34 @@ export default {
     email: 'Email',
     password: 'Password',
   },
+  CreateProductPage: {
+    title: 'Create Product',
+    saveProductButton: 'Save Product',
+    productDetails: {
+      sectionTitle: 'Product Details',
+      productName: 'Product Name',
+      price: 'Price',
+      description: 'Description',
+      category: 'Category',
+    },
+    colorVariants: {
+      sectionTitle: 'Color Variants',
+      sectionDescription: 'Add different color variants for your product.',
+      emptyVariants: {
+        title: 'No Color Variants',
+        description:
+          'You have not added any color variants for this product yet.',
+        addFirstVariant: 'Add First Color Variant',
+      },
+      colorVariant: 'Color Variant',
+      colorPlaceholder: 'Enter color name (e.g., Red, Navy Blue)',
+      availableSizes: 'Available Sizes',
+      stockPerSize: 'Stock per Size',
+      noSizesSelected: 'Click on sizes above to add stock entries',
+      addVariant: 'Add Color Variant',
+    },
+    selectCategory: 'Select Category',
+  },
   Global: {
     next: 'Next',
     previous: 'Previous',
@@ -41,6 +69,9 @@ export default {
     view: 'View',
     edit: 'Edit',
     delete: 'Delete',
+    browseFiles: 'Browse files',
+    dragDrop: 'Drag and drop files here to upload',
+    fileExtension: 'JPEG, PNG, up to 2MB',
   },
   Sidebar: {
     dashboard: 'Dashboard',
