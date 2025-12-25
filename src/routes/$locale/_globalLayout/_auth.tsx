@@ -1,4 +1,4 @@
-import { LoginForm } from '@components/login-form';
+import { LoginForm } from '@modules/auth/components/login-form';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { Link } from '@/i18n/routing';
 
