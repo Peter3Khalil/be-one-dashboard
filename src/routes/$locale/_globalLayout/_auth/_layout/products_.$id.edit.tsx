@@ -1,6 +1,6 @@
+import Loading from '@components/loading';
 import EditProductForm from '@modules/products/components/edit-product-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { ProductFormSchema } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
@@ -57,10 +57,7 @@ function RouteComponent() {
     });
   }, []);
   return isLoading ? (
-    <div className="flex h-full flex-col items-center justify-center gap-2">
-      <Loader2 className="animate-spin text-primary" size={45} />
-      Loading...
-    </div>
+    <Loading className="h-full" />
   ) : (
     <EditProductForm key={JSON.stringify(values)} defaultValues={values} />
   );

@@ -1,18 +1,12 @@
 import { LoginForm } from '@modules/auth/components/login-form';
-import { Loader2 } from 'lucide-react';
 import React from 'react';
 import { useAuth } from './auth-provider';
+import Loading from './loading';
 import { Link } from '@/i18n/routing';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isLoading, user } = useAuth();
-  if (isLoading)
-    return (
-      <div className="flex h-svh flex-col items-center justify-center gap-2">
-        <Loader2 className="animate-spin text-primary" size={45} />
-        Loading...
-      </div>
-    );
+  if (isLoading) return <Loading />;
   return user?.role === 'admin' ? (
     children
   ) : (
