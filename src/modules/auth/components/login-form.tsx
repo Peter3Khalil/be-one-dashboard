@@ -1,15 +1,31 @@
+import InputFormField from '@components/form-fields/input-form-field';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card';
-import { Field, FieldGroup, FieldLabel } from '@ui/field';
-import { Input } from '@ui/input';
+import { Form } from '@ui/form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
+import { useLogin } from '../mutations';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
   const { t } = useTranslation();
+  const { mutate, isPending } = useLogin();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    mutate(values);
+  }
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -17,28 +33,27 @@ export function LoginForm({
           <CardTitle className="text-xl">{t('LoginPage.title')}</CardTitle>
         </CardHeader>
         <CardContent>
-          <form>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="email">{t('LoginPage.email')}</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="password">
-                  {t('LoginPage.password')}
-                </FieldLabel>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">{t('LoginPage.login')}</Button>
-              </Field>
-            </FieldGroup>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <InputFormField
+                name="email"
+                label={t('LoginPage.email')}
+                placeholder={t('LoginPage.email')}
+                type="email"
+                control={form.control}
+              />
+              <InputFormField
+                name="password"
+                label={t('LoginPage.password')}
+                placeholder={t('LoginPage.password')}
+                type="password"
+                control={form.control}
+              />
+              <Button type="submit" className="w-full" disabled={isPending}>
+                {t('LoginPage.login')}
+              </Button>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
