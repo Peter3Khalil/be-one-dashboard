@@ -1,4 +1,4 @@
-import type { LoginResponse } from './types';
+import type { GetMeResponse, LoginResponse } from './types';
 import axiosClient from '@/lib/axios-client';
 
 export function login({
@@ -9,4 +9,15 @@ export function login({
   password: string;
 }) {
   return axiosClient.post<LoginResponse>('/auth/login', { email, password });
+}
+
+export function getMe() {
+  return axiosClient.get<GetMeResponse>('/auth/me');
+}
+
+export function logout() {
+  return axiosClient.post<{
+    statusCode: boolean;
+    message: string;
+  }>('/auth/logout');
 }
