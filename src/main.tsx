@@ -1,15 +1,17 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-
-// Import the generated route tree
+import {
+  QueryClient,
+  QueryClientProvider,
+  keepPreviousData,
+} from '@tanstack/react-query';
 import { routeTree } from './routeTree.gen';
 
 import './styles.css';
 import ThemeEffect from './stores/theme';
 import './i18n';
 
-// Create a new router instance
 const router = createRouter({
   routeTree,
   context: {},
@@ -17,6 +19,27 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
+});
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
+      placeholderData: keepPreviousData,
+      throwOnError: true,
+    },
+    // mutations: {
+    //   onError: (error) => {
+    //     if (error.response?.data?.message) {
+    //       toast.error(error.response.data.message);
+    //     } else {
+    //       toast.error('Something went wrong');
+    //     }
+    //   },
+    // },
+  },
 });
 
 // Register the router instance for type safety
@@ -33,7 +56,9 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <ThemeEffect />
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>
   );
 }
