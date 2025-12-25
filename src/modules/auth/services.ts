@@ -12,7 +12,7 @@ export function login({
 }
 
 export function getMe() {
-  return axiosClient.get<GetMeResponse>('/auth/me');
+  return axiosClient.get<GetMeResponse>('/user/me');
 }
 
 export function logout() {
