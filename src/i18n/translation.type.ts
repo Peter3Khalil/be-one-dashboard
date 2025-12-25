@@ -59,6 +59,7 @@ export type TranslationType = {
     password: string;
   };
   Global: {
+    loading: string;
     next: string;
     previous: string;
     active: string;

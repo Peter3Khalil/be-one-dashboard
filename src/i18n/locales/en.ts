@@ -62,6 +62,7 @@ export default {
     selectCategory: 'Select Category',
   },
   Global: {
+    loading: 'Loading...',
     next: 'Next',
     previous: 'Previous',
     active: 'Active',

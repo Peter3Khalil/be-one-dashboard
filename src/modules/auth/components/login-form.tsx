@@ -50,7 +50,7 @@ export function LoginForm({
                 control={form.control}
               />
               <Button type="submit" className="w-full" disabled={isPending}>
-                {t('LoginPage.login')}
+                {isPending ? t('Global.loading') : t('LoginPage.login')}
               </Button>
             </form>
           </Form>

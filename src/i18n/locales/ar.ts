@@ -61,6 +61,7 @@ export default {
     password: 'كلمة المرور',
   },
   Global: {
+    loading: 'جار التحميل...',
     next: 'التالي',
     previous: 'السابق',
     active: 'نشط',
