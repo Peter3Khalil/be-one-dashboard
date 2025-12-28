@@ -24,6 +24,10 @@ export type TranslationType = {
     stock: string;
     itemsInStock: string;
     description: string;
+    productNotFound: string;
+    productNotFoundDescription: string;
+    viewProducts: string;
+    categories: string;
   };
   CreateProductPage: {
     title: string;

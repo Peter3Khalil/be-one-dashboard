@@ -26,6 +26,11 @@ export default {
     stock: 'Stock',
     itemsInStock: 'Items in Stock',
     description: 'Description',
+    productNotFound: 'Product Not Found',
+    productNotFoundDescription:
+      'Sorry, we could not find the product you are looking for.',
+    viewProducts: 'View Products',
+    categories: 'Categories',
   },
   LoginPage: {
     title: 'Admin Dashboard',

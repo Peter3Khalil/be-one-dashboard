@@ -5,6 +5,7 @@ import type {
   CreateProductResponse,
   GetProductsResponse,
   ProductParams,
+  ProductType,
   UploadImageResponse,
   UploadImagesBody,
 } from './types';
@@ -37,4 +38,11 @@ export function getCategories() {
     success: boolean;
     data: Array<Category>;
   }>('/categories');
+}
+
+export function getProductById(productId: string) {
+  return axiosClient.get<{
+    success: boolean;
+    data: ProductType;
+  }>(`/products/${productId}`);
 }

@@ -46,7 +46,7 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const [params, setParams] = useQueryStates(
     {
       product_name: parseAsString.withDefault(''),
-      offset: parseAsString.withDefault('1'),
+      offset: parseAsString.withDefault('0'),
       category_name: parseAsArrayOf(parseAsString).withDefault([]),
     },
     { history: 'replace' }

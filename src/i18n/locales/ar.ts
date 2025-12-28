@@ -26,6 +26,11 @@ export default {
     stock: 'المخزون',
     itemsInStock: 'العناصر في المخزون',
     description: 'الوصف',
+    productNotFound: 'المنتج غير موجود',
+    productNotFoundDescription:
+      'عذرًا، لم نتمكن من العثور على المنتج الذي تبحث عنه.',
+    viewProducts: 'عرض المنتجات',
+    categories: 'الفئات',
   },
   CreateProductPage: {
     title: 'إنشاء منتج',
