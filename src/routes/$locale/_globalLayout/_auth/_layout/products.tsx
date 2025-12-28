@@ -1,9 +1,10 @@
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
 import {
-  useCategoriesQuery,
-  useProductsQuery,
-} from '@modules/products/queries';
+  useProducts,
+  withProductsProvider,
+} from '@modules/products/components/products-provider';
+import { useCategoriesQuery } from '@modules/products/queries';
 import { Label } from '@radix-ui/react-label';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -18,6 +19,7 @@ import {
 } from '@ui/alert-dialog';
 import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
+import { Card, CardContent } from '@ui/card';
 import CustomCombobox from '@ui/custom-combobox';
 import {
   DropdownMenu,
@@ -39,21 +41,19 @@ import {
   Trash,
   X,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent } from '@ui/card';
-import type { ProductType as Product } from '@modules/products/types';
 import type { ColumnDef } from '@tanstack/react-table';
+import type { ProductType as Product } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
 import { Link } from '@/i18n/routing';
-import useDebounce from '@/hooks/use-debounce';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/products'
 )({
-  component: RouteComponent,
+  component: withProductsProvider(RouteComponent),
   onEnter() {
     useSidebarItems.getState().setActiveItem('products');
   },
@@ -64,15 +64,12 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const { t } = useTranslation();
-  const [productName, setProductName] = useState('');
-  const debouncedProductName = useDebounce(productName);
-  const [categoryName, setCategoryName] = useState('');
-  const [offset, setOffset] = useState(0);
-  const { data, isFetching, isLoading } = useProductsQuery({
-    product_name: debouncedProductName,
-    category_name: categoryName,
-    offset: String(offset),
-  });
+  const {
+    dispatch,
+    params,
+    queryResult: { data, isLoading, isFetching, refetch },
+  } = useProducts();
+
   const products = data?.data.data || [];
   const { data: categoriesData } = useCategoriesQuery();
   const categoryOptions = categoriesData?.data.data.map(({ name }) => ({
@@ -80,15 +77,23 @@ function RouteComponent() {
     value: name,
   }));
   useBreadcrumbSetup();
+  console.log(params);
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <h1 className="heading">{t('ProductsPage.products')} (15)</h1>
-          <Button variant="ghost" size="icon-sm">
+          <h1 className="heading">
+            {t('ProductsPage.products')} ({data?.data.pagination.total_items})
+          </h1>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => refetch()}
+            disabled={isFetching}
+          >
             <RotateCcw
               className={cn({
-                'animate-spin': false,
+                'animate-spin': isFetching,
               })}
             />
           </Button>
@@ -109,8 +114,10 @@ function RouteComponent() {
             type="search"
             placeholder={t('ProductsPage.searchPlaceholder')}
             className="w-80"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            value={params.product_name}
+            onChange={(e) =>
+              dispatch({ type: 'SET_PRODUCT_NAME', payload: e.target.value })
+            }
           />
         </div>
         <CustomCombobox
@@ -118,7 +125,11 @@ function RouteComponent() {
           label={t('ProductsPage.filterByCategory')}
           placeholder={t('CreateProductPage.selectCategory')}
           className="max-w-md"
-          onValueChange={(v) => setCategoryName(v[0])}
+          onValueChange={(v) =>
+            dispatch({ type: 'SET_CATEGORY_NAME', payload: v })
+          }
+          defaultValues={params.category_name}
+          multiple
         />
       </div>
       {isLoading ? (
@@ -142,8 +153,11 @@ function RouteComponent() {
       )}
       <CustomPagination
         className="mx-auto [&_ul]:gap-3"
-        defaultPage={offset + 1}
-        onValueChange={(page) => setOffset(page - 1)}
+        defaultPage={Number(params.offset || 0) + 1}
+        key={params.offset}
+        onValueChange={(page) =>
+          dispatch({ type: 'SET_PAGE', payload: String(page - 1) })
+        }
         totalPages={data?.data.pagination.total_pages || 1}
       />
     </div>

@@ -107,7 +107,7 @@ export type ProcessedSize = {
 export type ProductParams = Partial<{
   product_name: string;
   offset: string;
-  category_name: string;
+  category_name: Array<string>;
 }>;
 
 export type GetProductsResponse = {

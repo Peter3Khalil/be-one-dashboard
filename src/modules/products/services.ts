@@ -9,9 +9,12 @@ import type {
   UploadImagesBody,
 } from './types';
 import axiosClient from '@/lib/axios-client';
+import { createQueryString } from '@/lib/utils';
 
 export function getProducts(params?: Partial<ProductParams>) {
-  return axiosClient.get<GetProductsResponse>('/products', { params });
+  return axiosClient.get<GetProductsResponse>(
+    `/products?${createQueryString(params || {})}`
+  );
 }
 
 export function createProduct(data: CreateProductBody) {
