@@ -1,29 +1,9 @@
 import products from '@assets/products.json';
-import Combobox from '@components/combobox';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
+import { useCategoriesQuery } from '@modules/products/queries';
+import { Label } from '@radix-ui/react-label';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@ui/button';
-import { Input } from '@ui/input';
-import {
-  CircleCheck,
-  Eye,
-  MoreHorizontal,
-  Pencil,
-  Plus,
-  RotateCcw,
-  Trash,
-  X,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Badge } from '@ui/badge';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@ui/dropdown-menu';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -34,8 +14,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@ui/alert-dialog';
-import { useTranslation } from 'react-i18next';
+import { Badge } from '@ui/badge';
+import { Button } from '@ui/button';
+import CustomCombobox from '@ui/custom-combobox';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@ui/dropdown-menu';
+import { Input } from '@ui/input';
 import i18next from 'i18next';
+import {
+  CircleCheck,
+  Eye,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  RotateCcw,
+  Trash,
+  X,
+} from 'lucide-react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -65,8 +67,12 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const [selectedValues, setSelectedValues] = useState<Array<string>>([]);
   const { t } = useTranslation();
+  const { data: categoriesData } = useCategoriesQuery();
+  const categoryOptions = categoriesData?.data.data.map(({ name, id }) => ({
+    label: name,
+    value: String(id),
+  }));
   const { setItems } = useBreadcrumbItems();
   useEffect(() => {
     setItems([
@@ -93,29 +99,22 @@ function RouteComponent() {
           </Link>
         </Button>
       </div>
-      <div className="flex items-center gap-4">
-        <Input
-          placeholder={t('ProductsPage.searchPlaceholder')}
-          className="w-80"
-        />
-        <Combobox
-          items={[
-            {
-              label: 'Summer',
-              value: 'summer',
-            },
-            {
-              label: 'Winter',
-              value: 'winter',
-            },
-          ]}
-          onSelect={setSelectedValues}
-          label={
-            selectedValues.length > 0
-              ? `${selectedValues.length} ${selectedValues.length > 1 ? 'Categories' : 'Category'}`
-              : t('ProductsPage.filterByCategory')
-          }
-          searchPlaceholder={t('ProductsPage.searchForCategoryPlaceholder')}
+      <div className="flex items-start gap-4">
+        <div className="flex flex-col">
+          <Label className="mb-1 text-sm font-medium">
+            {t('CreateProductPage.productDetails.productName')}
+          </Label>
+          <Input
+            placeholder={t('ProductsPage.searchPlaceholder')}
+            className="w-80"
+          />
+        </div>
+        <CustomCombobox
+          options={categoryOptions}
+          label={t('ProductsPage.filterByCategory')}
+          placeholder={t('CreateProductPage.selectCategory')}
+          className="max-w-md"
+          multiple
         />
       </div>
       <DataTable
