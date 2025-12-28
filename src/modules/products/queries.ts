@@ -6,6 +6,7 @@ export function useProductsQuery(params?: Partial<ProductParams>) {
   return useQuery({
     queryKey: ['products', params],
     queryFn: () => getProducts(params),
+    refetchOnMount: true,
   });
 }
 
