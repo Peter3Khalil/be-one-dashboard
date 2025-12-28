@@ -73,6 +73,7 @@ export default {
     browseFiles: 'Browse files',
     dragDrop: 'Drag and drop files here to upload',
     fileExtension: 'JPEG, PNG, up to 2MB',
+    saving: 'Saving...',
   },
   Sidebar: {
     dashboard: 'Dashboard',

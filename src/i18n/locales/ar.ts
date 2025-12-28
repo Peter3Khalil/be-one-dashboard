@@ -72,6 +72,7 @@ export default {
     browseFiles: 'تصفح الملفات',
     dragDrop: 'اسحب وأفلت الملفات هنا للتحميل',
     fileExtension: 'JPEG، PNG، حتى 2 ميغابايت',
+    saving: 'جار الحفظ...',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',

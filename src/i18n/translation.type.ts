@@ -70,6 +70,7 @@ export type TranslationType = {
     dragDrop: string;
     fileExtension: string;
     browseFiles: string;
+    saving: string;
   };
   Sidebar: {
     dashboard: string;
