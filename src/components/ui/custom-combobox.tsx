@@ -17,19 +17,30 @@ type Props = {
   options?: Array<{ label: string; value: string }>;
   label?: string;
   placeholder?: string;
-} & React.ComponentProps<typeof Combobox>;
+  onValueChange?: (values: Array<string>) => void;
+  values?: Array<string>;
+  defaultValues?: Array<string>;
+} & Omit<
+  React.ComponentProps<typeof Combobox>,
+  'onValueChange' | 'value' | 'defaultValue'
+>;
 const CustomCombobox = ({
   options = [],
   label = 'Items',
   placeholder,
   onValueChange,
+  values,
+  defaultValues,
   ...props
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<Array<string>>([]);
-  console.log({ selectedOptions });
+  const [selectedOptions, setSelectedOptions] = useState<Array<string>>(
+    defaultValues || values || []
+  );
   return (
     <Combobox
+      value={selectedOptions}
+      defaultValue={defaultValues}
       onValueChange={(values) => {
         if (Array.isArray(values)) {
           onValueChange?.(values);
