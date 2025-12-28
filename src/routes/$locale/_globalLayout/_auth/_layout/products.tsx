@@ -67,9 +67,11 @@ function RouteComponent() {
   const [productName, setProductName] = useState('');
   const debouncedProductName = useDebounce(productName);
   const [categoryName, setCategoryName] = useState('');
+  const [offset, setOffset] = useState(0);
   const { data, isFetching, isLoading } = useProductsQuery({
     product_name: debouncedProductName,
     category_name: categoryName,
+    offset: String(offset),
   });
   const products = data?.data.data || [];
   const { data: categoriesData } = useCategoriesQuery();
@@ -140,6 +142,8 @@ function RouteComponent() {
       )}
       <CustomPagination
         className="mx-auto [&_ul]:gap-3"
+        defaultPage={offset + 1}
+        onValueChange={(page) => setOffset(page - 1)}
         totalPages={data?.data.pagination.total_pages || 1}
       />
     </div>

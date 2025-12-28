@@ -1,13 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 const usePagination = ({
   totalPages,
   chunkSize = 5,
   defaultPage = 1,
+  onValueChange,
 }: {
   totalPages: number;
   chunkSize?: number;
   defaultPage?: number;
+
+  onValueChange?: (page: number) => void;
 }) => {
   const [currentPage, setCurrentPage] = useState(defaultPage);
 
@@ -32,30 +35,35 @@ const usePagination = ({
 
   const goToPage = useCallback(
     (page: number) => {
-      setCurrentPage(() => Math.min(totalPages, Math.max(1, page)));
+      setCurrentPage(() => Math.min(Math.max(1, page), totalPages));
+      onValueChange?.(page);
     },
-    [totalPages]
+    [totalPages, onValueChange]
   );
 
   const goToNext = useCallback(() => {
     setCurrentPage((prev) => Math.min(totalPages, prev + 1));
-  }, [totalPages]);
+    onValueChange?.(Math.min(totalPages, currentPage + 1));
+  }, [totalPages, onValueChange, currentPage]);
 
   const goToPrev = useCallback(() => {
     setCurrentPage((prev) => Math.max(1, prev - 1));
-  }, []);
+    onValueChange?.(Math.max(1, currentPage - 1));
+  }, [onValueChange, currentPage]);
 
   const goToNextChunk = useCallback(() => {
     if (hasNextChunk) {
       setCurrentPage(Math.min(totalPages, endChunkPage));
+      onValueChange?.(Math.min(totalPages, endChunkPage));
     }
-  }, [hasNextChunk, endChunkPage, totalPages]);
+  }, [hasNextChunk, endChunkPage, totalPages, onValueChange]);
 
   const goToPrevChunk = useCallback(() => {
     if (hasPrevChunk) {
       setCurrentPage(Math.max(1, startChunkPage - chunkSize + 1));
+      onValueChange?.(Math.max(1, startChunkPage - chunkSize + 1));
     }
-  }, [hasPrevChunk, startChunkPage, chunkSize]);
+  }, [hasPrevChunk, startChunkPage, chunkSize, onValueChange]);
 
   const getNextChunk = useCallback(() => {
     if (!hasNextChunk) return [];
@@ -90,10 +98,6 @@ const usePagination = ({
       (_, i) => firstStartChunkPage + i
     );
   }, [chunkSize, totalPages]);
-
-  useEffect(() => {
-    setCurrentPage(defaultPage);
-  }, [defaultPage]);
 
   return {
     currentPage,

@@ -6,7 +6,6 @@ import {
   PaginationItem,
 } from '@ui/pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { FC } from 'react';
 import { cn } from '@/lib/utils';
@@ -14,13 +13,13 @@ import usePagination from '@/hooks/use-pagination';
 
 type CustomPaginationProps = React.ComponentProps<typeof Pagination> &
   Parameters<typeof usePagination>['0'] & {
-    onPaginate?: (page: number) => void;
+    onValueChange?: (page: number) => void;
   };
 const CustomPagination: FC<CustomPaginationProps> = ({
   totalPages,
   chunkSize,
   defaultPage,
-  onPaginate,
+  onValueChange,
   className,
   ...props
 }) => {
@@ -39,11 +38,9 @@ const CustomPagination: FC<CustomPaginationProps> = ({
     totalPages,
     chunkSize,
     defaultPage,
+    onValueChange,
   });
   const { t } = useTranslation();
-  useEffect(() => {
-    onPaginate?.(currentPage);
-  }, [onPaginate, currentPage]);
   return (
     <Pagination className={cn('mx-0 w-fit', className)} {...props}>
       <PaginationContent>
