@@ -1,7 +1,9 @@
-import products from '@assets/products.json';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
-import { useCategoriesQuery } from '@modules/products/queries';
+import {
+  useCategoriesQuery,
+  useProductsQuery,
+} from '@modules/products/queries';
 import { Label } from '@radix-ui/react-label';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -29,6 +31,7 @@ import i18next from 'i18next';
 import {
   CircleCheck,
   Eye,
+  Loader2,
   MoreHorizontal,
   Pencil,
   Plus,
@@ -36,24 +39,17 @@ import {
   Trash,
   X,
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Card, CardContent } from '@ui/card';
+import type { ProductType as Product } from '@modules/products/types';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
 import { Link } from '@/i18n/routing';
+import useDebounce from '@/hooks/use-debounce';
 
-type Product = {
-  id: number | string;
-  name: string;
-  price: number;
-  description?: string;
-  category_name: string;
-  is_active?: boolean;
-  image_url: string;
-  thumbnail_url: string;
-};
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/products'
 )({
@@ -68,17 +64,20 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const { t } = useTranslation();
+  const [productName, setProductName] = useState('');
+  const debouncedProductName = useDebounce(productName);
+  const [categoryName, setCategoryName] = useState('');
+  const { data, isFetching, isLoading } = useProductsQuery({
+    product_name: debouncedProductName,
+    category_name: categoryName,
+  });
+  const products = data?.data.data || [];
   const { data: categoriesData } = useCategoriesQuery();
-  const categoryOptions = categoriesData?.data.data.map(({ name, id }) => ({
+  const categoryOptions = categoriesData?.data.data.map(({ name }) => ({
     label: name,
-    value: String(id),
+    value: name,
   }));
-  const { setItems } = useBreadcrumbItems();
-  useEffect(() => {
-    setItems([
-      { label: t('ProductsPage.products'), href: '/products', isCurrent: true },
-    ]);
-  }, [setItems, t]);
+  useBreadcrumbSetup();
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -105,8 +104,11 @@ function RouteComponent() {
             {t('CreateProductPage.productDetails.productName')}
           </Label>
           <Input
+            type="search"
             placeholder={t('ProductsPage.searchPlaceholder')}
             className="w-80"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
           />
         </div>
         <CustomCombobox
@@ -114,19 +116,31 @@ function RouteComponent() {
           label={t('ProductsPage.filterByCategory')}
           placeholder={t('CreateProductPage.selectCategory')}
           className="max-w-md"
-          multiple
+          onValueChange={(v) => setCategoryName(v[0])}
         />
       </div>
-      <DataTable
-        className={cn('animation-duration-[0.7s]', {
-          'animate-pulse': false,
-        })}
-        columns={columns}
-        data={products.data}
-      />
+      {isLoading ? (
+        <Card>
+          <CardContent>
+            <Loader2
+              className={cn('mx-auto h-6 w-6 text-primary', {
+                'animate-spin': isLoading,
+              })}
+            />
+          </CardContent>
+        </Card>
+      ) : (
+        <DataTable
+          className={cn('animation-duration-[0.7s]', {
+            'animate-pulse': isFetching,
+          })}
+          columns={columns}
+          data={products}
+        />
+      )}
       <CustomPagination
         className="mx-auto [&_ul]:gap-3"
-        totalPages={products.pagination.count}
+        totalPages={data?.data.pagination.total_pages || 1}
       />
     </div>
   );
@@ -137,6 +151,10 @@ const columns: Array<ColumnDef<Product>> = [
     accessorKey: 'name',
     header: i18next.t('ProductsPage.table.header.name'),
     cell({ row: { original } }) {
+      const colorKeys = Object.keys(original.images);
+      const mainImage = colorKeys.length
+        ? original.images[colorKeys[0]][0].urls.thumbnail
+        : '';
       return (
         <div className="flex w-fit flex-row-reverse items-center gap-2">
           <Link
@@ -152,7 +170,7 @@ const columns: Array<ColumnDef<Product>> = [
             params={{ id: String(original.id) }}
           >
             <img
-              src={original.thumbnail_url}
+              src={mainImage}
               alt={original.name}
               className="absolute inset-0 size-full rounded-[inherit] object-cover duration-200 hover:scale-110"
             />
@@ -166,8 +184,19 @@ const columns: Array<ColumnDef<Product>> = [
     header: i18next.t('ProductsPage.table.header.price'),
   },
   {
-    accessorKey: 'category_name',
+    accessorKey: 'categories',
     header: i18next.t('ProductsPage.table.header.category'),
+    cell({ row: { original } }) {
+      return (
+        <div className="flex flex-wrap gap-1">
+          {original.categories.map((category) => (
+            <Badge key={category.id} variant="info-blue">
+              {category.name}
+            </Badge>
+          ))}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'is_active',
@@ -251,3 +280,13 @@ const columns: Array<ColumnDef<Product>> = [
     },
   },
 ];
+
+function useBreadcrumbSetup() {
+  const { t } = useTranslation();
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([
+      { label: t('ProductsPage.products'), href: '/products', isCurrent: true },
+    ]);
+  }, [setItems, t]);
+}
