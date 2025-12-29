@@ -1,5 +1,5 @@
-import { LayoutDashboard, Package, ShoppingCart, Users } from 'lucide-react';
 import i18next from 'i18next';
+import { LayoutDashboard, Package, ShoppingCart } from 'lucide-react';
 import type { NavItemType } from './types';
 
 export const NAV_ITEMS = () =>
@@ -22,12 +22,6 @@ export const NAV_ITEMS = () =>
       title: i18next.t('Sidebar.orders'),
       url: '/orders',
       icon: ShoppingCart,
-    },
-    {
-      id: 'customers',
-      title: i18next.t('Sidebar.customers'),
-      url: '/customers',
-      icon: Users,
     },
     {
       id: 'categories',
