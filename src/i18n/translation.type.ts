@@ -136,6 +136,24 @@ export type TranslationType = {
     create: string;
     update: string;
     alreadyExists: string;
+    monthNames: Record<
+      | 'january'
+      | 'february'
+      | 'march'
+      | 'april'
+      | 'may'
+      | 'june'
+      | 'july'
+      | 'august'
+      | 'september'
+      | 'october'
+      | 'november'
+      | 'december',
+      {
+        short: string;
+        long: string;
+      }
+    >;
   };
   Sidebar: {
     dashboard: string;
@@ -143,5 +161,20 @@ export type TranslationType = {
     orders: string;
     customers: string;
     categories: string;
+  };
+  Analytics: {
+    revenueOverview: string;
+    monthlyRevenue: string;
+    ordersStatus: string;
+    ordersByStatus: string;
+    totalRevenue: string;
+    totalOrders: string;
+    totalProducts: string;
+    totalCustomers: string;
+    productCategories: string;
+    distributionByCategory: string;
+    description: string;
+    revenue: string;
+    vsLastMonth: string;
   };
 };

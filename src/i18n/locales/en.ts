@@ -1,6 +1,21 @@
 import type { TranslationType } from '../translation.type';
 
 export default {
+  Analytics: {
+    productCategories: 'Product Categories',
+    distributionByCategory: 'Distribution by Category',
+    revenueOverview: 'Revenue Overview',
+    monthlyRevenue: 'Total Monthly Revenue',
+    ordersByStatus: 'Orders by Status',
+    totalRevenue: 'Total Revenue',
+    totalOrders: 'Total Orders',
+    totalProducts: 'Total Products',
+    totalCustomers: 'Total Customers',
+    ordersStatus: 'Orders Status',
+    description: "Overview of your store's performance and key metrics.",
+    revenue: 'Revenue',
+    vsLastMonth: 'vs Last Month',
+  },
   ProductsPage: {
     products: 'Products',
     addProductButton: 'Add Product',
@@ -142,6 +157,56 @@ export default {
     create: 'Create',
     update: 'Update',
     alreadyExists: 'Already exists',
+    monthNames: {
+      january: {
+        long: 'January',
+        short: 'Jan',
+      },
+      february: {
+        long: 'February',
+        short: 'Feb',
+      },
+      march: {
+        long: 'March',
+        short: 'Mar',
+      },
+      april: {
+        long: 'April',
+        short: 'Apr',
+      },
+      may: {
+        long: 'May',
+        short: 'May',
+      },
+      june: {
+        long: 'June',
+        short: 'Jun',
+      },
+      july: {
+        long: 'July',
+        short: 'Jul',
+      },
+      august: {
+        long: 'August',
+        short: 'Aug',
+      },
+      september: {
+        long: 'September',
+        short: 'Sep',
+      },
+      october: {
+        long: 'October',
+        short: 'Oct',
+      },
+      november: {
+        long: 'November',
+        short: 'Nov',
+      },
+      december: {
+        long: 'December',
+        short: 'Dec',
+      },
+    },
   },
   Sidebar: {
     dashboard: 'Dashboard',

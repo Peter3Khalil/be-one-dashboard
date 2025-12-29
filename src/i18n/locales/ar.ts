@@ -1,6 +1,21 @@
 import type { TranslationType } from '../translation.type';
 
 export default {
+  Analytics: {
+    productCategories: 'فئات المنتجات',
+    distributionByCategory: 'التوزيع حسب الفئة',
+    revenueOverview: 'نظرة عامة على الإيرادات',
+    monthlyRevenue: 'إجمالي الإيرادات الشهرية',
+    ordersByStatus: 'الطلبات حسب الحالة',
+    totalRevenue: 'إجمالي الإيرادات',
+    totalOrders: 'إجمالي الطلبات',
+    totalProducts: 'إجمالي المنتجات',
+    totalCustomers: 'إجمالي العملاء',
+    ordersStatus: 'حالة الطلبات',
+    description: 'نظرة عامة على أداء متجرك والمقاييس الرئيسية.',
+    revenue: 'الإيرادات',
+    vsLastMonth: 'مقابل الشهر الماضي',
+  },
   ProductsPage: {
     products: 'المنتجات',
     addProductButton: 'إضافة منتج',
@@ -141,6 +156,56 @@ export default {
     create: 'إنشاء',
     update: 'تحديث',
     alreadyExists: 'موجود بالفعل',
+    monthNames: {
+      january: {
+        long: 'يناير',
+        short: 'يناير',
+      },
+      february: {
+        long: 'فبراير',
+        short: 'فبراير',
+      },
+      march: {
+        long: 'مارس',
+        short: 'مارس',
+      },
+      april: {
+        long: 'أبريل',
+        short: 'أبريل',
+      },
+      may: {
+        long: 'مايو',
+        short: 'مايو',
+      },
+      june: {
+        long: 'يونيو',
+        short: 'يونيو',
+      },
+      july: {
+        long: 'يوليو',
+        short: 'يوليو',
+      },
+      august: {
+        long: 'أغسطس',
+        short: 'أغسطس',
+      },
+      september: {
+        long: 'سبتمبر',
+        short: 'سبتمبر',
+      },
+      october: {
+        long: 'أكتوبر',
+        short: 'أكتوبر',
+      },
+      november: {
+        long: 'نوفمبر',
+        short: 'نوفمبر',
+      },
+      december: {
+        long: 'ديسمبر',
+        short: 'ديسمبر',
+      },
+    },
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',
