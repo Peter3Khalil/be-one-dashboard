@@ -247,7 +247,7 @@ const columns: Array<ColumnDef<Order>> = [
         ];
 
         return (
-          <div className="flex items-center gap-2">
+          <div className="ms-auto flex w-fit items-center gap-2">
             <Link
               to="/orders/$id/view"
               params={{ id: String(row.original.order_id) }}
