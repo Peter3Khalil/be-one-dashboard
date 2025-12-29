@@ -17,6 +17,7 @@ import { Route as LocaleGlobalLayoutAuthLayoutIndexRouteImport } from './routes/
 import { Route as LocaleGlobalLayoutAuthLayoutProductsRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products'
 import { Route as LocaleGlobalLayoutAuthLayoutOrdersRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/orders'
 import { Route as LocaleGlobalLayoutAuthLayoutCustomersRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/customers'
+import { Route as LocaleGlobalLayoutAuthLayoutCategoriesRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/categories'
 import { Route as LocaleGlobalLayoutAuthLayoutProductsCreateRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.create'
 import { Route as LocaleGlobalLayoutAuthLayoutProductsIdViewRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.$id.view'
 import { Route as LocaleGlobalLayoutAuthLayoutProductsIdEditRouteImport } from './routes/$locale/_globalLayout/_auth/_layout/products_.$id.edit'
@@ -65,6 +66,12 @@ const LocaleGlobalLayoutAuthLayoutCustomersRoute =
     path: '/customers',
     getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
   } as any)
+const LocaleGlobalLayoutAuthLayoutCategoriesRoute =
+  LocaleGlobalLayoutAuthLayoutCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => LocaleGlobalLayoutAuthLayoutRoute,
+  } as any)
 const LocaleGlobalLayoutAuthLayoutProductsCreateRoute =
   LocaleGlobalLayoutAuthLayoutProductsCreateRouteImport.update({
     id: '/products_/create',
@@ -93,6 +100,7 @@ const LocaleGlobalLayoutAuthLayoutOrdersIdViewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleGlobalLayoutAuthLayoutRouteWithChildren
+  '/$locale/categories': typeof LocaleGlobalLayoutAuthLayoutCategoriesRoute
   '/$locale/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
   '/$locale/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
   '/$locale/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
@@ -105,6 +113,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleGlobalLayoutAuthLayoutIndexRoute
+  '/$locale/categories': typeof LocaleGlobalLayoutAuthLayoutCategoriesRoute
   '/$locale/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
   '/$locale/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
   '/$locale/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
@@ -119,6 +128,7 @@ export interface FileRoutesById {
   '/$locale/_globalLayout': typeof LocaleGlobalLayoutRouteWithChildren
   '/$locale/_globalLayout/_auth': typeof LocaleGlobalLayoutAuthRouteWithChildren
   '/$locale/_globalLayout/_auth/_layout': typeof LocaleGlobalLayoutAuthLayoutRouteWithChildren
+  '/$locale/_globalLayout/_auth/_layout/categories': typeof LocaleGlobalLayoutAuthLayoutCategoriesRoute
   '/$locale/_globalLayout/_auth/_layout/customers': typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
   '/$locale/_globalLayout/_auth/_layout/orders': typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
   '/$locale/_globalLayout/_auth/_layout/products': typeof LocaleGlobalLayoutAuthLayoutProductsRoute
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
+    | '/$locale/categories'
     | '/$locale/customers'
     | '/$locale/orders'
     | '/$locale/products'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$locale'
+    | '/$locale/categories'
     | '/$locale/customers'
     | '/$locale/orders'
     | '/$locale/products'
@@ -158,6 +170,7 @@ export interface FileRouteTypes {
     | '/$locale/_globalLayout'
     | '/$locale/_globalLayout/_auth'
     | '/$locale/_globalLayout/_auth/_layout'
+    | '/$locale/_globalLayout/_auth/_layout/categories'
     | '/$locale/_globalLayout/_auth/_layout/customers'
     | '/$locale/_globalLayout/_auth/_layout/orders'
     | '/$locale/_globalLayout/_auth/_layout/products'
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutCustomersRouteImport
       parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
     }
+    '/$locale/_globalLayout/_auth/_layout/categories': {
+      id: '/$locale/_globalLayout/_auth/_layout/categories'
+      path: '/categories'
+      fullPath: '/$locale/categories'
+      preLoaderRoute: typeof LocaleGlobalLayoutAuthLayoutCategoriesRouteImport
+      parentRoute: typeof LocaleGlobalLayoutAuthLayoutRoute
+    }
     '/$locale/_globalLayout/_auth/_layout/products_/create': {
       id: '/$locale/_globalLayout/_auth/_layout/products_/create'
       path: '/products/create'
@@ -263,6 +283,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleGlobalLayoutAuthLayoutRouteChildren {
+  LocaleGlobalLayoutAuthLayoutCategoriesRoute: typeof LocaleGlobalLayoutAuthLayoutCategoriesRoute
   LocaleGlobalLayoutAuthLayoutCustomersRoute: typeof LocaleGlobalLayoutAuthLayoutCustomersRoute
   LocaleGlobalLayoutAuthLayoutOrdersRoute: typeof LocaleGlobalLayoutAuthLayoutOrdersRoute
   LocaleGlobalLayoutAuthLayoutProductsRoute: typeof LocaleGlobalLayoutAuthLayoutProductsRoute
@@ -275,6 +296,8 @@ interface LocaleGlobalLayoutAuthLayoutRouteChildren {
 
 const LocaleGlobalLayoutAuthLayoutRouteChildren: LocaleGlobalLayoutAuthLayoutRouteChildren =
   {
+    LocaleGlobalLayoutAuthLayoutCategoriesRoute:
+      LocaleGlobalLayoutAuthLayoutCategoriesRoute,
     LocaleGlobalLayoutAuthLayoutCustomersRoute:
       LocaleGlobalLayoutAuthLayoutCustomersRoute,
     LocaleGlobalLayoutAuthLayoutOrdersRoute:

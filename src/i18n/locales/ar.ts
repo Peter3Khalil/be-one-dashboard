@@ -103,6 +103,17 @@ export default {
   EditProductPage: {
     title: 'تعديل المنتج',
   },
+  CategoriesPage: {
+    categories: 'الفئات',
+    addCategory: 'إضافة فئة',
+    editCategory: 'تعديل الفئة',
+    table: {
+      header: {
+        name: 'الاسم',
+        actions: 'الإجراءات',
+      },
+    },
+  },
   LoginPage: {
     title: 'لوحة التحكم',
     login: 'تسجيل الدخول',
@@ -127,11 +138,15 @@ export default {
     noItemsFound: 'لم يتم العثور على عناصر',
     logout: 'تسجيل الخروج',
     noResultsFound: 'لم يتم العثور على نتائج',
+    create: 'إنشاء',
+    update: 'تحديث',
+    alreadyExists: 'موجود بالفعل',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',
     products: 'المنتجات',
     orders: 'الطلبات',
     customers: 'العملاء',
+    categories: 'الفئات',
   },
 } satisfies TranslationType;

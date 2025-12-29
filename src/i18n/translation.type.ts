@@ -104,6 +104,17 @@ export type TranslationType = {
     email: string;
     password: string;
   };
+  CategoriesPage: {
+    categories: string;
+    addCategory: string;
+    editCategory: string;
+    table: {
+      header: {
+        name: string;
+        actions: string;
+      };
+    };
+  };
   Global: {
     loading: string;
     next: string;
@@ -122,11 +133,15 @@ export type TranslationType = {
     noItemsFound: string;
     logout: string;
     noResultsFound: string;
+    create: string;
+    update: string;
+    alreadyExists: string;
   };
   Sidebar: {
     dashboard: string;
     products: string;
     orders: string;
     customers: string;
+    categories: string;
   };
 };

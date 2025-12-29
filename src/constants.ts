@@ -29,6 +29,12 @@ export const NAV_ITEMS = () =>
       url: '/customers',
       icon: Users,
     },
+    {
+      id: 'categories',
+      title: i18next.t('Sidebar.categories'),
+      url: '/categories',
+      icon: Package,
+    },
   ] as const satisfies Array<NavItemType>;
 
 export const AVAILABLE_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'] as const;

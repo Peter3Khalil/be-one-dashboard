@@ -73,6 +73,17 @@ export default {
       'Sorry, we could not find the order you are looking for.',
     viewOrders: 'View Orders',
   },
+  CategoriesPage: {
+    categories: 'Categories',
+    addCategory: 'Add Category',
+    editCategory: 'Edit Category',
+    table: {
+      header: {
+        name: 'Name',
+        actions: 'Actions',
+      },
+    },
+  },
   LoginPage: {
     title: 'Admin Dashboard',
     login: 'Login',
@@ -128,11 +139,15 @@ export default {
     noItemsFound: 'No items found',
     logout: 'Logout',
     noResultsFound: 'No results found',
+    create: 'Create',
+    update: 'Update',
+    alreadyExists: 'Already exists',
   },
   Sidebar: {
     dashboard: 'Dashboard',
     products: 'Products',
     orders: 'Orders',
     customers: 'Customers',
+    categories: 'Categories',
   },
 } satisfies TranslationType;
