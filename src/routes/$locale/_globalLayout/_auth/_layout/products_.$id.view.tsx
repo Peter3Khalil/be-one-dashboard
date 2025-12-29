@@ -40,5 +40,5 @@ function RouteComponent() {
   }, [t, setItems]);
   if (isLoading) return <ProductViewSkeleton />;
   if (!product) return <ProductNotFound />;
-  return <ProductView product={product} />;
+  return <ProductView product={product} key={JSON.stringify(product)} />;
 }
