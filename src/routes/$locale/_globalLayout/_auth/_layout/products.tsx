@@ -77,7 +77,6 @@ function RouteComponent() {
     value: name,
   }));
   useBreadcrumbSetup();
-  console.log(params);
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
