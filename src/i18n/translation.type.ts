@@ -5,6 +5,8 @@ export type TranslationType = {
     searchPlaceholder: string;
     filterByCategory: string;
     searchForCategoryPlaceholder: string;
+    deleteConfirmTitle: string;
+    deleteConfirmDescription: string;
     table: {
       header: {
         name: string;
@@ -75,6 +77,7 @@ export type TranslationType = {
     fileExtension: string;
     browseFiles: string;
     saving: string;
+    cancel: string;
   };
   Sidebar: {
     dashboard: string;

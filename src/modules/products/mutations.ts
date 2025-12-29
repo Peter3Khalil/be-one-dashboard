@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   createProduct,
   deleteImage,
+  deleteProduct,
   updateProductDetails,
   uploadImages,
 } from './services';
@@ -49,6 +50,17 @@ export function useUpdateProductDetails(productId: string) {
       updateProductDetails({ productId, data }),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['product', productId] });
+    },
+  });
+}
+
+export function useDeleteProduct(productId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['deleteProduct', productId],
+    mutationFn: deleteProduct,
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     },
   });
 }

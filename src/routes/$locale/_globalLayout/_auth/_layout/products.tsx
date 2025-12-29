@@ -4,6 +4,7 @@ import {
   useProducts,
   withProductsProvider,
 } from '@modules/products/components/products-provider';
+import { useDeleteProduct } from '@modules/products/mutations';
 import { useCategoriesQuery } from '@modules/products/queries';
 import { Label } from '@radix-ui/react-label';
 import { createFileRoute } from '@tanstack/react-router';
@@ -21,34 +22,26 @@ import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
 import { Card, CardContent } from '@ui/card';
 import CustomCombobox from '@ui/custom-combobox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@ui/dropdown-menu';
 import { Input } from '@ui/input';
 import i18next from 'i18next';
 import {
   CircleCheck,
   Eye,
   Loader2,
-  MoreHorizontal,
   Pencil,
   Plus,
   RotateCcw,
   Trash,
   X,
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { ProductType as Product } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { cn, pageTitle } from '@/lib/utils';
-import { Link } from '@/i18n/routing';
+import { Link, useNavigate } from '@/i18n/routing';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/products'
@@ -236,65 +229,84 @@ const columns: Array<ColumnDef<Product>> = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const Component = () => {
-        return (
-          <AlertDialog>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                  <Link
-                    to="/products/$id/view"
-                    viewTransition
-                    params={{ id: String(row.original.id) }}
-                  >
-                    <Eye />
-                    {i18next.t('Global.view')}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild variant="info">
-                  <Link
-                    to="/products/$id/edit"
-                    params={{ id: String(row.original.id) }}
-                    viewTransition
-                  >
-                    <Pencil />
-                    {i18next.t('Global.edit')}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+      const ActionsCell = () => {
+        const navigate = useNavigate();
+        const [isOpen, setIsOpen] = useState(false);
+        const { mutate: deleteProduct, isPending } = useDeleteProduct(
+          String(row.original.id)
+        );
 
-                <AlertDialogTrigger asChild>
-                  <DropdownMenuItem variant="destructive">
-                    <Trash />
+        const handleDelete = () => {
+          deleteProduct(String(row.original.id), {
+            onSuccess() {
+              setIsOpen(false);
+            },
+          });
+        };
+
+        return (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                navigate({
+                  to: '/products/$id/view',
+                  params: { id: String(row.original.id) } as never,
+                })
+              }
+            >
+              <Eye />
+              {i18next.t('Global.view')}
+            </Button>
+            <Button
+              onClick={() =>
+                navigate({
+                  to: '/products/$id/edit',
+                  params: { id: String(row.original.id) } as never,
+                })
+              }
+              size="sm"
+            >
+              <Pencil />
+              {i18next.t('Global.edit')}
+            </Button>
+            <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  <Trash />
+                  {i18next.t('Global.delete')}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {i18next.t('ProductsPage.deleteConfirmTitle')}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {i18next.t('ProductsPage.deleteConfirmDescription')}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isPending}>
+                    {i18next.t('Global.cancel') || 'Cancel'}
+                  </AlertDialogCancel>
+                  <Button
+                    variant="destructive"
+                    onClick={handleDelete}
+                    disabled={isPending}
+                  >
+                    {isPending && <Loader2 className="animate-spin" />}
                     {i18next.t('Global.delete')}
-                  </DropdownMenuItem>
-                </AlertDialogTrigger>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button variant="destructive">Delete</Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         );
       };
 
-      return <Component />;
+      return <ActionsCell />;
     },
   },
 ];

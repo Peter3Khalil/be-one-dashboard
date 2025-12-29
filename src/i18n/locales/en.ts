@@ -7,6 +7,9 @@ export default {
     searchPlaceholder: 'Search for a product...',
     filterByCategory: 'Filter by Category',
     searchForCategoryPlaceholder: 'Search for a category...',
+    deleteConfirmTitle: 'Are you sure?',
+    deleteConfirmDescription:
+      'This action cannot be undone. This will permanently delete the product and remove all associated data.',
     table: {
       header: {
         name: 'Name',
@@ -79,6 +82,7 @@ export default {
     dragDrop: 'Drag and drop files here to upload',
     fileExtension: 'JPEG, PNG, up to 2MB',
     saving: 'Saving...',
+    cancel: 'Cancel',
   },
   Sidebar: {
     dashboard: 'Dashboard',

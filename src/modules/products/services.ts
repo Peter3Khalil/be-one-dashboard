@@ -75,3 +75,9 @@ export function updateProductDetails({
     };
   }>(`/products/${productId}`, data);
 }
+
+export function deleteProduct(productId: string) {
+  return axiosClient.delete<{ success: boolean; message: string }>(
+    `/products/${productId}`
+  );
+}

@@ -7,6 +7,9 @@ export default {
     searchPlaceholder: 'ابحث عن منتج...',
     filterByCategory: 'تصفية حسب الفئة',
     searchForCategoryPlaceholder: 'ابحث عن فئة...',
+    deleteConfirmTitle: 'هل أنت متأكد؟',
+    deleteConfirmDescription:
+      'لا يمكن التراجع عن هذا الإجراء. سيؤدي ذلك إلى حذف المنتج نهائيًا وإزالة جميع البيانات المرتبطة به.',
     table: {
       header: {
         name: 'الاسم',
@@ -78,6 +81,7 @@ export default {
     dragDrop: 'اسحب وأفلت الملفات هنا للتحميل',
     fileExtension: 'JPEG، PNG، حتى 2 ميغابايت',
     saving: 'جار الحفظ...',
+    cancel: 'إلغاء',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',
