@@ -69,6 +69,9 @@ export default {
     },
     selectCategory: 'Select Category',
   },
+  EditProductPage: {
+    title: 'Edit Product',
+  },
   Global: {
     loading: 'Loading...',
     next: 'Next',

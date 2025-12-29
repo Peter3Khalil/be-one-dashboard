@@ -5,6 +5,7 @@ import { Form } from '@ui/form';
 import { Package, Save } from 'lucide-react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   useDeleteImages,
   useUpdateProductDetails,
@@ -24,6 +25,7 @@ type Props = {
 };
 const EditProductForm = ({ defaultValues, productId }: Props) => {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
   const deletedImagesIds = useRef<Array<string>>([]);
   const { data: categoriesData } = useCategoriesQuery();
   const navigate = useNavigate();
@@ -85,17 +87,17 @@ const EditProductForm = ({ defaultValues, productId }: Props) => {
         className={cn('container space-y-6', { 'px-0': isMobile })}
       >
         <div className="flex items-center justify-between">
-          <h1 className="heading">Edit Product</h1>
+          <h1 className="heading">{t('EditProductPage.title')}</h1>
           <Button
             type="submit"
             disabled={isUpdatingProduct || isDeletingImages}
           >
             {isUpdatingProduct || isDeletingImages ? (
-              'Saving...'
+              t('Global.saving')
             ) : (
               <>
                 <Save />
-                Save Changes
+                {t('CreateProductPage.saveProductButton')}
               </>
             )}
           </Button>

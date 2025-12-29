@@ -41,6 +41,7 @@ const ProductDetailsForm = ({ form, categoryOptions = [] }: Props) => {
         <ComboboxFormField
           className="w-full"
           label={t('CreateProductPage.selectCategory')}
+          placeholder={t('CreateProductPage.selectCategory')}
           control={form.control}
           name="categories"
           multiple

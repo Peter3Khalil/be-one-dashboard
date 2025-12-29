@@ -58,6 +58,9 @@ export type TranslationType = {
     };
     selectCategory: string;
   };
+  EditProductPage: {
+    title: string;
+  };
   LoginPage: {
     title: string;
     login: string;

@@ -3,6 +3,8 @@ import EditProductForm from '@modules/products/components/edit-product-form';
 import { useProductByIdQuery } from '@modules/products/queries';
 import { createFileRoute, useParams } from '@tanstack/react-router';
 import { ProductNotFound } from '@modules/products/components/product-view';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import type { ProductFormSchema, ProductType } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -13,13 +15,6 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
   onEnter() {
-    useBreadcrumbItems.getState().setItems([
-      { label: 'Products', href: '/products' },
-      {
-        label: 'Edit Product',
-        isCurrent: true,
-      },
-    ]);
     useSidebarItems.getState().setActiveItem('products');
   },
   head() {
@@ -31,6 +26,7 @@ function RouteComponent() {
   const { id } = useParams({ from: Route.id });
   const { data, isLoading } = useProductByIdQuery(id);
   const product = data?.data.data;
+  useBreadcrumbSetup();
   if (isLoading) return <Loading className="h-full" />;
   return !product ? (
     <ProductNotFound />
@@ -75,4 +71,18 @@ function prepareDefaultValues(product: ProductType): ProductFormSchema {
     categories: product.categories.map((cat) => String(cat.id)),
     variants,
   };
+}
+
+function useBreadcrumbSetup() {
+  const { setItems } = useBreadcrumbItems();
+  const { t } = useTranslation();
+  useEffect(() => {
+    setItems([
+      { label: t('ProductsPage.products'), href: '/products' },
+      {
+        label: t('EditProductPage.title'),
+        isCurrent: true,
+      },
+    ]);
+  }, [setItems, t]);
 }

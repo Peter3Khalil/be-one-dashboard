@@ -59,6 +59,7 @@ export const ComboboxFormField = <T extends FieldValues>({
         options={myOptions}
         label={label}
         onFilter={onFilter}
+        placeholder={placeholder}
       />
     );
   }
@@ -154,7 +155,7 @@ const ComboboxMultipleFormField = <T extends FieldValues>({
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
               />
-              <ComboboxTrigger className="absolute top-3 right-2">
+              <ComboboxTrigger className="absolute end-2 top-3">
                 <ChevronDown className="h-4 w-4" />
               </ComboboxTrigger>
             </ComboboxAnchor>

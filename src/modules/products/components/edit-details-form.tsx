@@ -43,6 +43,7 @@ const EditProductDetailsForm = ({ form, categoryOptions = [] }: Props) => {
           className="w-full"
           label={t('CreateProductPage.selectCategory')}
           control={form.control}
+          placeholder={t('CreateProductPage.selectCategory')}
           name="categories"
           multiple
           options={categoryOptions}

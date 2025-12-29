@@ -62,6 +62,9 @@ export default {
     },
     selectCategory: 'اختر الفئة',
   },
+  EditProductPage: {
+    title: 'تعديل المنتج',
+  },
   LoginPage: {
     title: 'لوحة التحكم',
     login: 'تسجيل الدخول',
