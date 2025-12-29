@@ -8,15 +8,13 @@ import { NAV_ITEMS } from '@/constants';
 
 export const Route = createFileRoute('/$locale/_globalLayout')({
   component: LayoutComponent,
-  beforeLoad(ctx) {
+  onEnter(ctx) {
     const locale = ctx.params.locale;
     if (locale !== 'en' && locale !== 'ar') {
       return notFound();
     } else {
       i18next.changeLanguage(locale);
     }
-  },
-  onEnter() {
     useSidebarItems.getState().setItems(NAV_ITEMS());
   },
 });
