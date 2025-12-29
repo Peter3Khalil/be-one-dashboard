@@ -267,6 +267,7 @@ const columns: Array<ColumnDef<Product>> = [
                   params: { id: String(row.original.id) } as never,
                 })
               }
+              variant="secondary"
               size="sm"
             >
               <Pencil />
