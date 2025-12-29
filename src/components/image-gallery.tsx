@@ -34,7 +34,7 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
                 )
               }
             >
-              <ChevronLeft />
+              <ChevronLeft className="rtl:rotate-180" />
             </Button>
             <Button
               variant="ghost"
@@ -46,7 +46,7 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
                 )
               }
             >
-              <ChevronRight />
+              <ChevronRight className="rtl:rotate-180" />
             </Button>
           </>
         )}
