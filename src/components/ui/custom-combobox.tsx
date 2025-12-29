@@ -20,6 +20,7 @@ type Props = {
   onValueChange?: (values: Array<string>) => void;
   values?: Array<string>;
   defaultValues?: Array<string>;
+  noItemsFound?: string;
 } & Omit<
   React.ComponentProps<typeof Combobox>,
   'onValueChange' | 'value' | 'defaultValue'
@@ -31,6 +32,7 @@ const CustomCombobox = ({
   onValueChange,
   values,
   defaultValues,
+  noItemsFound = 'No items found',
   ...props
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -78,7 +80,7 @@ const CustomCombobox = ({
         </ComboboxTrigger>
       </ComboboxAnchor>
       <ComboboxContent className="max-h-[300px] overflow-x-hidden overflow-y-auto">
-        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxEmpty>{noItemsFound}</ComboboxEmpty>
         {options.map(({ value, label }) => (
           <ComboboxItem key={value} value={value}>
             {label}

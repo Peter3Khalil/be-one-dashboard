@@ -14,6 +14,7 @@ import {
 import type { ColumnDef } from '@tanstack/react-table';
 
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 type Props<TData, TValue> = {
   columns: Array<ColumnDef<TData, TValue>>;
@@ -26,6 +27,7 @@ export function DataTable<TData, TValue>({
   className,
   ...props
 }: Props<TData, TValue>) {
+  const { t } = useTranslation();
   const table = useReactTable({
     data,
     columns,
@@ -73,7 +75,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                {t('Global.noResultsFound')}
               </TableCell>
             </TableRow>
           )}

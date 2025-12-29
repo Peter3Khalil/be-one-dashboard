@@ -12,6 +12,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   ) : (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
+        {/* eslint-disable i18next/no-literal-string */}
         <Link to="/" lang="en" className="text-center text-4xl font-bold">
           Be One.
         </Link>

@@ -82,6 +82,9 @@ export type TranslationType = {
     saving: string;
     cancel: string;
     actions: string;
+    noItemsFound: string;
+    logout: string;
+    noResultsFound: string;
   };
   Sidebar: {
     dashboard: string;

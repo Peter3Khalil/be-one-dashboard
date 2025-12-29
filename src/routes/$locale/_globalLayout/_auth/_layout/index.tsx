@@ -1,14 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
-import { pageTitle } from '@/lib/utils';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout/')({
   component: App,
   onEnter() {
-    useBreadcrumbItems
-      .getState()
-      .setItems([{ label: 'Dashboard', href: '/', isCurrent: true }]);
     useSidebarItems.getState().setActiveItem('dashboard');
   },
   head() {
@@ -17,5 +16,15 @@ export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout/')({
 });
 
 function App() {
-  return <div>Dashboard</div>;
+  const { t } = useTranslation();
+  useBreadcrumbSetup();
+  return <div>{t('Sidebar.dashboard')}</div>;
+}
+
+function useBreadcrumbSetup() {
+  const { t } = useTranslation();
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([{ label: t('Sidebar.dashboard'), isCurrent: true }]);
+  }, [setItems, t]);
 }

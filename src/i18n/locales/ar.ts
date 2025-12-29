@@ -86,6 +86,9 @@ export default {
     saving: 'جار الحفظ...',
     cancel: 'إلغاء',
     actions: 'الإجراءات',
+    noItemsFound: 'لم يتم العثور على عناصر',
+    logout: 'تسجيل الخروج',
+    noResultsFound: 'لم يتم العثور على نتائج',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',

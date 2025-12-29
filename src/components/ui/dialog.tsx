@@ -1,3 +1,4 @@
+/* eslint-disable i18next/no-literal-string */
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { XIcon } from 'lucide-react';

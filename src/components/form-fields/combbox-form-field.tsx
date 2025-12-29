@@ -31,6 +31,7 @@ type Props<T extends FieldValues> = {
   placeholder?: string;
   className?: string;
   multiple?: boolean;
+  noFoundText?: string;
 };
 
 export const ComboboxFormField = <T extends FieldValues>({
@@ -41,6 +42,7 @@ export const ComboboxFormField = <T extends FieldValues>({
   placeholder = 'Select item...',
   className,
   multiple = false,
+  noFoundText = 'No options found.',
 }: Props<T>) => {
   function onFilter(options: Array<string>, inputValue: string) {
     const selectedOptions = myOptions.filter(({ value }) =>
@@ -86,7 +88,7 @@ export const ComboboxFormField = <T extends FieldValues>({
               </ComboboxAnchor>
             </FormControl>
             <ComboboxContent className="max-h-[300px] overflow-x-hidden overflow-y-auto">
-              <ComboboxEmpty>No {label.toLowerCase()} found.</ComboboxEmpty>
+              <ComboboxEmpty>{noFoundText}</ComboboxEmpty>
               {myOptions.map(({ value, label }) => (
                 <ComboboxItem key={value} value={value}>
                   {label}
@@ -109,6 +111,7 @@ type ComboboxFormFieldProps<T extends FieldValues> = {
   placeholder?: string;
   className?: string;
   onFilter: ComponentProps<typeof Combobox>['onFilter'];
+  noFoundText?: string;
 };
 
 const ComboboxMultipleFormField = <T extends FieldValues>({
@@ -118,6 +121,7 @@ const ComboboxMultipleFormField = <T extends FieldValues>({
   label = 'Options',
   placeholder = 'Select item...',
   onFilter,
+  noFoundText = 'No options found.',
 }: ComboboxFormFieldProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
@@ -160,7 +164,7 @@ const ComboboxMultipleFormField = <T extends FieldValues>({
               </ComboboxTrigger>
             </ComboboxAnchor>
             <ComboboxContent className="max-h-[300px] overflow-x-hidden overflow-y-auto">
-              <ComboboxEmpty>No {label.toLowerCase()} found.</ComboboxEmpty>
+              <ComboboxEmpty>{noFoundText}</ComboboxEmpty>
               {myOptions.map(({ value, label }) => (
                 <ComboboxItem key={value} value={value}>
                   {label}

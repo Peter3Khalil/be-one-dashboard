@@ -1,16 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useSidebarItems } from '@/stores/sidebar';
-import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { pageTitle } from '@/lib/utils';
+import { useBreadcrumbItems } from '@/stores/breadcrumb';
+import { useSidebarItems } from '@/stores/sidebar';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/orders'
 )({
   component: RouteComponent,
   onEnter() {
-    useBreadcrumbItems
-      .getState()
-      .setItems([{ label: 'Orders', href: '/orders', isCurrent: true }]);
     useSidebarItems.getState().setActiveItem('orders');
   },
   head() {
@@ -19,5 +18,15 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  return <div>Orders</div>;
+  const { t } = useTranslation();
+  useBreadcrumbSetup();
+  return <div>{t('Sidebar.orders')}</div>;
+}
+
+function useBreadcrumbSetup() {
+  const { t } = useTranslation();
+  const { setItems } = useBreadcrumbItems();
+  useEffect(() => {
+    setItems([{ label: t('Sidebar.orders'), isCurrent: true }]);
+  }, [setItems, t]);
 }

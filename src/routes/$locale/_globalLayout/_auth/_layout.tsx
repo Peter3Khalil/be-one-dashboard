@@ -4,19 +4,22 @@ import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { SidebarInset, SidebarProvider } from '@ui/sidebar';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
+import { useAuth } from '@components/auth-provider';
 
 export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { user, logout } = useAuth();
   const { items } = useSidebarItems();
   const { items: breadcrumbItems } = useBreadcrumbItems();
   return (
     <SidebarProvider>
       <AppSidebar
         items={items}
-        user={{ name: 'Peter', email: 'peter@example.com' }}
+        user={{ name: user!.username, email: user!.email }}
+        onLogout={logout}
       />
       <SidebarInset>
         <Header items={breadcrumbItems} />

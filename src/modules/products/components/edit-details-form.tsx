@@ -44,6 +44,7 @@ const EditProductDetailsForm = ({ form, categoryOptions = [] }: Props) => {
           label={t('CreateProductPage.selectCategory')}
           control={form.control}
           placeholder={t('CreateProductPage.selectCategory')}
+          noFoundText={t('Global.noItemsFound')}
           name="categories"
           multiple
           options={categoryOptions}

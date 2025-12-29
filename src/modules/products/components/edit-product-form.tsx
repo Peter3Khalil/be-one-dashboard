@@ -106,7 +106,6 @@ const EditProductForm = ({ defaultValues, productId }: Props) => {
         <EditVariantsForm
           form={form}
           onRemoveImage={(imageId) => {
-            console.log('imageId', imageId);
             deletedImagesIds.current.push(imageId);
           }}
         />
@@ -115,8 +114,10 @@ const EditProductForm = ({ defaultValues, productId }: Props) => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Package className="h-4 w-4" />
             <span>
-              Total Stock:{' '}
-              <strong className="text-foreground">{totalStock} items</strong>
+              {t('ProductDetailsPage.totalStocks')}:{' '}
+              <strong className="text-foreground">
+                {totalStock} {t('ProductDetailsPage.items')}
+              </strong>
             </span>
           </div>
         </div>

@@ -1,17 +1,9 @@
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from 'lucide-react';
+import { ChevronsUpDown, LogOut } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -23,16 +15,20 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@ui/sidebar';
+import { useTranslation } from 'react-i18next';
 
 export default function NavUser({
   user,
+  onLogout,
 }: {
   user: {
     name: string;
     email: string;
   };
+  onLogout?: () => void;
 }) {
   const { isMobile } = useSidebar();
+  const { t } = useTranslation();
   const userInitials = user.name
     .split(' ')
     .map((n) => n[0])
@@ -80,31 +76,9 @@ export default function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onLogout}>
               <LogOut />
-              Log out
+              {t('Global.logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

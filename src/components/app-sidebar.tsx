@@ -19,9 +19,15 @@ type Props = React.ComponentProps<typeof Sidebar> & {
     name: string;
     email: string;
   };
+  onLogout?: () => void;
 };
 
-export default function AppSidebar({ items = [], user, ...props }: Props) {
+export default function AppSidebar({
+  items = [],
+  user,
+  onLogout,
+  ...props
+}: Props) {
   const locale = useLocale();
   return (
     <Sidebar
@@ -32,12 +38,14 @@ export default function AppSidebar({ items = [], user, ...props }: Props) {
       <SidebarHeader>
         <SidebarHeader>
           <Link to="/" className="flex items-center gap-2 py-2 font-bold">
+            {/* eslint-disable-next-line i18next/no-literal-string */}
             <span className="hidden text-xl group-data-[state=collapsed]:mx-auto group-data-[state=collapsed]:block">
               B1
             </span>
             <span
               lang="en"
               className="text-2xl group-data-[state=collapsed]:hidden"
+              /* eslint-disable-next-line i18next/no-literal-string */
             >
               Be One.
             </span>
@@ -48,7 +56,7 @@ export default function AppSidebar({ items = [], user, ...props }: Props) {
         <NavMain items={items} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={user} onLogout={onLogout} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

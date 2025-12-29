@@ -42,6 +42,7 @@ const ProductDetailsForm = ({ form, categoryOptions = [] }: Props) => {
           className="w-full"
           label={t('CreateProductPage.selectCategory')}
           placeholder={t('CreateProductPage.selectCategory')}
+          noFoundText={t('Global.noItemsFound')}
           control={form.control}
           name="categories"
           multiple

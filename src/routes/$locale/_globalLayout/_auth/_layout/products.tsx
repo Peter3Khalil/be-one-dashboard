@@ -120,6 +120,7 @@ function RouteComponent() {
           onValueChange={(v) =>
             dispatch({ type: 'SET_CATEGORY_NAME', payload: v })
           }
+          noItemsFound={t('Global.noItemsFound')}
           defaultValues={params.category_name}
           multiple
         />
@@ -289,7 +290,7 @@ const columns: Array<ColumnDef<Product>> = [
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel disabled={isPending}>
-                    {i18next.t('Global.cancel') || 'Cancel'}
+                    {i18next.t('Global.cancel')}
                   </AlertDialogCancel>
                   <Button
                     variant="destructive"

@@ -27,7 +27,8 @@ const LanguageSwitcher: FC<Props> = ({ className, children, ...props }) => {
     >
       {typeof children === 'function'
         ? children(locale)
-        : children || `${locale === 'en' ? 'Ar' : 'En'}`}
+        : /* eslint-disable i18next/no-literal-string */
+          children || `${locale === 'en' ? 'Ar' : 'En'}`}
     </Link>
   );
 };

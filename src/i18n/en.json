@@ -81,7 +81,10 @@
     "fileExtension": "JPEG, PNG, up to 2MB",
     "saving": "Saving...",
     "cancel": "Cancel",
-    "actions": "Actions"
+    "actions": "Actions",
+    "noItemsFound": "No items found",
+    "logout": "Logout",
+    "noResultsFound": "No results found"
   },
   "Sidebar": {
     "dashboard": "Dashboard",

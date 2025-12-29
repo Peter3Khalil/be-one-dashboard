@@ -87,6 +87,9 @@ export default {
     saving: 'Saving...',
     cancel: 'Cancel',
     actions: 'Actions',
+    noItemsFound: 'No items found',
+    logout: 'Logout',
+    noResultsFound: 'No results found',
   },
   Sidebar: {
     dashboard: 'Dashboard',

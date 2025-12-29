@@ -1,3 +1,4 @@
+//
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 import { PanelLeftIcon } from 'lucide-react';
@@ -195,7 +196,9 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
+            {/* eslint-disable i18next/no-literal-string */}
             <SheetTitle>Sidebar</SheetTitle>
+            {/* eslint-disable i18next/no-literal-string */}
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
