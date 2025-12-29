@@ -1,6 +1,10 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import type { ClassValue } from 'clsx';
+import type {
+  ProductFormSchema,
+  UploadImagesBody,
+} from '@modules/products/types';
 
 export function cn(...inputs: Array<ClassValue>) {
   return twMerge(clsx(inputs));
@@ -37,4 +41,18 @@ export function createQueryString(
     }
   });
   return s.endsWith('&') ? s.slice(0, -1) : s;
+}
+
+export function prepareProductImages({
+  productId,
+  variants,
+}: {
+  productId: string;
+  variants: ProductFormSchema['variants'];
+}): Array<UploadImagesBody> {
+  return variants.map(({ color, images }) => ({
+    productId,
+    color,
+    images,
+  }));
 }

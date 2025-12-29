@@ -2,25 +2,24 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import ProductDetailsForm from '@modules/products/components/product-details-form';
 import { VariantsForm } from '@modules/products/components/variants-form';
 import { formSchema } from '@modules/products/form-schema';
+import { useCreateProduct, useUploadImages } from '@modules/products/mutations';
+import { useCategoriesQuery } from '@modules/products/queries';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@ui/button';
 import { Form } from '@ui/form';
 import { Package, Save } from 'lucide-react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
-import { useCreateProduct, useUploadImages } from '@modules/products/mutations';
-import { useCategoriesQuery } from '@modules/products/queries';
 import type {
   CreateProductBody,
   ProductFormSchema,
-  UploadImagesBody,
 } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { cn, pageTitle } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { cn, pageTitle, prepareProductImages } from '@/lib/utils';
 import { useNavigate } from '@/i18n/routing';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/products_/create'
@@ -147,20 +146,6 @@ function prepareFormData(data: ProductFormSchema): CreateProductBody {
     variants,
     categories: data.categories.map((cat) => Number(cat)),
   };
-}
-
-function prepareProductImages({
-  productId,
-  variants,
-}: {
-  productId: string;
-  variants: ProductFormSchema['variants'];
-}): Array<UploadImagesBody> {
-  return variants.map(({ color, images }) => ({
-    productId,
-    color,
-    images,
-  }));
 }
 
 function useBreadcrumbSetup() {
