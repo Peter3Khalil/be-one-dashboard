@@ -1,3 +1,7 @@
+import { Link } from '@/i18n/routing';
+import { cn, pageTitle } from '@/lib/utils';
+import { useBreadcrumbItems } from '@/stores/breadcrumb';
+import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
 import {
@@ -6,8 +10,10 @@ import {
 } from '@modules/products/components/products-provider';
 import { useDeleteProduct } from '@modules/products/mutations';
 import { useCategoriesQuery } from '@modules/products/queries';
+import type { ProductType as Product } from '@modules/products/types';
 import { Label } from '@radix-ui/react-label';
 import { createFileRoute } from '@tanstack/react-router';
+import type { ColumnDef } from '@tanstack/react-table';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -36,12 +42,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ColumnDef } from '@tanstack/react-table';
-import type { ProductType as Product } from '@modules/products/types';
-import { useSidebarItems } from '@/stores/sidebar';
-import { useBreadcrumbItems } from '@/stores/breadcrumb';
-import { cn, pageTitle } from '@/lib/utils';
-import { Link, useNavigate } from '@/i18n/routing';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/products'
@@ -231,7 +231,6 @@ const columns: Array<ColumnDef<Product>> = [
     id: 'actions',
     cell: ({ row }) => {
       const ActionsCell = () => {
-        const navigate = useNavigate();
         const [isOpen, setIsOpen] = useState(false);
         const { mutate: deleteProduct, isPending } = useDeleteProduct(
           String(row.original.id)
@@ -247,31 +246,23 @@ const columns: Array<ColumnDef<Product>> = [
 
         return (
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                navigate({
-                  to: '/products/$id/view',
-                  params: { id: String(row.original.id) } as never,
-                })
-              }
-            >
-              <Eye />
-              {i18next.t('Global.view')}
+            <Button variant="outline" size="sm" asChild>
+              <Link
+                to="/products/$id/view"
+                params={{ id: String(row.original.id) }}
+              >
+                <Eye />
+                {i18next.t('Global.view')}
+              </Link>
             </Button>
-            <Button
-              onClick={() =>
-                navigate({
-                  to: '/products/$id/edit',
-                  params: { id: String(row.original.id) } as never,
-                })
-              }
-              variant="secondary"
-              size="sm"
-            >
-              <Pencil />
-              {i18next.t('Global.edit')}
+            <Button variant="secondary" size="sm" asChild>
+              <Link
+                to="/products/$id/edit"
+                params={{ id: String(row.original.id) }}
+              >
+                <Pencil />
+                {i18next.t('Global.edit')}
+              </Link>
             </Button>
             <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
               <AlertDialogTrigger asChild>
