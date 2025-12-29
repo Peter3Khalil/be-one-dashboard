@@ -154,10 +154,14 @@ const columns: Array<ColumnDef<Order>> = [
     accessorKey: 'items',
     header: i18next.t('OrdersPage.table.header.items'),
     cell({ row: { original } }) {
+      const itemCount = original.items.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
       return (
         <div className="flex items-center gap-1">
           <Package className="h-4 w-4" />
-          {original.items.length} {i18next.t('OrdersPage.items')}
+          {itemCount} {i18next.t('OrdersPage.items')}
         </div>
       );
     },
