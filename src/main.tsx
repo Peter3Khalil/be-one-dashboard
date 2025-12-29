@@ -28,7 +28,6 @@ const queryClient = new QueryClient({
       refetchOnMount: false,
       retry: false,
       placeholderData: keepPreviousData,
-      throwOnError: true,
     },
     // mutations: {
     //   onError: (error) => {

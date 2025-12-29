@@ -2,6 +2,7 @@ import Loading from '@components/loading';
 import EditProductForm from '@modules/products/components/edit-product-form';
 import { useProductByIdQuery } from '@modules/products/queries';
 import { createFileRoute, useParams } from '@tanstack/react-router';
+import { ProductNotFound } from '@modules/products/components/product-view';
 import type { ProductFormSchema, ProductType } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
@@ -30,8 +31,9 @@ function RouteComponent() {
   const { id } = useParams({ from: Route.id });
   const { data, isLoading } = useProductByIdQuery(id);
   const product = data?.data.data;
-  return isLoading || !product ? (
-    <Loading className="h-full" />
+  if (isLoading) return <Loading className="h-full" />;
+  return !product ? (
+    <ProductNotFound />
   ) : (
     <EditProductForm
       key={JSON.stringify(product)}
