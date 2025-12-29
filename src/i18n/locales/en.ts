@@ -35,6 +35,28 @@ export default {
     viewProducts: 'View Products',
     categories: 'Categories',
   },
+  OrdersPage: {
+    orders: 'Orders',
+    filterByStatus: 'Filter by Status',
+    selectStatus: 'Select Status',
+    items: 'items',
+    status: {
+      pending: 'Pending',
+      delivered: 'Delivered',
+      cancelled: 'Cancelled',
+      refunded: 'Refunded',
+      all: 'All',
+    },
+    table: {
+      header: {
+        orderId: 'Order ID',
+        customerName: 'Customer Name',
+        totalAmount: 'Total Amount',
+        items: 'Items',
+        status: 'Status',
+      },
+    },
+  },
   LoginPage: {
     title: 'Admin Dashboard',
     login: 'Login',

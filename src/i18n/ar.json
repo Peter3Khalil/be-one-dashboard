@@ -31,6 +31,28 @@
     "viewProducts": "عرض المنتجات",
     "categories": "الفئات"
   },
+  "OrdersPage": {
+    "orders": "الطلبات",
+    "filterByStatus": "تصفية حسب الحالة",
+    "selectStatus": "اختر الحالة",
+    "items": "عناصر",
+    "status": {
+      "pending": "قيد الانتظار",
+      "delivered": "تم التسليم",
+      "cancelled": "ملغى",
+      "refunded": "تم الاسترجاع",
+      "all": "الكل"
+    },
+    "table": {
+      "header": {
+        "orderId": "رقم الطلب",
+        "customerName": "اسم العميل",
+        "totalAmount": "المبلغ الإجمالي",
+        "items": "العناصر",
+        "status": "الحالة"
+      }
+    }
+  },
   "CreateProductPage": {
     "title": "إنشاء منتج",
     "saveProductButton": "حفظ المنتج",

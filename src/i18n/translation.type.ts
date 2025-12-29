@@ -31,6 +31,28 @@ export type TranslationType = {
     viewProducts: string;
     categories: string;
   };
+  OrdersPage: {
+    orders: string;
+    filterByStatus: string;
+    selectStatus: string;
+    items: string;
+    status: {
+      pending: string;
+      delivered: string;
+      cancelled: string;
+      refunded: string;
+      all: string;
+    };
+    table: {
+      header: {
+        orderId: string;
+        customerName: string;
+        totalAmount: string;
+        items: string;
+        status: string;
+      };
+    };
+  };
   CreateProductPage: {
     title: string;
     saveProductButton: string;
