@@ -11,6 +11,7 @@
     "format": "prettier --write src",
     "check": "prettier --write . && eslint --fix",
     "generate:locales": "tsx src/i18n/generate-locales.ts",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {

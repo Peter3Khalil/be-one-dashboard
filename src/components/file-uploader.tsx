@@ -16,14 +16,19 @@ interface ImageFile {
   error?: string;
 }
 
-interface ImageUploadProps {
+type Props = {
   maxFiles?: number;
   maxSize?: number;
   accept?: string;
   className?: string;
   onImagesChange?: (images: Array<ImageFile>) => void;
   onUploadComplete?: (images: Array<ImageFile>) => void;
-}
+  defaultImages?: Array<{
+    id: string;
+    url: string;
+  }>;
+  onRemoveImage?: (id: string) => void;
+};
 
 export default function FileUploader({
   maxFiles = 10,
@@ -32,10 +37,11 @@ export default function FileUploader({
   className,
   onImagesChange,
   onUploadComplete,
-}: ImageUploadProps) {
+  defaultImages = [],
+  onRemoveImage,
+}: Props) {
   const [images, setImages] = useState<Array<ImageFile>>([]);
   const [isDragging, setIsDragging] = useState(false);
-
   const validateFile = (file: File): string | null => {
     if (!file.type.startsWith('image/')) {
       return 'File must be an image';
@@ -189,9 +195,32 @@ export default function FileUploader({
   return (
     <div className={cn('w-full space-y-4', className)}>
       <div>
-        {images.length > 0 && (
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {images.map((imageFile, index) => (
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {defaultImages.length > 0 &&
+            defaultImages.map(({ id, url }, index) => (
+              <Card
+                key={id}
+                className="group relative flex aspect-square w-full shrink-0 rounded-md bg-accent/50 shadow-none"
+              >
+                <img
+                  src={url}
+                  className="absolute inset-0 size-full rounded-md object-cover"
+                  alt={`Product view ${index + 1}`}
+                />
+
+                {/* Remove Button Overlay */}
+                <Button
+                  onClick={() => onRemoveImage?.(id)}
+                  variant="destructiveSoft"
+                  size="icon"
+                  className="absolute end-2 top-2 size-6 rounded-full opacity-0 shadow-sm group-hover:opacity-100"
+                >
+                  <XIcon className="size-3.5" />
+                </Button>
+              </Card>
+            ))}
+          {images.length > 0 &&
+            images.map((imageFile, index) => (
               <Card
                 key={imageFile.id}
                 className="group relative flex aspect-square w-full shrink-0 rounded-md bg-accent/50 shadow-none"
@@ -213,8 +242,7 @@ export default function FileUploader({
                 </Button>
               </Card>
             ))}
-          </div>
-        )}
+        </div>
       </div>
       <Card
         className={cn(

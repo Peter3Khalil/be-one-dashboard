@@ -15,6 +15,7 @@ const sizeSchema = z.object({
 });
 
 const variantsSchema = z.object({
+  id: z.string().optional(),
   color: z
     .string({
       required_error: 'Required',
@@ -53,3 +54,15 @@ export const formSchema = z.object({
     message: 'At least one variant is required',
   }),
 });
+
+export const editFormSchema = formSchema
+  .extend({
+    variants: z.array(
+      variantsSchema.extend({
+        images: z
+          .array(z.object({ id: z.string(), url: z.string() }))
+          .or(z.array(z.any())),
+      })
+    ),
+  })
+  .partial();

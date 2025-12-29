@@ -46,3 +46,32 @@ export function getProductById(productId: string) {
     data: ProductType;
   }>(`/products/${productId}`);
 }
+
+export function deleteImage(imageId: string) {
+  return axiosClient.delete<{ success: boolean; message: string }>(
+    `/images/${imageId}`
+  );
+}
+export function updateProductDetails({
+  productId,
+  data,
+}: {
+  productId: string;
+  data: Partial<
+    Pick<ProductType, 'name' | 'description' | 'is_active' | 'price'> & {
+      categories: Array<string | number>;
+    }
+  >;
+}) {
+  return axiosClient.put<{
+    success: boolean;
+    message: string;
+    data: Pick<
+      ProductType,
+      'id' | 'name' | 'description' | 'is_active' | 'price'
+    > & {
+      created_at: string;
+      updated_at: string;
+    };
+  }>(`/products/${productId}`, data);
+}

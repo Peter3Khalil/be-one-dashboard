@@ -1,8 +1,8 @@
 import Loading from '@components/loading';
 import EditProductForm from '@modules/products/components/edit-product-form';
-import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import type { ProductFormSchema } from '@modules/products/types';
+import { useProductByIdQuery } from '@modules/products/queries';
+import { createFileRoute, useParams } from '@tanstack/react-router';
+import type { ProductFormSchema, ProductType } from '@modules/products/types';
 import { useSidebarItems } from '@/stores/sidebar';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { pageTitle } from '@/lib/utils';
@@ -27,38 +27,50 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const [values, setValues] = useState<ProductFormSchema>();
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    new Promise<ProductFormSchema>((resolve) => {
-      setIsLoading(true);
-      setTimeout(() => {
-        resolve({
-          categories: ['summer'],
-          variants: [
-            {
-              color: 'Red',
-              sizes: [
-                { value: 'S', stock: 10 },
-                { value: 'M', stock: 15 },
-                { value: 'L', stock: 20 },
-              ],
-              images: [],
-            },
-          ],
-          description: '',
-          name: 'T',
-          price: 0,
-        });
-      }, 1000);
-    }).then((data) => {
-      setIsLoading(false);
-      setValues(data);
-    });
-  }, []);
-  return isLoading ? (
+  const { id } = useParams({ from: Route.id });
+  const { data, isLoading } = useProductByIdQuery(id);
+  const product = data?.data.data;
+  return isLoading || !product ? (
     <Loading className="h-full" />
   ) : (
-    <EditProductForm key={JSON.stringify(values)} defaultValues={values} />
+    <EditProductForm
+      key={JSON.stringify(product)}
+      defaultValues={prepareDefaultValues(product)}
+      productId={product.id}
+    />
   );
+}
+
+function prepareDefaultValues(product: ProductType): ProductFormSchema {
+  const colorsMap = new Map<
+    string,
+    { sizes: Array<{ value: string; stock: number }>; variantId: string }
+  >();
+  product.variants.forEach(({ color, size, stock, id }) => {
+    if (!colorsMap.has(color)) {
+      colorsMap.set(color, { sizes: [{ value: size, stock }], variantId: id });
+    } else {
+      colorsMap.get(color)?.sizes.push({ value: size, stock });
+    }
+  });
+  const variants: ProductFormSchema['variants'] = Array.from(
+    colorsMap.entries()
+  ).map(([color, { sizes, variantId }]) => ({
+    color,
+    sizes,
+    images: product.images
+      ? product.images[color].map(({ urls, id }) => ({
+          id,
+          url: urls.original,
+        }))
+      : [],
+    id: String(variantId),
+  }));
+  return {
+    name: product.name,
+    price: product.price,
+    description: product.description || '',
+    categories: product.categories.map((cat) => String(cat.id)),
+    variants,
+  };
 }

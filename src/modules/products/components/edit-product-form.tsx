@@ -1,44 +1,83 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import ProductDetailsForm from '@modules/products/components/product-details-form';
-import { VariantsForm } from '@modules/products/components/variants-form';
-import { formSchema } from '@modules/products/form-schema';
+import { editFormSchema } from '@modules/products/form-schema';
 import { Button } from '@ui/button';
 import { Form } from '@ui/form';
 import { Package, Save } from 'lucide-react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import type { ProductFormSchema } from '@modules/products/types';
-import { cn } from '@/lib/utils';
+import {
+  useDeleteImages,
+  useUpdateProductDetails,
+  useUploadImages,
+} from '../mutations';
+import { useCategoriesQuery } from '../queries';
+import EditProductDetailsForm from './edit-details-form';
+import { EditVariantsForm } from './edit-variants-form';
+import type { z } from 'zod';
+import { cn, prepareProductImages } from '@/lib/utils';
+import { useNavigate } from '@/i18n/routing';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 type Props = {
-  defaultValues?: ProductFormSchema;
+  defaultValues?: z.infer<typeof editFormSchema>;
+  productId: string;
 };
-const EditProductForm = ({ defaultValues }: Props) => {
+const EditProductForm = ({ defaultValues, productId }: Props) => {
   const isMobile = useIsMobile();
+  const deletedImagesIds = useRef<Array<string>>([]);
+  const { data: categoriesData } = useCategoriesQuery();
+  const navigate = useNavigate();
+  const { deleteImages, isPending: isDeletingImages } = useDeleteImages();
+  const { mutateAsync: uploadImages } = useUploadImages();
+  const categoryOptions = categoriesData?.data.data.map(({ name, id }) => ({
+    label: name,
+    value: String(id),
+  }));
+  const { mutateAsync: updateProduct, isPending: isUpdatingProduct } =
+    useUpdateProductDetails(productId);
 
-  const form = useForm<ProductFormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof editFormSchema>>({
+    resolver: zodResolver(editFormSchema),
     defaultValues: {
       variants: [],
       ...defaultValues,
     },
   });
 
-  function onSubmit(values: ProductFormSchema) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof editFormSchema>) {
+    const { variants, categories, ...data } = values;
+
+    const { status } = await updateProduct({
+      ...data,
+      categories: (categories || []).map((c) => Number(c)),
+    });
+    if (status !== 200) return;
+
+    const imagesData = prepareProductImages({
+      productId,
+      variants: values.variants || [],
+    });
+    Promise.all(imagesData.map((imgData) => uploadImages(imgData))).then(() => {
+      navigate({
+        to: '/products/$id/view',
+        params: { id: productId } as never,
+      });
+    });
+    if (deletedImagesIds.current.length) {
+      deleteImages(deletedImagesIds.current);
+    }
+    navigate({ to: '/products/$id/view', params: { id: productId } as never });
   }
 
-  const totalStock = form
-    .getValues('variants')
-    .reduce(
-      (sum, v) =>
-        sum +
-        v.sizes.reduce(
-          (s, size) => s + (isNaN(+size.stock) ? 0 : +size.stock),
-          0
-        ),
-      0
-    );
+  const totalStock = (form.getValues('variants') || []).reduce(
+    (sum, v) =>
+      sum +
+      v.sizes.reduce(
+        (s, size) => s + (isNaN(+size.stock) ? 0 : +size.stock),
+        0
+      ),
+    0
+  );
   return (
     <Form {...form}>
       <form
@@ -47,12 +86,28 @@ const EditProductForm = ({ defaultValues }: Props) => {
       >
         <div className="flex items-center justify-between">
           <h1 className="heading">Edit Product</h1>
-          <Button type="submit">
-            <Save /> Save Changes
+          <Button
+            type="submit"
+            disabled={isUpdatingProduct || isDeletingImages}
+          >
+            {isUpdatingProduct || isDeletingImages ? (
+              'Saving...'
+            ) : (
+              <>
+                <Save />
+                Save Changes
+              </>
+            )}
           </Button>
         </div>
-        <ProductDetailsForm form={form} />
-        <VariantsForm form={form} />
+        <EditProductDetailsForm form={form} categoryOptions={categoryOptions} />
+        <EditVariantsForm
+          form={form}
+          onRemoveImage={(imageId) => {
+            console.log('imageId', imageId);
+            deletedImagesIds.current.push(imageId);
+          }}
+        />
 
         <div className="flex items-center justify-between border-t border-border pt-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
