@@ -1,10 +1,9 @@
-import { OrdersChart } from '@modules/dashboard/components/orders-chart';
-import { ProductCategoriesChart } from '@modules/dashboard/components/product-categories-chart';
-import { RevenueChart } from '@modules/dashboard/components/revenue-chart';
-import { StatsCards } from '@modules/dashboard/components/stats-cards';
 import { pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
+import { OrdersChart } from '@modules/dashboard/components/orders-chart';
+import { RevenueChart } from '@modules/dashboard/components/revenue-chart';
+import { StatsCards } from '@modules/dashboard/components/stats-cards';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,8 +37,6 @@ function App() {
         <RevenueChart />
         <OrdersChart />
       </div>
-
-      <ProductCategoriesChart />
     </div>
   );
 }
