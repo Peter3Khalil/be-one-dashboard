@@ -57,6 +57,22 @@ export default {
       },
     },
   },
+  OrderDetailsPage: {
+    title: 'تفاصيل الطلب',
+    orderNumber: 'الطلب #{{number}}',
+    items: 'عناصر',
+    customerInformation: 'معلومات العميل',
+    shippingAddress: 'عنوان الشحن',
+    orderItems: 'عناصر الطلب',
+    size: 'المقاس',
+    color: 'اللون',
+    total: 'الإجمالي',
+    updateStatus: 'تحديث حالة الطلب',
+    orderNotFound: 'الطلب غير موجود',
+    orderNotFoundDescription:
+      'عذراً، لم نتمكن من العثور على الطلب الذي تبحث عنه.',
+    viewOrders: 'عرض الطلبات',
+  },
   CreateProductPage: {
     title: 'إنشاء منتج',
     saveProductButton: 'حفظ المنتج',

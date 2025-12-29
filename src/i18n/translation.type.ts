@@ -53,6 +53,21 @@ export type TranslationType = {
       };
     };
   };
+  OrderDetailsPage: {
+    title: string;
+    orderNumber: string;
+    items: string;
+    customerInformation: string;
+    shippingAddress: string;
+    orderItems: string;
+    size: string;
+    color: string;
+    total: string;
+    updateStatus: string;
+    orderNotFound: string;
+    orderNotFoundDescription: string;
+    viewOrders: string;
+  };
   CreateProductPage: {
     title: string;
     saveProductButton: string;

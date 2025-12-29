@@ -53,6 +53,21 @@
       }
     }
   },
+  "OrderDetailsPage": {
+    "title": "Order Details",
+    "orderNumber": "Order #{{number}}",
+    "items": "items",
+    "customerInformation": "Customer Information",
+    "shippingAddress": "Shipping Address",
+    "orderItems": "Order Items",
+    "size": "Size",
+    "color": "Color",
+    "total": "Total",
+    "updateStatus": "Update Order Status",
+    "orderNotFound": "Order Not Found",
+    "orderNotFoundDescription": "Sorry, we could not find the order you are looking for.",
+    "viewOrders": "View Orders"
+  },
   "LoginPage": {
     "title": "Admin Dashboard",
     "login": "Login",

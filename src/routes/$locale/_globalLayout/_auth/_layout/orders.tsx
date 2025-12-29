@@ -1,6 +1,7 @@
 import { cn, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
+import { Link } from '@/i18n/routing';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
 import {
@@ -20,6 +21,7 @@ import CustomSelect from '@ui/custom-select';
 import i18next from 'i18next';
 import {
   CheckCircle,
+  Eye,
   Loader2,
   Package,
   RotateCcw,
@@ -136,7 +138,15 @@ const columns: Array<ColumnDef<Order>> = [
     accessorKey: 'order_id',
     header: i18next.t('OrdersPage.table.header.orderId'),
     cell({ row: { original } }) {
-      return <span className="font-medium">#{original.order_id}</span>;
+      return (
+        <Link
+          to="/orders/$id/view"
+          params={{ id: String(original.order_id) }}
+          className="font-medium underline-offset-2 duration-200 hover:text-primary hover:underline"
+        >
+          #{original.order_id}
+        </Link>
+      );
     },
   },
   {
@@ -238,6 +248,15 @@ const columns: Array<ColumnDef<Order>> = [
 
         return (
           <div className="flex items-center gap-2">
+            <Link
+              to="/orders/$id/view"
+              params={{ id: String(row.original.order_id) }}
+            >
+              <Button variant="outline" size="sm">
+                <Eye className="h-4 w-4" />
+                {i18next.t('Global.view')}
+              </Button>
+            </Link>
             <div className="relative">
               <CustomSelect
                 value={selectedStatus}
