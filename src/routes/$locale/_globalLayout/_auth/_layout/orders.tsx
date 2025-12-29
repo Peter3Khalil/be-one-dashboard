@@ -136,7 +136,7 @@ function RouteComponent() {
 const columns: Array<ColumnDef<Order>> = [
   {
     accessorKey: 'order_id',
-    header: i18next.t('OrdersPage.table.header.orderId'),
+    header: () => i18next.t('OrdersPage.table.header.orderId'),
     cell({ row: { original } }) {
       return (
         <Link
@@ -151,18 +151,18 @@ const columns: Array<ColumnDef<Order>> = [
   },
   {
     accessorKey: 'customer_name',
-    header: i18next.t('OrdersPage.table.header.customerName'),
+    header: () => i18next.t('OrdersPage.table.header.customerName'),
   },
   {
     accessorKey: 'total_amount',
-    header: i18next.t('OrdersPage.table.header.totalAmount'),
+    header: () => i18next.t('OrdersPage.table.header.totalAmount'),
     cell({ row: { original } }) {
       return `$${original.total_amount}`;
     },
   },
   {
     accessorKey: 'items',
-    header: i18next.t('OrdersPage.table.header.items'),
+    header: () => i18next.t('OrdersPage.table.header.items'),
     cell({ row: { original } }) {
       const itemCount = original.items.reduce(
         (total, item) => total + item.quantity,
@@ -178,7 +178,7 @@ const columns: Array<ColumnDef<Order>> = [
   },
   {
     accessorKey: 'order_status',
-    header: i18next.t('OrdersPage.table.header.status'),
+    header: () => i18next.t('OrdersPage.table.header.status'),
     cell({ row: { original } }) {
       const statusConfig: Record<
         Order['order_status'],

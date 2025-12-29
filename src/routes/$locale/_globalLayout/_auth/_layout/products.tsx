@@ -160,7 +160,7 @@ function RouteComponent() {
 const columns: Array<ColumnDef<Product>> = [
   {
     accessorKey: 'name',
-    header: i18next.t('ProductsPage.table.header.name'),
+    header: () => i18next.t('ProductsPage.table.header.name'),
     cell({ row: { original } }) {
       const colorKeys = Object.keys(original.images || {});
       const mainImage =
@@ -193,11 +193,11 @@ const columns: Array<ColumnDef<Product>> = [
   },
   {
     accessorKey: 'price',
-    header: i18next.t('ProductsPage.table.header.price'),
+    header: () => i18next.t('ProductsPage.table.header.price'),
   },
   {
     accessorKey: 'categories',
-    header: i18next.t('ProductsPage.table.header.category'),
+    header: () => i18next.t('ProductsPage.table.header.category'),
     cell({ row: { original } }) {
       return (
         <div className="flex flex-wrap gap-1">
@@ -212,7 +212,7 @@ const columns: Array<ColumnDef<Product>> = [
   },
   {
     accessorKey: 'is_active',
-    header: i18next.t('ProductsPage.table.header.status'),
+    header: () => i18next.t('ProductsPage.table.header.status'),
     cell({ row: { original } }) {
       return original.is_active ? (
         <Badge variant="success">
