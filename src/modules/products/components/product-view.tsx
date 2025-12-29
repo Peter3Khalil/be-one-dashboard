@@ -173,7 +173,9 @@ const ProductView: FC<Props> = ({
             <CardContent className="space-y-4">
               {colorsEntries.map(([color, { sizes }]) => (
                 <div className="flex flex-col gap-4 rounded-xl border bg-accent/40 px-4 py-2 md:flex-row">
-                  <span className="font-medium capitalize">{color}</span>
+                  <span className="font-medium text-nowrap capitalize">
+                    {color}
+                  </span>
                   <div className="flex w-full gap-2">
                     <span className="text-muted-foreground">=&gt;</span>
                     <ul className="flex items-center gap-4">
