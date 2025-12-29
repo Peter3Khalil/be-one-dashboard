@@ -168,10 +168,11 @@ const columns: Array<ColumnDef<Product>> = [
     accessorKey: 'name',
     header: i18next.t('ProductsPage.table.header.name'),
     cell({ row: { original } }) {
-      const colorKeys = Object.keys(original.images);
-      const mainImage = colorKeys.length
-        ? original.images[colorKeys[0]][0].urls.thumbnail
-        : '';
+      const colorKeys = Object.keys(original.images || {});
+      const mainImage =
+        colorKeys.length && original.images
+          ? original.images[colorKeys[0]][0].urls.thumbnail
+          : '';
       return (
         <div className="flex w-fit flex-row-reverse items-center gap-2">
           <Link

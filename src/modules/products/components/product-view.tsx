@@ -121,7 +121,7 @@ const ProductView: FC<Props> = ({
             <ImageGallery
               key={currentColor}
               images={
-                images[currentColor]?.map(
+                images?.[currentColor]?.map(
                   ({ urls: { original } }) => original
                 ) || []
               }

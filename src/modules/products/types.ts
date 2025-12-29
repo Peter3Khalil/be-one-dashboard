@@ -49,7 +49,7 @@ export type ProductType = {
       id: string;
       urls: Record<'original' | 'large' | 'medium' | 'thumbnail', string>;
     }>
-  >;
+  > | null;
 };
 
 export type Category = {
