@@ -83,6 +83,7 @@ export default {
     fileExtension: 'JPEG, PNG, up to 2MB',
     saving: 'Saving...',
     cancel: 'Cancel',
+    actions: 'Actions',
   },
   Sidebar: {
     dashboard: 'Dashboard',

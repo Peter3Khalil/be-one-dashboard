@@ -77,7 +77,8 @@
     "dragDrop": "Drag and drop files here to upload",
     "fileExtension": "JPEG, PNG, up to 2MB",
     "saving": "Saving...",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "actions": "Actions"
   },
   "Sidebar": {
     "dashboard": "Dashboard",

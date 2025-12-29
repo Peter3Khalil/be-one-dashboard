@@ -82,6 +82,7 @@ export default {
     fileExtension: 'JPEG، PNG، حتى 2 ميغابايت',
     saving: 'جار الحفظ...',
     cancel: 'إلغاء',
+    actions: 'الإجراءات',
   },
   Sidebar: {
     dashboard: 'اللوحة الرئيسية',

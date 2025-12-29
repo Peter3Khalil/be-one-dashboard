@@ -1,4 +1,14 @@
 import { useRouter } from '@tanstack/react-router';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@ui/alert-dialog';
 import { Button, buttonVariants } from '@ui/button';
 import {
   Card,
@@ -12,8 +22,11 @@ import {
   Book,
   CircleCheck,
   Images,
+  Loader2,
   Package,
+  Pencil,
   Tags,
+  Trash,
   X,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -24,10 +37,11 @@ import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
 import { Skeleton } from '@ui/skeleton';
 import { useTranslation } from 'react-i18next';
+import { useDeleteProduct } from '../mutations';
 import type { FC } from 'react';
 import type { ProductType } from '../types';
 import { cn } from '@/lib/utils';
-import { useNavigate } from '@/i18n/routing';
+import { Link, useNavigate } from '@/i18n/routing';
 
 type Props = {
   product: ProductType;
@@ -36,6 +50,7 @@ const ProductView: FC<Props> = ({
   product: {
     categories,
     description,
+    id,
     images,
     is_active,
     name,
@@ -45,7 +60,20 @@ const ProductView: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const navigate = useNavigate();
   const [currentColor, setCurrentColor] = useState(variants[0].color);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct(
+    String(id)
+  );
+
+  const handleDelete = () => {
+    deleteProduct(String(id), {
+      onSuccess: () => {
+        navigate({ to: '/products' });
+      },
+    });
+  };
   const totalStock = variants.reduce((sum, { stock }) => sum + stock, 0);
   const colorsMap = getDistinctColors({
     variants,
@@ -161,6 +189,7 @@ const ProductView: FC<Props> = ({
               </ul>
             </CardContent>
           </Card>
+
           <Card className="gap-4">
             <CardHeader className="gap-4">
               <CardTitle className="flex items-center gap-3 text-lg">
@@ -213,6 +242,58 @@ const ProductView: FC<Props> = ({
                 </span>
                 <b>{totalStock}</b>
               </div>
+            </CardContent>
+          </Card>
+          <Card className="gap-4">
+            <CardHeader className="gap-4">
+              <CardTitle className="flex items-center gap-3 text-lg">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Package className="size-5 text-primary" />
+                </div>
+                {t('Global.actions')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex items-center gap-2">
+              <Button asChild className="flex-1" variant="outline">
+                <Link to="/products/$id/edit" params={{ id: String(id) }}>
+                  <Pencil />
+                  {t('Global.edit')}
+                </Link>
+              </Button>
+              <AlertDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+              >
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" className="flex-1">
+                    <Trash />
+                    {t('Global.delete')}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      {t('ProductsPage.deleteConfirmTitle')}
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {t('ProductsPage.deleteConfirmDescription')}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel disabled={isDeleting}>
+                      {t('Global.cancel')}
+                    </AlertDialogCancel>
+                    <Button
+                      variant="destructive"
+                      onClick={handleDelete}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting && <Loader2 className="animate-spin" />}
+                      {t('Global.delete')}
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         </div>

@@ -78,6 +78,7 @@ export type TranslationType = {
     browseFiles: string;
     saving: string;
     cancel: string;
+    actions: string;
   };
   Sidebar: {
     dashboard: string;
