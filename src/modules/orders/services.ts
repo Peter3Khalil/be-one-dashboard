@@ -22,7 +22,7 @@ export function updateOrderStatus({
   orderId: number | string;
   status: Order['order_status'];
 }) {
-  return axiosClient.patch<{
+  return axiosClient.put<{
     success: boolean;
     data: Order;
   }>(`/orders/${orderId}/status`, { status });
