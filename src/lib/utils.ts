@@ -64,3 +64,14 @@ export function formatPrice(price: number | string) {
     maximumFractionDigits: 0,
   }).format(typeof price === 'string' ? parseFloat(price) : price);
 }
+
+export function formatDate(dateStr: string | Date, language = 'en') {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString(language, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

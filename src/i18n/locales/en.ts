@@ -88,6 +88,9 @@ export default {
     orderNotFoundDescription:
       'Sorry, we could not find the order you are looking for.',
     viewOrders: 'View Orders',
+    orderDates: 'Order Dates',
+    createdAt: 'Created At',
+    lastUpdated: 'Last Updated',
   },
   CategoriesPage: {
     categories: 'Categories',

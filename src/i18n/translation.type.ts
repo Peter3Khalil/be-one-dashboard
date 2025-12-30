@@ -68,6 +68,9 @@ export type TranslationType = {
     orderNotFound: string;
     orderNotFoundDescription: string;
     viewOrders: string;
+    lastUpdated: string;
+    createdAt: string;
+    orderDates: string;
   };
   CreateProductPage: {
     title: string;

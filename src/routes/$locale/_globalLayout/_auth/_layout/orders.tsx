@@ -1,4 +1,4 @@
-import { cn, formatPrice, pageTitle } from '@/lib/utils';
+import { cn, formatDate, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { Link } from '@/i18n/routing';
@@ -180,13 +180,7 @@ const columns: Array<ColumnDef<Order>> = [
     accessorKey: 'order_date',
     header: () => i18next.t('OrdersPage.table.header.orderDate'),
     cell({ row: { original } }) {
-      const date = new Date(original.order_date);
-      return date.toLocaleDateString(i18next.language, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-      });
+      return formatDate(original.order_date, i18next.language);
     },
   },
   {

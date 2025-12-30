@@ -88,6 +88,9 @@ export default {
     orderNotFoundDescription:
       'عذراً، لم نتمكن من العثور على الطلب الذي تبحث عنه.',
     viewOrders: 'عرض الطلبات',
+    lastUpdated: 'آخر تحديث',
+    createdAt: 'تاريخ الإنشاء',
+    orderDates: 'تواريخ الطلب',
   },
   CreateProductPage: {
     title: 'إنشاء منتج',

@@ -15,6 +15,7 @@ import { Skeleton } from '@ui/skeleton';
 import type { VariantProps } from 'class-variance-authority';
 import {
   ArrowLeft,
+  Calendar,
   CheckCircle,
   Loader2,
   Mail,
@@ -31,7 +32,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUpdateOrderStatus } from '../mutations';
 import type { Order } from '../types';
-import { formatPrice } from '@/lib/utils';
+import { formatDate, formatPrice } from '@/lib/utils';
+import i18next from 'i18next';
 
 type Props = {
   order: Order;
@@ -57,6 +59,8 @@ const OrderView: FC<Props> = ({ order }) => {
     postal_code,
     country,
     items,
+    order_date,
+    order_updated_at,
   } = order;
 
   const statusConfig: Record<
@@ -289,6 +293,36 @@ const OrderView: FC<Props> = ({ order }) => {
                   </Button>
                 );
               })}
+            </CardContent>
+          </Card>
+          <Card className="gap-4">
+            <CardHeader className="gap-4">
+              <CardTitle className="flex items-center gap-3 text-lg">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Calendar className="size-5 text-primary" />
+                </div>
+                {t('OrderDetailsPage.orderDates')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">
+                  {t('OrderDetailsPage.createdAt')}
+                </span>
+                <span className="font-medium">
+                  {formatDate(order_date, i18next.language)}
+                </span>
+              </div>
+              {order_updated_at && (
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">
+                    {t('OrderDetailsPage.lastUpdated')}
+                  </span>
+                  <span className="font-medium">
+                    {formatDate(order_updated_at, i18next.language)}
+                  </span>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
