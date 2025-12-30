@@ -17,6 +17,8 @@ export type Order = {
   postal_code: string;
   country: string;
   items: Array<OrderItem>;
+  order_updated_at: string;
+  order_date: string;
 };
 
 export type OrderItem = {

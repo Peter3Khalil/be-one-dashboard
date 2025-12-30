@@ -64,7 +64,8 @@
         "customerName": "Customer Name",
         "totalAmount": "Total Amount",
         "items": "Items",
-        "status": "Status"
+        "status": "Status",
+        "orderDate": "Order Date"
       }
     }
   },

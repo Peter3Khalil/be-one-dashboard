@@ -69,6 +69,7 @@ export default {
         totalAmount: 'Total Amount',
         items: 'Items',
         status: 'Status',
+        orderDate: 'Order Date',
       },
     },
   },

@@ -64,7 +64,8 @@
         "customerName": "اسم العميل",
         "totalAmount": "المبلغ الإجمالي",
         "items": "العناصر",
-        "status": "الحالة"
+        "status": "الحالة",
+        "orderDate": "تاريخ الطلب"
       }
     }
   },

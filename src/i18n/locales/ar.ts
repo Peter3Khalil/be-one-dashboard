@@ -69,6 +69,7 @@ export default {
         totalAmount: 'المبلغ الإجمالي',
         items: 'العناصر',
         status: 'الحالة',
+        orderDate: 'تاريخ الطلب',
       },
     },
   },

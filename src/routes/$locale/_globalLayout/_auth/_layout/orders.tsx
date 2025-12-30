@@ -177,6 +177,19 @@ const columns: Array<ColumnDef<Order>> = [
     },
   },
   {
+    accessorKey: 'order_date',
+    header: () => i18next.t('OrdersPage.table.header.orderDate'),
+    cell({ row: { original } }) {
+      const date = new Date(original.order_date);
+      return date.toLocaleDateString(i18next.language, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+      });
+    },
+  },
+  {
     accessorKey: 'order_status',
     header: () => i18next.t('OrdersPage.table.header.status'),
     cell({ row: { original } }) {

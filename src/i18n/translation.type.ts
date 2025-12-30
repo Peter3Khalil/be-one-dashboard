@@ -50,6 +50,7 @@ export type TranslationType = {
         totalAmount: string;
         items: string;
         status: string;
+        orderDate: string;
       };
     };
   };
