@@ -31,6 +31,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUpdateOrderStatus } from '../mutations';
 import type { Order } from '../types';
+import { formatPrice } from '@/lib/utils';
 
 type Props = {
   order: Order;
@@ -128,7 +129,7 @@ const OrderView: FC<Props> = ({ order }) => {
           </Badge>
         </div>
         <div className="flex flex-col text-end">
-          <strong className="heading">${total_amount}</strong>
+          <strong className="heading">{formatPrice(total_amount)}</strong>
           <span className="text-sm text-muted-foreground">
             <b>{totalQuantity}</b> {t('OrderDetailsPage.items')}
           </span>
@@ -235,11 +236,13 @@ const OrderView: FC<Props> = ({ order }) => {
                           </span>
                         </div>
                       </div>
-                      <span className="font-medium">${item.line_total}</span>
+                      <span className="font-medium">
+                        {formatPrice(item.line_total)}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">
-                        ${item.unit_price} × {item.quantity}
+                        {formatPrice(item.unit_price)} × {item.quantity}
                       </span>
                     </div>
                   </div>
@@ -249,7 +252,9 @@ const OrderView: FC<Props> = ({ order }) => {
                 <span className="text-lg font-medium">
                   {t('OrderDetailsPage.total')}
                 </span>
-                <span className="text-lg font-bold">${total_amount}</span>
+                <span className="text-lg font-bold">
+                  {formatPrice(total_amount)}
+                </span>
               </div>
             </CardContent>
           </Card>

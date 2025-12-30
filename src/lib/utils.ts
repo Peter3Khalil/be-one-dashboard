@@ -57,10 +57,10 @@ export function prepareProductImages({
   }));
 }
 
-export function formatPrice(price: number) {
+export function formatPrice(price: number | string) {
   return new Intl.NumberFormat('en-EG', {
     style: 'currency',
     currency: 'EGP',
     maximumFractionDigits: 0,
-  }).format(price);
+  }).format(typeof price === 'string' ? parseFloat(price) : price);
 }

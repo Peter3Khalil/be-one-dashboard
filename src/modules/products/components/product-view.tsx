@@ -40,7 +40,7 @@ import { useTranslation } from 'react-i18next';
 import { useDeleteProduct } from '../mutations';
 import type { FC } from 'react';
 import type { ProductType } from '../types';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { Link, useNavigate } from '@/i18n/routing';
 
 type Props = {
@@ -105,7 +105,7 @@ const ProductView: FC<Props> = ({
           )}
         </div>
         <div className="flex flex-col">
-          <strong className="heading">${price}</strong>
+          <strong className="heading">{formatPrice(price)}</strong>
           <span className="text-sm text-muted-foreground">
             <b>{totalStock}</b> {t('ProductDetailsPage.itemsInStock')}
           </span>

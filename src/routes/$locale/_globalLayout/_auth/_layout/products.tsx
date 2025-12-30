@@ -1,5 +1,5 @@
 import { Link } from '@/i18n/routing';
-import { cn, pageTitle } from '@/lib/utils';
+import { cn, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
@@ -194,6 +194,9 @@ const columns: Array<ColumnDef<Product>> = [
   {
     accessorKey: 'price',
     header: () => i18next.t('ProductsPage.table.header.price'),
+    cell: ({ row: { original } }) => {
+      return <span>{formatPrice(original.price)}</span>;
+    },
   },
   {
     accessorKey: 'categories',

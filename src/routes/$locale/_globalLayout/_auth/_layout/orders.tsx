@@ -1,4 +1,4 @@
-import { cn, pageTitle } from '@/lib/utils';
+import { cn, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { Link } from '@/i18n/routing';
@@ -157,7 +157,7 @@ const columns: Array<ColumnDef<Order>> = [
     accessorKey: 'total_amount',
     header: () => i18next.t('OrdersPage.table.header.totalAmount'),
     cell({ row: { original } }) {
-      return `$${original.total_amount}`;
+      return formatPrice(original.total_amount);
     },
   },
   {
