@@ -181,15 +181,6 @@
   }
 }
 
-:lang(ar) {
-  font-family: var(--font-cairo);
-  direction: rtl !important;
-}
-:lang(en) {
-  font-family: var(--font-inter);
-  direction: ltr !important;
-}
-
 @theme {
   --animate-slide-in: slide-in 0.2s ease-in-out;
   @keyframes slide-in {
@@ -211,4 +202,23 @@
       -o-transform: translateY(0);
     }
   }
+}
+
+:lang(ar) {
+  font-family: var(--font-cairo);
+  direction: rtl !important;
+}
+:lang(en) {
+  font-family: var(--font-inter);
+  direction: ltr !important;
+}
+
+@utility arabic {
+  font-family: var(--font-cairo) !important;
+  direction: rtl !important;
+}
+
+@utility english {
+  font-family: var(--font-inter) !important;
+  direction: ltr !important;
 }

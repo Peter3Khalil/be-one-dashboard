@@ -75,3 +75,10 @@ export function formatDate(dateStr: string | Date, language = 'en') {
     minute: '2-digit',
   });
 }
+
+export function detectLang(text: string) {
+  const arabicChars = text.match(/[\u0600-\u06FF]/g)?.length ?? 0;
+  const latinChars = text.match(/[A-Za-z]/g)?.length ?? 0;
+
+  return arabicChars > latinChars ? 'ar' : 'en';
+}

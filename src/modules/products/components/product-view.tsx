@@ -40,7 +40,7 @@ import { useTranslation } from 'react-i18next';
 import { useDeleteProduct } from '../mutations';
 import type { FC } from 'react';
 import type { ProductType } from '../types';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn, detectLang, formatPrice } from '@/lib/utils';
 import { Link, useNavigate } from '@/i18n/routing';
 
 type Props = {
@@ -91,7 +91,14 @@ const ProductView: FC<Props> = ({
           >
             <ArrowLeft />
           </Button>
-          <h1 className="heading">{name}</h1>
+          <h1
+            className={cn('heading', {
+              arabic: detectLang(name) === 'ar',
+              english: detectLang(name) === 'en',
+            })}
+          >
+            {name}
+          </h1>
           {is_active ? (
             <Badge variant="success">
               <CircleCheck />
@@ -105,7 +112,7 @@ const ProductView: FC<Props> = ({
           )}
         </div>
         <div className="flex flex-col">
-          <strong className="heading">{formatPrice(price)}</strong>
+          <strong className="english heading">{formatPrice(price)}</strong>
           <span className="text-sm text-muted-foreground">
             <b>{totalStock}</b> {t('ProductDetailsPage.itemsInStock')}
           </span>
@@ -135,6 +142,10 @@ const ProductView: FC<Props> = ({
                         variant:
                           currentColor === color ? 'default' : 'secondary',
                         size: 'sm',
+                        className: cn({
+                          arabic: detectLang(color) === 'ar',
+                          english: detectLang(color) === 'en',
+                        }),
                       })}
                       htmlFor={String(index)}
                     >
@@ -167,7 +178,14 @@ const ProductView: FC<Props> = ({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription>{description}</CardDescription>
+              <CardDescription
+                className={cn({
+                  arabic: detectLang(description) === 'ar',
+                  english: detectLang(description) === 'en',
+                })}
+              >
+                {description}
+              </CardDescription>
             </CardContent>
           </Card>
           <Card className="gap-4">
@@ -183,7 +201,15 @@ const ProductView: FC<Props> = ({
               <ul className="flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <li key={category.id}>
-                    <Badge variant="info-blue">{category.name}</Badge>
+                    <Badge
+                      variant="info-blue"
+                      className={cn({
+                        arabic: detectLang(category.name) === 'ar',
+                        english: detectLang(category.name) === 'en',
+                      })}
+                    >
+                      {category.name}
+                    </Badge>
                   </li>
                 ))}
               </ul>
@@ -202,7 +228,12 @@ const ProductView: FC<Props> = ({
             <CardContent className="space-y-4">
               {colorsEntries.map(([color, { sizes }]) => (
                 <div className="flex flex-col gap-4 rounded-xl border bg-accent/40 px-4 py-2 md:flex-row">
-                  <span className="font-medium text-nowrap capitalize">
+                  <span
+                    className={cn('font-medium text-nowrap capitalize', {
+                      arabic: detectLang(color) === 'ar',
+                      english: detectLang(color) === 'en',
+                    })}
+                  >
                     {color}
                   </span>
                   <div className="flex w-full gap-2">

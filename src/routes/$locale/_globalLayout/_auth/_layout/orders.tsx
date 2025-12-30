@@ -1,4 +1,10 @@
-import { cn, formatDate, formatPrice, pageTitle } from '@/lib/utils';
+import {
+  cn,
+  detectLang,
+  formatDate,
+  formatPrice,
+  pageTitle,
+} from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { Link } from '@/i18n/routing';
@@ -152,6 +158,18 @@ const columns: Array<ColumnDef<Order>> = [
   {
     accessorKey: 'customer_name',
     header: () => i18next.t('OrdersPage.table.header.customerName'),
+    cell({ row: { original } }) {
+      return (
+        <span
+          className={cn('font-medium', {
+            arabic: detectLang(original.customer_name) === 'ar',
+            english: detectLang(original.customer_name) === 'en',
+          })}
+        >
+          {original.customer_name}
+        </span>
+      );
+    },
   },
   {
     accessorKey: 'total_amount',

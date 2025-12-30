@@ -1,5 +1,5 @@
 import { Link } from '@/i18n/routing';
-import { cn, formatPrice, pageTitle } from '@/lib/utils';
+import { cn, detectLang, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
@@ -172,7 +172,13 @@ const columns: Array<ColumnDef<Product>> = [
           <Link
             to="/products/$id/view"
             params={{ id: String(original.id) }}
-            className="peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline"
+            className={cn(
+              'peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline',
+              {
+                arabic: detectLang(original.name) === 'ar',
+                english: detectLang(original.name) === 'en',
+              }
+            )}
           >
             {original.name}
           </Link>
@@ -205,7 +211,14 @@ const columns: Array<ColumnDef<Product>> = [
       return (
         <div className="flex flex-wrap gap-1">
           {original.categories.map((category) => (
-            <Badge key={category.id} variant="info-blue">
+            <Badge
+              key={category.id}
+              variant="info-blue"
+              className={cn({
+                arabic: detectLang(category.name) === 'ar',
+                english: detectLang(category.name) === 'en',
+              })}
+            >
               {category.name}
             </Badge>
           ))}
