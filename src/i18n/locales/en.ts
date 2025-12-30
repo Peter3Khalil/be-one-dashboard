@@ -53,9 +53,13 @@ export default {
   OrdersPage: {
     orders: 'Orders',
     filterByStatus: 'Filter by Status',
+    filterBySize: 'Filter by Size',
+    filterByColor: 'Filter by Color',
+    selectSize: 'Select Size',
+    selectColor: 'Select Color',
     selectStatus: 'Select Status',
     items: 'items',
-    searchPlaceholder: 'Search for customer name or email...',
+    searchPlaceholder: 'Name or Email...',
     searchLabel: 'Search Customer',
     status: {
       pending: 'Pending',

@@ -3,6 +3,7 @@ import type {
   Category,
   CreateProductBody,
   CreateProductResponse,
+  FiltersResponse,
   GetProductsResponse,
   ProductParams,
   ProductType,
@@ -80,4 +81,8 @@ export function deleteProduct(productId: string) {
   return axiosClient.delete<{ success: boolean; message: string }>(
     `/products/${productId}`
   );
+}
+
+export function getAvailableFilters() {
+  return axiosClient.get<FiltersResponse>('/products/filters');
 }

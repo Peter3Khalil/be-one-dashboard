@@ -12,6 +12,7 @@ import {
   ComboboxTrigger,
 } from './combobox';
 import { Label } from './label';
+import { cn, detectLang } from '@/lib/utils';
 
 type Props = {
   options?: Array<{ label: string; value: string }>;
@@ -64,7 +65,14 @@ const CustomCombobox = ({
 
             return (
               <ComboboxBadgeItem key={item} value={item}>
-                {option.label}
+                <span
+                  className={cn({
+                    arabic: detectLang(option.label) === 'ar',
+                    english: detectLang(option.label) === 'en',
+                  })}
+                >
+                  {option.label}
+                </span>
               </ComboboxBadgeItem>
             );
           })}
@@ -83,7 +91,14 @@ const CustomCombobox = ({
         <ComboboxEmpty>{noItemsFound}</ComboboxEmpty>
         {options.map(({ value, label }) => (
           <ComboboxItem key={value} value={value}>
-            {label}
+            <span
+              className={cn({
+                arabic: detectLang(label) === 'ar',
+                english: detectLang(label) === 'en',
+              })}
+            >
+              {label}
+            </span>
           </ComboboxItem>
         ))}
       </ComboboxContent>

@@ -16,6 +16,7 @@ import {
 } from '@modules/orders/components/orders-provider';
 import { useUpdateOrderStatus } from '@modules/orders/mutations';
 import type { Order } from '@modules/orders/types';
+import { useFiltersQuery } from '@modules/products/queries';
 import { createFileRoute } from '@tanstack/react-router';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { BadgeVariant } from '@ui/badge';
@@ -60,7 +61,8 @@ function RouteComponent() {
   } = useOrders();
 
   const orders = data?.data.data || [];
-
+  const { data: filtersData } = useFiltersQuery();
+  const filtersOptions = filtersData?.data.data;
   const statusOptions = [
     { label: t('OrdersPage.status.pending'), value: 'pending' },
     { label: t('OrdersPage.status.delivered'), value: 'delivered' },
@@ -91,26 +93,12 @@ function RouteComponent() {
           </Button>
         </div>
       </div>
-      <div className="flex items-start gap-4">
-        <CustomCombobox
-          options={statusOptions}
-          label={t('OrdersPage.filterByStatus')}
-          placeholder={t('OrdersPage.selectStatus')}
-          className="max-w-md"
-          onValueChange={(v) =>
-            dispatch({
-              type: 'SET_ORDER_STATUS',
-              payload: v as Array<Order['order_status']>,
-            })
-          }
-          noItemsFound={t('Global.noItemsFound')}
-          multiple
-          defaultValues={params.order_status}
-        />
-        <div className="w-full max-w-md space-y-2">
-          <Label>{t('OrdersPage.searchLabel')}</Label>
+      <div className="flex flex-col gap-4 *:flex-1 sm:grid sm:grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-start md:*:min-w-[200px]">
+        <div className="space-y-2">
+          <Label htmlFor="search">{t('OrdersPage.searchLabel')}</Label>
           <Input
             type="search"
+            id="search"
             placeholder={t('OrdersPage.searchPlaceholder')}
             className="h-10"
             value={params.customer_name || params.email}
@@ -129,6 +117,62 @@ function RouteComponent() {
             }}
           />
         </div>
+        <CustomCombobox
+          options={statusOptions}
+          label={t('OrdersPage.filterByStatus')}
+          placeholder={t('OrdersPage.selectStatus')}
+          className="max-w-md"
+          onValueChange={(v) =>
+            dispatch({
+              type: 'SET_ORDER_STATUS',
+              payload: v as Array<Order['order_status']>,
+            })
+          }
+          noItemsFound={t('Global.noItemsFound')}
+          multiple
+          defaultValues={params.order_status}
+        />
+        <CustomCombobox
+          options={
+            filtersOptions?.sizes.map((size) => ({
+              label: size,
+              value: size,
+            })) || []
+          }
+          label={t('OrdersPage.filterBySize')}
+          placeholder={t('OrdersPage.selectSize')}
+          className="max-w-md"
+          onValueChange={(v) =>
+            dispatch({
+              type: 'SET_SIZE',
+              payload: v,
+            })
+          }
+          noItemsFound={t('Global.noItemsFound')}
+          multiple
+          defaultValues={params.size}
+        />
+
+        <CustomCombobox
+          options={
+            filtersOptions?.colors.map((color) => ({
+              label: color,
+              value: color,
+            })) || []
+          }
+          label={t('OrdersPage.filterByColor')}
+          placeholder={t('OrdersPage.selectColor')}
+          className="max-w-md"
+          onValueChange={(v) =>
+            dispatch({
+              type: 'SET_COLOR',
+              payload: v,
+            })
+          }
+          noItemsFound={t('Global.noItemsFound')}
+          multiple
+          defaultValues={params.color}
+        />
       </div>
       {isLoading ? (
         <Card>

@@ -53,9 +53,13 @@ export default {
   OrdersPage: {
     orders: 'الطلبات',
     filterByStatus: 'تصفية حسب الحالة',
+    filterBySize: 'تصفية حسب المقاس',
+    filterByColor: 'تصفية حسب اللون',
+    selectSize: 'اختر المقاس',
+    selectColor: 'اختر اللون',
     selectStatus: 'اختر الحالة',
     items: 'عناصر',
-    searchPlaceholder: 'ابحث عن اسم العميل أو البريد الإلكتروني...',
+    searchPlaceholder: 'الاسم أو الايميل...',
     searchLabel: 'البحث عن العميل',
     status: {
       pending: 'قيد الانتظار',

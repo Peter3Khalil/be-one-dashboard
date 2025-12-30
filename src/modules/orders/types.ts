@@ -37,4 +37,6 @@ export type OrderParams = Partial<{
   email: string;
   order_status: Array<Order['order_status']>;
   offset: string;
+  size: Array<string>;
+  color: Array<string>;
 }>;

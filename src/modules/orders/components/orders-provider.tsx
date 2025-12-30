@@ -21,6 +21,10 @@ type ContextType = {
 type Actions =
   | { type: 'SET_CUSTOMER_NAME'; payload?: string }
   | {
+      type: 'SET_COLOR' | 'SET_SIZE';
+      payload: Array<string>;
+    }
+  | {
       type: 'SET_EMAIL';
       payload?: string;
     }
@@ -38,6 +42,10 @@ function reducer(state: OrderParams, action: Actions): OrderParams {
       return { ...state, offset: action.payload };
     case 'SET_ORDER_STATUS':
       return { ...state, order_status: action.payload, offset: '0' };
+    case 'SET_COLOR':
+      return { ...state, color: action.payload, offset: '0' };
+    case 'SET_SIZE':
+      return { ...state, size: action.payload, offset: '0' };
     case 'RESET_FILTERS':
       return { customer_name: '', order_status: [], offset: '0' };
     default:
@@ -61,6 +69,8 @@ const OrdersProvider = ({ children }: { children: React.ReactNode }) => {
       ).withDefault([]),
       offset: parseAsString.withDefault('0'),
       email: parseAsString.withDefault(''),
+      size: parseAsArrayOf(parseAsString).withDefault([]),
+      color: parseAsArrayOf(parseAsString).withDefault([]),
     },
     { history: 'replace' }
   );

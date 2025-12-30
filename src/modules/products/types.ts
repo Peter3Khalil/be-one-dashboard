@@ -122,3 +122,18 @@ type Pagination = {
   total_pages: number;
   total_items: number;
 };
+
+export type FiltersResponse = {
+  success: boolean;
+  data: AvailableFilters;
+};
+
+export type AvailableFilters = {
+  categories: Array<string>;
+  colors: Array<string>;
+  sizes: Array<string>;
+  price_range: {
+    min_price: string;
+    max_price: string;
+  };
+};

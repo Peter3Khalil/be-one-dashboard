@@ -34,6 +34,10 @@ export type TranslationType = {
   OrdersPage: {
     orders: string;
     filterByStatus: string;
+    filterBySize: string;
+    filterByColor: string;
+    selectSize: string;
+    selectColor: string;
     selectStatus: string;
     items: string;
     searchPlaceholder: string;
