@@ -1,3 +1,4 @@
+import { Link } from '@/i18n/routing';
 import {
   cn,
   detectLang,
@@ -7,7 +8,6 @@ import {
 } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
-import { Link } from '@/i18n/routing';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
 import {
@@ -18,12 +18,14 @@ import { useUpdateOrderStatus } from '@modules/orders/mutations';
 import type { Order } from '@modules/orders/types';
 import { createFileRoute } from '@tanstack/react-router';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Badge } from '@ui/badge';
 import type { BadgeVariant } from '@ui/badge';
+import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
 import { Card, CardContent } from '@ui/card';
 import CustomCombobox from '@ui/custom-combobox';
 import CustomSelect from '@ui/custom-select';
+import { Input } from '@ui/input';
+import { Label } from '@ui/label';
 import i18next from 'i18next';
 import {
   CheckCircle,
@@ -35,6 +37,7 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 export const Route = createFileRoute(
   '/$locale/_globalLayout/_auth/_layout/orders'
@@ -104,6 +107,28 @@ function RouteComponent() {
           multiple
           defaultValues={params.order_status}
         />
+        <div className="w-full max-w-md space-y-2">
+          <Label>{t('OrdersPage.searchLabel')}</Label>
+          <Input
+            type="search"
+            placeholder={t('OrdersPage.searchPlaceholder')}
+            className="h-10"
+            value={params.customer_name || params.email}
+            onChange={(e) => {
+              if (z.string().email().safeParse(e.target.value.trim()).success) {
+                dispatch({ type: 'SET_EMAIL', payload: e.target.value.trim() });
+                dispatch({ type: 'SET_CUSTOMER_NAME', payload: '' });
+                return;
+              } else {
+                dispatch({
+                  type: 'SET_CUSTOMER_NAME',
+                  payload: e.target.value.trim(),
+                });
+                dispatch({ type: 'SET_EMAIL', payload: '' });
+              }
+            }}
+          />
+        </div>
       </div>
       {isLoading ? (
         <Card>
@@ -160,14 +185,23 @@ const columns: Array<ColumnDef<Order>> = [
     header: () => i18next.t('OrdersPage.table.header.customerName'),
     cell({ row: { original } }) {
       return (
-        <span
-          className={cn('font-medium', {
-            arabic: detectLang(original.customer_name) === 'ar',
-            english: detectLang(original.customer_name) === 'en',
-          })}
-        >
-          {original.customer_name}
-        </span>
+        <div>
+          <span
+            className={cn('font-medium', {
+              arabic: detectLang(original.customer_name) === 'ar',
+              english: detectLang(original.customer_name) === 'en',
+            })}
+          >
+            {original.customer_name}
+          </span>
+          <br />
+          <a
+            href={`mailto:${original.email}`}
+            className="text-sm text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+          >
+            {original.email}
+          </a>
+        </div>
       );
     },
   },

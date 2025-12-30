@@ -36,6 +36,8 @@ export type TranslationType = {
     filterByStatus: string;
     selectStatus: string;
     items: string;
+    searchPlaceholder: string;
+    searchLabel: string;
     status: {
       pending: string;
       delivered: string;

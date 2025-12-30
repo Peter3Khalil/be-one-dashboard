@@ -55,6 +55,8 @@ export default {
     filterByStatus: 'Filter by Status',
     selectStatus: 'Select Status',
     items: 'items',
+    searchPlaceholder: 'Search for customer name or email...',
+    searchLabel: 'Search Customer',
     status: {
       pending: 'Pending',
       delivered: 'Delivered',

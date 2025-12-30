@@ -35,9 +35,11 @@ export function createQueryString(
     if (Array.isArray(value)) {
       value.forEach((v) => (s += `${key}=${v}&`));
     } else {
-      if (typeof value === 'string' || typeof value === 'number')
+      if (
+        (typeof value === 'string' || typeof value === 'number') &&
+        value !== ''
+      )
         s += `${key}=${value}&`;
-      else s += `${key}=${JSON.stringify(value)}&`;
     }
   });
   return s.endsWith('&') ? s.slice(0, -1) : s;

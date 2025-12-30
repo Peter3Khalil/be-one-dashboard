@@ -55,6 +55,8 @@ export default {
     filterByStatus: 'تصفية حسب الحالة',
     selectStatus: 'اختر الحالة',
     items: 'عناصر',
+    searchPlaceholder: 'ابحث عن اسم العميل أو البريد الإلكتروني...',
+    searchLabel: 'البحث عن العميل',
     status: {
       pending: 'قيد الانتظار',
       delivered: 'تم التسليم',

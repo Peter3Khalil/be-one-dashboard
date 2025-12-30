@@ -34,6 +34,7 @@ export type OrderItem = {
 
 export type OrderParams = Partial<{
   customer_name: string;
+  email: string;
   order_status: Array<Order['order_status']>;
   offset: string;
 }>;

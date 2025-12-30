@@ -20,6 +20,10 @@ type ContextType = {
 
 type Actions =
   | { type: 'SET_CUSTOMER_NAME'; payload?: string }
+  | {
+      type: 'SET_EMAIL';
+      payload?: string;
+    }
   | { type: 'SET_PAGE'; payload: string }
   | { type: 'SET_ORDER_STATUS'; payload?: Array<Order['order_status']> }
   | { type: 'RESET_FILTERS' };
@@ -28,6 +32,8 @@ function reducer(state: OrderParams, action: Actions): OrderParams {
   switch (action.type) {
     case 'SET_CUSTOMER_NAME':
       return { ...state, customer_name: action.payload, offset: '0' };
+    case 'SET_EMAIL':
+      return { ...state, email: action.payload, offset: '0' };
     case 'SET_PAGE':
       return { ...state, offset: action.payload };
     case 'SET_ORDER_STATUS':
@@ -54,6 +60,7 @@ const OrdersProvider = ({ children }: { children: React.ReactNode }) => {
         ] as Array<Order['order_status']>)
       ).withDefault([]),
       offset: parseAsString.withDefault('0'),
+      email: parseAsString.withDefault(''),
     },
     { history: 'replace' }
   );
