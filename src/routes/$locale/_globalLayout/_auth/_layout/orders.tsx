@@ -1,3 +1,4 @@
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from '@/i18n/routing';
 import {
   cn,
@@ -10,6 +11,7 @@ import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
+import OrderCard from '@modules/orders/components/order-card';
 import {
   useOrders,
   withOrdersProvider,
@@ -54,6 +56,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const {
     dispatch,
     params,
@@ -184,6 +187,24 @@ function RouteComponent() {
             />
           </CardContent>
         </Card>
+      ) : isMobile ? (
+        <div
+          className={cn('space-y-4', {
+            'animate-pulse': isFetching,
+          })}
+        >
+          {orders.length > 0 ? (
+            orders.map((order) => (
+              <OrderCard key={order.order_id} order={order} />
+            ))
+          ) : (
+            <Card>
+              <CardContent className="py-8 text-center text-muted-foreground">
+                {t('Global.noResultsFound')}
+              </CardContent>
+            </Card>
+          )}
+        </div>
       ) : (
         <DataTable
           className={cn('animation-duration-[0.7s]', {
