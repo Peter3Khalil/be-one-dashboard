@@ -1,5 +1,5 @@
+import { formatPrice } from '@/lib/utils';
 import { Card } from '@ui/card';
-import { useTranslation } from 'react-i18next';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -8,10 +8,11 @@ import {
   ShoppingCartIcon,
   UsersIcon,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface StatCardProps {
   title: string;
-  value: string;
+  value: number | string;
   change: number;
   icon: React.ReactNode;
 }
@@ -48,31 +49,42 @@ function StatCard({ title, value, change, icon }: StatCardProps) {
   );
 }
 
-export function StatsCards() {
+type Props = {
+  totalRevenue: number;
+  totalOrders: number;
+  totalProducts: number;
+  totalCustomers: number;
+};
+export function StatsCards({
+  totalRevenue,
+  totalOrders,
+  totalProducts,
+  totalCustomers,
+}: Props) {
   const { t } = useTranslation();
 
   const stats = [
     {
       title: t('Analytics.totalRevenue'),
-      value: '$45,231',
+      value: formatPrice(totalRevenue),
       change: 12.5,
       icon: <DollarSignIcon className="h-6 w-6 text-primary" />,
     },
     {
       title: t('Analytics.totalOrders'),
-      value: '1,234',
+      value: totalOrders,
       change: 8.3,
       icon: <ShoppingCartIcon className="h-6 w-6 text-primary" />,
     },
     {
       title: t('Analytics.totalProducts'),
-      value: '567',
+      value: totalProducts,
       change: 2.4,
       icon: <PackageIcon className="h-6 w-6 text-primary" />,
     },
     {
       title: t('Analytics.totalCustomers'),
-      value: '892',
+      value: totalCustomers,
       change: -1.2,
       icon: <UsersIcon className="h-6 w-6 text-primary" />,
     },

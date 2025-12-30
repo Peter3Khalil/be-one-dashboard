@@ -9,52 +9,18 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
-export function OrdersChart() {
+type Props = {
+  data: Array<{
+    month: string;
+    delivered: number;
+    pending: number;
+    cancelled: number;
+    refunded: number;
+  }>;
+};
+export function OrdersChart({ data }: Props) {
   const { t } = useTranslation();
-  const chartData = [
-    {
-      month: t('Global.monthNames.january.short'),
-      delivered: 186,
-      pending: 80,
-      cancelled: 20,
-      refunded: 10,
-    },
-    {
-      month: t('Global.monthNames.february.short'),
-      delivered: 305,
-      pending: 120,
-      cancelled: 15,
-      refunded: 5,
-    },
-    {
-      month: t('Global.monthNames.march.short'),
-      delivered: 237,
-      pending: 90,
-      cancelled: 25,
-      refunded: 8,
-    },
-    {
-      month: t('Global.monthNames.april.short'),
-      delivered: 423,
-      pending: 150,
-      cancelled: 30,
-      refunded: 12,
-    },
-    {
-      month: t('Global.monthNames.may.short'),
-      delivered: 209,
-      pending: 100,
-      cancelled: 18,
-      refunded: 7,
-    },
-    {
-      month: t('Global.monthNames.june.short'),
-      delivered: 340,
-      pending: 110,
-      cancelled: 22,
-      refunded: 200,
-    },
-  ];
+
   const chartConfig = {
     delivered: {
       label: t('OrdersPage.status.delivered'),
@@ -83,7 +49,7 @@ export function OrdersChart() {
         </p>
       </div>
       <ChartContainer config={chartConfig} className="h-75 w-full">
-        <BarChart accessibilityLayer data={chartData}>
+        <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="month"
