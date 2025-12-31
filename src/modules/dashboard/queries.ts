@@ -5,5 +5,6 @@ export function useStatsQuery() {
   return useQuery({
     queryKey: ['stats'],
     queryFn: getStats,
+    refetchOnMount: true,
   });
 }
