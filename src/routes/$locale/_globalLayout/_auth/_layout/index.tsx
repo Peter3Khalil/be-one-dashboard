@@ -3,6 +3,7 @@ import useLocale from '@/hooks/use-locale';
 import { pageTitle, reverseArray } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
+import { DashboardSkeleton } from '@modules/dashboard/components/dashboard-skeleton';
 import { OrdersChart } from '@modules/dashboard/components/orders-chart';
 import { RevenueChart } from '@modules/dashboard/components/revenue-chart';
 import { StatsCards } from '@modules/dashboard/components/stats-cards';
@@ -25,7 +26,12 @@ function App() {
   const { t } = useTranslation();
   const locale = useLocale();
   useBreadcrumbSetup();
-  const { data: statsQuery } = useStatsQuery();
+  const { data: statsQuery, isLoading } = useStatsQuery();
+
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
+
   const revenueChartData =
     statsQuery?.data.revenueOverview?.map(({ month, revenue }) => ({
       month: t(`Global.monthNames.${MONTH_NAMES[month - 1]}.short`),
