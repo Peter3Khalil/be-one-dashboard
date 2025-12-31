@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/routing';
-import { cn, detectLang, formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
+import LocalizedText from '@components/localized-text';
 import { useDeleteProduct } from '@modules/products/mutations';
 import type { ProductType as Product } from '@modules/products/types';
 import {
@@ -61,14 +62,10 @@ export default function ProductCard({ product }: { product: Product }) {
               to="/products/$id/view"
               params={{ id: String(product.id) }}
               className={cn(
-                'block truncate font-semibold underline-offset-2 duration-200 hover:text-primary hover:underline',
-                {
-                  arabic: detectLang(product.name) === 'ar',
-                  english: detectLang(product.name) === 'en',
-                }
+                'block truncate font-semibold underline-offset-2 duration-200 hover:text-primary hover:underline'
               )}
             >
-              {product.name}
+              <LocalizedText>{product.name}</LocalizedText>
             </Link>
             <p className="text-lg font-semibold text-primary">
               {formatPrice(product.price)}
@@ -93,15 +90,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <>
             <div className="flex flex-wrap gap-1">
               {product.categories.map((category) => (
-                <Badge
-                  key={category.id}
-                  variant="info-blue"
-                  className={cn({
-                    arabic: detectLang(category.name) === 'ar',
-                    english: detectLang(category.name) === 'en',
-                  })}
-                >
-                  {category.name}
+                <Badge key={category.id} variant="info-blue">
+                  <LocalizedText>{category.name}</LocalizedText>
                 </Badge>
               ))}
             </div>

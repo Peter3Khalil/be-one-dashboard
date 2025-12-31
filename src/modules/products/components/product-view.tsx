@@ -31,17 +31,18 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
+import { Link, useNavigate } from '@/i18n/routing';
+import { cn, formatPrice } from '@/lib/utils';
 import ImageGallery from '@components/image-gallery';
+import LocalizedText from '@components/localized-text';
 import { Badge } from '@ui/badge';
 import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
 import { Skeleton } from '@ui/skeleton';
+import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDeleteProduct } from '../mutations';
-import type { FC } from 'react';
 import type { ProductType } from '../types';
-import { cn, detectLang, formatPrice } from '@/lib/utils';
-import { Link, useNavigate } from '@/i18n/routing';
 
 type Props = {
   product: ProductType;
@@ -91,13 +92,8 @@ const ProductView: FC<Props> = ({
           >
             <ArrowLeft />
           </Button>
-          <h1
-            className={cn('heading', {
-              arabic: detectLang(name) === 'ar',
-              english: detectLang(name) === 'en',
-            })}
-          >
-            {name}
+          <h1 className="heading">
+            <LocalizedText>{name}</LocalizedText>
           </h1>
           {is_active ? (
             <Badge variant="success">
@@ -112,7 +108,9 @@ const ProductView: FC<Props> = ({
           )}
         </div>
         <div className="flex flex-col">
-          <strong className="english heading">{formatPrice(price)}</strong>
+          <strong className="heading">
+            <LocalizedText>{formatPrice(price)}</LocalizedText>
+          </strong>
           <span className="text-sm text-muted-foreground">
             <b>{totalStock}</b> {t('ProductDetailsPage.itemsInStock')}
           </span>
@@ -142,14 +140,10 @@ const ProductView: FC<Props> = ({
                         variant:
                           currentColor === color ? 'default' : 'secondary',
                         size: 'sm',
-                        className: cn({
-                          arabic: detectLang(color) === 'ar',
-                          english: detectLang(color) === 'en',
-                        }),
                       })}
                       htmlFor={String(index)}
                     >
-                      {color}
+                      <LocalizedText>{color}</LocalizedText>
                     </Label>
                   </li>
                 ))}
@@ -178,13 +172,8 @@ const ProductView: FC<Props> = ({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription
-                className={cn({
-                  arabic: detectLang(description) === 'ar',
-                  english: detectLang(description) === 'en',
-                })}
-              >
-                {description}
+              <CardDescription>
+                <LocalizedText>{description}</LocalizedText>
               </CardDescription>
             </CardContent>
           </Card>
@@ -201,14 +190,8 @@ const ProductView: FC<Props> = ({
               <ul className="flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <li key={category.id}>
-                    <Badge
-                      variant="info-blue"
-                      className={cn({
-                        arabic: detectLang(category.name) === 'ar',
-                        english: detectLang(category.name) === 'en',
-                      })}
-                    >
-                      {category.name}
+                    <Badge variant="info-blue">
+                      <LocalizedText>{category.name}</LocalizedText>
                     </Badge>
                   </li>
                 ))}
@@ -228,14 +211,9 @@ const ProductView: FC<Props> = ({
             <CardContent className="space-y-4">
               {colorsEntries.map(([color, { sizes }]) => (
                 <div className="flex flex-col gap-4 rounded-xl border bg-accent/40 px-4 py-2 md:flex-row">
-                  <span
-                    className={cn('font-medium text-nowrap capitalize', {
-                      arabic: detectLang(color) === 'ar',
-                      english: detectLang(color) === 'en',
-                    })}
-                  >
+                  <LocalizedText className="font-medium text-nowrap capitalize">
                     {color}
-                  </span>
+                  </LocalizedText>
                   <div className="flex w-full gap-2">
                     <span className="text-muted-foreground">=&gt;</span>
                     <ul className="flex items-center gap-4">

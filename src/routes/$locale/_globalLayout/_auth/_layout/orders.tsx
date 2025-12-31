@@ -1,16 +1,11 @@
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from '@/i18n/routing';
-import {
-  cn,
-  detectLang,
-  formatDate,
-  formatPrice,
-  pageTitle,
-} from '@/lib/utils';
+import { cn, formatDate, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
+import LocalizedText from '@components/localized-text';
 import OrderCard from '@modules/orders/components/order-card';
 import {
   useOrders,
@@ -251,18 +246,13 @@ const columns: Array<ColumnDef<Order>> = [
     cell({ row: { original } }) {
       return (
         <div>
-          <span
-            className={cn('font-medium', {
-              arabic: detectLang(original.customer_name) === 'ar',
-              english: detectLang(original.customer_name) === 'en',
-            })}
-          >
+          <LocalizedText className="font-medium">
             {original.customer_name}
-          </span>
+          </LocalizedText>
           <br />
           <a
             href={`mailto:${original.email}`}
-            className="text-sm text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+            className="english text-sm text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
           >
             {original.email}
           </a>
@@ -274,7 +264,9 @@ const columns: Array<ColumnDef<Order>> = [
     accessorKey: 'total_amount',
     header: () => i18next.t('OrdersPage.table.header.totalAmount'),
     cell({ row: { original } }) {
-      return formatPrice(original.total_amount);
+      return (
+        <LocalizedText>{formatPrice(original.total_amount)}</LocalizedText>
+      );
     },
   },
   {

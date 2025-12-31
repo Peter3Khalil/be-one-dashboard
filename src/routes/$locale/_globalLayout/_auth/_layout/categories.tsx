@@ -1,7 +1,8 @@
-import { cn, detectLang, pageTitle } from '@/lib/utils';
+import { cn, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { DataTable } from '@components/data-table';
+import LocalizedText from '@components/localized-text';
 import {
   useCreateCategory,
   useDeleteCategory,
@@ -128,14 +129,7 @@ const columns: Array<ColumnDef<Category>> = [
     header: () => i18next.t('CategoriesPage.table.header.name'),
     cell({ row: { original } }) {
       return (
-        <span
-          className={cn('font-medium', {
-            arabic: detectLang(original.name) === 'ar',
-            english: detectLang(original.name) === 'en',
-          })}
-        >
-          {original.name}
-        </span>
+        <LocalizedText className="font-medium">{original.name}</LocalizedText>
       );
     },
   },

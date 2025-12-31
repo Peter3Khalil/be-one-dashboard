@@ -1,10 +1,11 @@
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from '@/i18n/routing';
-import { cn, detectLang, formatPrice, pageTitle } from '@/lib/utils';
+import { cn, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
+import LocalizedText from '@components/localized-text';
 import ProductCard from '@modules/products/components/product-card';
 import {
   useProducts,
@@ -194,14 +195,10 @@ const columns: Array<ColumnDef<Product>> = [
             to="/products/$id/view"
             params={{ id: String(original.id) }}
             className={cn(
-              'peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline',
-              {
-                arabic: detectLang(original.name) === 'ar',
-                english: detectLang(original.name) === 'en',
-              }
+              'peer font-medium underline-offset-2 duration-200 hover:text-primary hover:underline'
             )}
           >
-            {original.name}
+            <LocalizedText>{original.name}</LocalizedText>
           </Link>
           <Link
             to="/products/$id/view"
@@ -222,7 +219,7 @@ const columns: Array<ColumnDef<Product>> = [
     accessorKey: 'price',
     header: () => i18next.t('ProductsPage.table.header.price'),
     cell: ({ row: { original } }) => {
-      return <span>{formatPrice(original.price)}</span>;
+      return <LocalizedText>{formatPrice(original.price)}</LocalizedText>;
     },
   },
   {
@@ -232,15 +229,8 @@ const columns: Array<ColumnDef<Product>> = [
       return (
         <div className="flex flex-wrap gap-1">
           {original.categories.map((category) => (
-            <Badge
-              key={category.id}
-              variant="info-blue"
-              className={cn({
-                arabic: detectLang(category.name) === 'ar',
-                english: detectLang(category.name) === 'en',
-              })}
-            >
-              {category.name}
+            <Badge key={category.id} variant="info-blue">
+              <LocalizedText>{category.name}</LocalizedText>
             </Badge>
           ))}
         </div>

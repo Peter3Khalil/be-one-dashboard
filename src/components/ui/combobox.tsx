@@ -2,7 +2,7 @@ import * as ComboboxPrimitive from '@diceui/combobox';
 import { Check, ChevronDown, X } from 'lucide-react';
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn, detectLang } from '@/lib/utils';
 
 const Combobox = React.forwardRef<
   React.ComponentRef<typeof ComboboxPrimitive.Root>,
@@ -55,6 +55,10 @@ const ComboboxInput = React.forwardRef<
     ref={ref}
     className={cn(
       'flex h-9 w-full rounded-md bg-transparent text-base placeholder:text-muted-foreground focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+      {
+        arabic: props.value && detectLang(String(props.value)) === 'ar',
+        english: props.value && detectLang(String(props.value)) === 'en',
+      },
       className
     )}
     {...props}

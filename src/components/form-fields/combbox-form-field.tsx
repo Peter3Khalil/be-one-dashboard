@@ -22,6 +22,7 @@ import { useState } from 'react';
 import type { ComponentProps } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { cn } from '@/lib/utils';
+import LocalizedText from '@components/localized-text';
 
 type Props<T extends FieldValues> = {
   control: Control<T>;
@@ -91,7 +92,7 @@ export const ComboboxFormField = <T extends FieldValues>({
               <ComboboxEmpty>{noFoundText}</ComboboxEmpty>
               {myOptions.map(({ value, label }) => (
                 <ComboboxItem key={value} value={value}>
-                  {label}
+                  <LocalizedText>{label}</LocalizedText>
                 </ComboboxItem>
               ))}
             </ComboboxContent>
@@ -148,7 +149,7 @@ const ComboboxMultipleFormField = <T extends FieldValues>({
 
                   return (
                     <ComboboxBadgeItem key={item} value={item}>
-                      {option.label}
+                      <LocalizedText>{option.label}</LocalizedText>
                     </ComboboxBadgeItem>
                   );
                 })}

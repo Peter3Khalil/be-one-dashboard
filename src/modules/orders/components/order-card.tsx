@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/routing';
-import { cn, detectLang, formatDate, formatPrice } from '@/lib/utils';
+import { formatDate, formatPrice } from '@/lib/utils';
+import LocalizedText from '@components/localized-text';
 import { useUpdateOrderStatus } from '@modules/orders/mutations';
 import type { Order } from '@modules/orders/types';
 import type { BadgeVariant } from '@ui/badge';
@@ -100,17 +101,12 @@ export default function OrderCard({ order }: { order: Order }) {
       <CardContent className="space-y-4">
         {/* Customer Info */}
         <div className="space-y-1">
-          <p
-            className={cn('font-medium', {
-              arabic: detectLang(order.customer_name) === 'ar',
-              english: detectLang(order.customer_name) === 'en',
-            })}
-          >
-            {order.customer_name}
+          <p className="font-medium">
+            <LocalizedText>{order.customer_name}</LocalizedText>
           </p>
           <a
             href={`mailto:${order.email}`}
-            className="text-sm text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+            className="english text-sm text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
           >
             {order.email}
           </a>

@@ -1,3 +1,4 @@
+import LocalizedText from '@components/localized-text';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -12,7 +13,6 @@ import {
   ComboboxTrigger,
 } from './combobox';
 import { Label } from './label';
-import { cn, detectLang } from '@/lib/utils';
 
 type Props = {
   options?: Array<{ label: string; value: string }>;
@@ -65,14 +65,7 @@ const CustomCombobox = ({
 
             return (
               <ComboboxBadgeItem key={item} value={item}>
-                <span
-                  className={cn({
-                    arabic: detectLang(option.label) === 'ar',
-                    english: detectLang(option.label) === 'en',
-                  })}
-                >
-                  {option.label}
-                </span>
+                <LocalizedText>{option.label}</LocalizedText>
               </ComboboxBadgeItem>
             );
           })}
@@ -91,14 +84,7 @@ const CustomCombobox = ({
         <ComboboxEmpty>{noItemsFound}</ComboboxEmpty>
         {options.map(({ value, label }) => (
           <ComboboxItem key={value} value={value}>
-            <span
-              className={cn({
-                arabic: detectLang(label) === 'ar',
-                english: detectLang(label) === 'en',
-              })}
-            >
-              {label}
-            </span>
+            <LocalizedText>{label}</LocalizedText>
           </ComboboxItem>
         ))}
       </ComboboxContent>
