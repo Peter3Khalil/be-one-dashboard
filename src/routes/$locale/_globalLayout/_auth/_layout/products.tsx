@@ -1,9 +1,11 @@
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from '@/i18n/routing';
 import { cn, detectLang, formatPrice, pageTitle } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import CustomPagination from '@components/custom-pagination';
 import { DataTable } from '@components/data-table';
+import ProductCard from '@modules/products/components/product-card';
 import {
   useProducts,
   withProductsProvider,
@@ -57,6 +59,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const {
     dispatch,
     params,
@@ -97,7 +100,7 @@ function RouteComponent() {
           </Link>
         </Button>
       </div>
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start">
         <div className="flex flex-col">
           <Label className="mb-1 text-sm font-medium">
             {t('CreateProductPage.productDetails.productName')}
@@ -105,7 +108,7 @@ function RouteComponent() {
           <Input
             type="search"
             placeholder={t('ProductsPage.searchPlaceholder')}
-            className="w-80"
+            className="h-10 md:w-80"
             value={params.product_name}
             onChange={(e) =>
               dispatch({ type: 'SET_PRODUCT_NAME', payload: e.target.value })
@@ -135,6 +138,24 @@ function RouteComponent() {
             />
           </CardContent>
         </Card>
+      ) : isMobile ? (
+        <div
+          className={cn('space-y-4', {
+            'animate-pulse': isFetching,
+          })}
+        >
+          {products.length > 0 ? (
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <Card>
+              <CardContent className="py-8 text-center text-muted-foreground">
+                {t('Global.noResultsFound')}
+              </CardContent>
+            </Card>
+          )}
+        </div>
       ) : (
         <DataTable
           className={cn('animation-duration-[0.7s]', {
