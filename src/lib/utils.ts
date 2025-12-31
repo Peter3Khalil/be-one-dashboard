@@ -84,3 +84,11 @@ export function detectLang(text: string) {
 
   return arabicChars > latinChars ? 'ar' : 'en';
 }
+
+export function reverseArray<T>(arr: Array<T>): Array<T> {
+  const result: Array<T> = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    result.push(arr[i]);
+  }
+  return result;
+}

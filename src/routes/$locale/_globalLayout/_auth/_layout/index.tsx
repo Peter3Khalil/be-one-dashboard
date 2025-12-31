@@ -1,5 +1,6 @@
 import { MONTH_NAMES } from '@/constants';
-import { pageTitle } from '@/lib/utils';
+import useLocale from '@/hooks/use-locale';
+import { pageTitle, reverseArray } from '@/lib/utils';
 import { useBreadcrumbItems } from '@/stores/breadcrumb';
 import { useSidebarItems } from '@/stores/sidebar';
 import { OrdersChart } from '@modules/dashboard/components/orders-chart';
@@ -22,6 +23,7 @@ export const Route = createFileRoute('/$locale/_globalLayout/_auth/_layout/')({
 
 function App() {
   const { t } = useTranslation();
+  const locale = useLocale();
   useBreadcrumbSetup();
   const { data: statsQuery } = useStatsQuery();
   const revenueChartData =
@@ -53,8 +55,16 @@ function App() {
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <RevenueChart data={revenueChartData} />
-        <OrdersChart data={ordersChartData} />
+        <RevenueChart
+          data={
+            locale === 'ar' ? reverseArray(revenueChartData) : revenueChartData
+          }
+        />
+        <OrdersChart
+          data={
+            locale === 'ar' ? reverseArray(ordersChartData) : ordersChartData
+          }
+        />
       </div>
     </div>
   );

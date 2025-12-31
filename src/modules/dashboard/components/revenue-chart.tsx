@@ -15,7 +15,6 @@ export function RevenueChart({ data }: Props) {
       color: 'var(--chart-1)',
     },
   };
-  console.log('RevenueChart data:', data);
   return (
     <Card className="p-6">
       <div className="mb-4">
@@ -42,7 +41,6 @@ export function RevenueChart({ data }: Props) {
             tickLine={false}
             axisLine={false}
             tickMargin={8}
-            tickFormatter={(value) => value.slice(0, 3)}
           />
           <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <defs>
