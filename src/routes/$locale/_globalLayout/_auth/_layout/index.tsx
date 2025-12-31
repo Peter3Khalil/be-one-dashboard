@@ -27,7 +27,7 @@ function App() {
   useBreadcrumbSetup();
   const { data: statsQuery } = useStatsQuery();
   const revenueChartData =
-    statsQuery?.data.revenueOverView?.map(({ month, revenue }) => ({
+    statsQuery?.data.revenueOverview?.map(({ month, revenue }) => ({
       month: t(`Global.monthNames.${MONTH_NAMES[month - 1]}.short`),
       revenue,
     })) || [];
