@@ -101,14 +101,15 @@ function RouteComponent() {
             className="h-10"
             value={params.customer_name || params.email}
             onChange={(e) => {
-              if (z.string().email().safeParse(e.target.value.trim()).success) {
-                dispatch({ type: 'SET_EMAIL', payload: e.target.value.trim() });
+              const value = e.target.value;
+              if (z.string().email().safeParse(value.trim()).success) {
+                dispatch({ type: 'SET_EMAIL', payload: value.trim() });
                 dispatch({ type: 'SET_CUSTOMER_NAME', payload: '' });
                 return;
               } else {
                 dispatch({
                   type: 'SET_CUSTOMER_NAME',
-                  payload: e.target.value.trim(),
+                  payload: e.target.value,
                 });
                 dispatch({ type: 'SET_EMAIL', payload: '' });
               }
