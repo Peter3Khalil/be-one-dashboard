@@ -1,7 +1,7 @@
+import { cn } from '@/lib/utils';
 import { Eye, EyeOff } from 'lucide-react';
 import * as React from 'react';
 import { Input } from './input';
-import { cn } from '@/lib/utils';
 
 const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -9,10 +9,10 @@ const PasswordInput = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <div className="relative">
+    <div dir="ltr" className="relative">
       <Input
         ref={ref}
-        className={cn('pe-10', className)}
+        className={cn('pe-10 english rtl:placeholder:arabic', className)}
         autoComplete="off"
         {...props}
         type={showPassword ? 'text' : 'password'}
@@ -22,7 +22,7 @@ const PasswordInput = React.forwardRef<
         onClick={() => setShowPassword((prev) => !prev)}
         aria-label={showPassword ? 'Hide password' : 'Show password'}
         className={cn(
-          'absolute top-1/2 -translate-y-1/2 cursor-pointer text-muted-foreground hover:text-foreground ltr:right-3 rtl:left-3'
+          'absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-muted-foreground hover:text-foreground'
         )}
       >
         {showPassword ? (
